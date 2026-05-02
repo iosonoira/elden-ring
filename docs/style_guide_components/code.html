@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@400;600&amp;family=Space+Grotesk:wght@400;700&amp;family=Cinzel:wght@400;700&amp;family=Lora:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#484740",
+                    "tertiary-fixed-dim": "#cac6be",
+                    "on-error": "#690005",
+                    "outline": "#99907c",
+                    "surface-container-lowest": "#0e0e10",
+                    "on-primary": "#412d00",
+                    "surface-variant": "#353437",
+                    "on-tertiary-container": "#47453f",
+                    "on-surface-variant": "#d0c5af",
+                    "outline-variant": "#4d4635",
+                    "surface-tint": "#f1c97d",
+                    "background": "#131315",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-low": "#1b1b1d",
+                    "secondary-fixed-dim": "#cbc6be",
+                    "on-secondary-fixed-variant": "#494740",
+                    "tertiary-container": "#b6b3ab",
+                    "surface-bright": "#39393b",
+                    "on-background": "#e5e1e4",
+                    "secondary-container": "#494740",
+                    "on-secondary-container": "#b9b5ac",
+                    "surface-container-highest": "#353434",
+                    "surface-dim": "#131315",
+                    "primary-fixed": "#ffdea5",
+                    "on-primary-fixed-variant": "#5d4201",
+                    "secondary": "#cbc6be",
+                    "surface-container": "#201f21",
+                    "on-tertiary": "#32302a",
+                    "on-secondary": "#32302b",
+                    "primary-fixed-dim": "#e9c176",
+                    "inverse-surface": "#e5e1e4",
+                    "primary-container": "#d4ad65",
+                    "on-primary-container": "#5b4000",
+                    "primary": "#f1c97d",
+                    "on-tertiary-fixed": "#1c1c16",
+                    "inverse-on-surface": "#313032",
+                    "tertiary-fixed": "#e6e2d9",
+                    "on-primary-fixed": "#261900",
+                    "error-container": "#93000a",
+                    "error": "#ffb4ab",
+                    "surface-container-high": "#2a2a2c",
+                    "surface": "#131315",
+                    "on-surface": "#e5e1e4",
+                    "inverse-primary": "#775a19",
+                    "tertiary": "#d2cec6",
+                    "on-secondary-fixed": "#1d1c16",
+                    "secondary-fixed": "#e7e2d9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Space Grotesk"],
+                    "cinzel": ["Cinzel"],
+                    "lora": ["Lora"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .glass-panel {
+        background: rgba(19, 19, 21, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(241, 201, 125, 0.1);
+      }
+      .rune-gradient {
+        background: linear-gradient(135deg, #f1c97d 0%, #d4ad65 100%);
+      }
+      .gold-glow {
+        box-shadow: 0 0 20px rgba(241, 201, 125, 0.15);
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<header class="bg-[#131315] border-b border-[#353434] shadow-[0_0_20px_rgba(241,201,125,0.15)] flex justify-between items-center w-full px-8 py-4 fixed top-0 z-50">
+<div class="text-2xl font-bold text-[#f1c97d] italic font-['Noto_Serif'] tracking-wide uppercase">GILDED RELIQUARY</div>
+<nav class="hidden md:flex gap-8 font-['Noto_Serif'] tracking-wide uppercase">
+<a class="text-stone-400 hover:text-[#f1c97d] transition-colors duration-300" href="#">Inventory</a>
+<a class="text-stone-400 hover:text-[#f1c97d] transition-colors duration-300" href="#">Archives</a>
+<a class="text-stone-400 hover:text-[#f1c97d] transition-colors duration-300" href="#">Artifacts</a>
+<a class="text-[#f1c97d] border-b-2 border-[#f1c97d] pb-1" href="#">Bestiary</a>
+</nav>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-[#f1c97d] cursor-pointer scale-95 transition-transform">notifications</span>
+<span class="material-symbols-outlined text-[#f1c97d] cursor-pointer scale-95 transition-transform">history_edu</span>
+<div class="w-8 h-8 rounded-sm overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Tarnished Profile Avatar: A dark, cinematic portrait of a mysterious figure in ornate metal armor obscured by shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAntVnebVEJ_ivknqITSo1c_4iX2Nv2Rl8_8l-AJy_yyGYj7seYhOnhn1EBXW6tgNfDeQATn9gbQ_g2fw127KeR7lGAOxZWTb4N4too6WuCeKAhEKCJUQwAUVkR83C6mc8TR-Bo1-7-Oei4MtccbgoJzFndgRDg89Qfcpr_7Ru8WJlhm6rui_L5Dxm1Sj1z4h_E5KK1NkyvI2C84BDlbi8XUeelai0z3zMK34iMt_6m9uJTNAzp494vqAl4FbXvEdgOVt7ycgYsVVs"/>
+</div>
+</div>
+</header>
+<div class="flex pt-[73px]">
+<!-- SideNavBar -->
+<aside class="bg-[#0e0e10] border-r border-[#353434] flex flex-col h-[calc(100vh-73px)] w-64 py-6 px-4 sticky top-[73px] hidden md:flex">
+<div class="mb-8">
+<div class="text-[#f1c97d] font-serif italic text-lg leading-tight">SOVEREIGN ARCHIVE</div>
+<div class="font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase text-stone-500">V0.4.2-PRIME</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-4 py-3 px-4 font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase text-stone-500 hover:bg-stone-800/50 hover:text-[#f1c97d] transition-all duration-200" href="#">
+<span class="material-symbols-outlined scale-75">shield</span> Equipment
+                </a>
+<a class="flex items-center gap-4 py-3 px-4 font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase text-stone-500 hover:bg-stone-800/50 hover:text-[#f1c97d] transition-all duration-200" href="#">
+<span class="material-symbols-outlined scale-75">auto_awesome</span> Items
+                </a>
+<a class="flex items-center gap-4 py-3 px-4 font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase text-stone-500 hover:bg-stone-800/50 hover:text-[#f1c97d] transition-all duration-200" href="#">
+<span class="material-symbols-outlined scale-75">auto_fix_high</span> Spells
+                </a>
+<a class="flex items-center gap-4 py-3 px-4 font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase text-stone-500 hover:bg-stone-800/50 hover:text-[#f1c97d] transition-all duration-200" href="#">
+<span class="material-symbols-outlined scale-75">humerus</span> Crafting
+                </a>
+<a class="flex items-center gap-4 py-3 px-4 font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase text-[#f1c97d] font-bold bg-[#f1c97d]/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined scale-75">query_stats</span> Status
+                </a>
+</nav>
+<div class="mt-auto pt-6 border-t border-[#353434] space-y-4">
+<button class="w-full py-3 bg-primary/10 border border-primary/30 text-primary font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase hover:bg-primary/20 transition-colors">COMMUNE WITH GRACE</button>
+<div class="space-y-1">
+<a class="flex items-center gap-4 py-2 px-4 font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase text-stone-500 hover:text-[#f1c97d]" href="#">
+<span class="material-symbols-outlined scale-75">settings</span> Settings
+                    </a>
+<a class="flex items-center gap-4 py-2 px-4 font-['Space_Grotesk'] text-[10px] tracking-[0.5em] uppercase text-stone-500 hover:text-error" href="#">
+<span class="material-symbols-outlined scale-75">logout</span> Logout
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content (Style Guide Canvas) -->
+<main class="flex-1 p-12 overflow-y-auto">
+<header class="mb-16">
+<h1 class="text-[60px] font-headline text-primary italic leading-none mb-4">The Style Guide</h1>
+<p class="text-stone-400 font-lora text-lg max-w-2xl italic">Architectural foundations and sacred UI artifacts for the Gilded Reliquary ecosystem.</p>
+</header>
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-12">
+<!-- Buttons Section -->
+<section class="space-y-8">
+<div class="flex items-center gap-4 mb-6">
+<span class="font-label text-[10px] tracking-[0.5em] text-primary uppercase">01</span>
+<h2 class="text-2xl font-headline italic">Martial Interactions</h2>
+</div>
+<div class="glass-panel p-8 space-y-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-4">
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase block">Primary Action</label>
+<button class="rune-gradient gold-glow text-on-primary-container px-8 py-3 rounded-sm font-label text-[10px] tracking-[0.5em] uppercase font-bold w-full hover:brightness-110 transition-all active:scale-95">Touch Grace</button>
+</div>
+<div class="space-y-4">
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase block">Secondary Action</label>
+<button class="bg-stone-800/30 border border-stone-600 text-tertiary-fixed-dim px-8 py-3 rounded-sm font-label text-[10px] tracking-[0.5em] uppercase w-full hover:bg-stone-700/50 transition-all active:scale-95">Rest at Grace</button>
+</div>
+<div class="space-y-4">
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase block">Icon Only</label>
+<div class="flex gap-4">
+<button class="w-12 h-12 flex items-center justify-center glass-panel border-primary/20 text-primary hover:bg-primary/10 transition-all"><span class="material-symbols-outlined">swords</span></button>
+<button class="w-12 h-12 flex items-center justify-center glass-panel border-primary/20 text-primary hover:bg-primary/10 transition-all"><span class="material-symbols-outlined">auto_stories</span></button>
+<button class="w-12 h-12 flex items-center justify-center glass-panel border-primary/20 text-primary hover:bg-primary/10 transition-all"><span class="material-symbols-outlined">skull</span></button>
+</div>
+</div>
+<div class="space-y-4">
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase block">Inert / Disabled</label>
+<button class="bg-stone-900 border border-stone-800 text-stone-700 px-8 py-3 rounded-sm font-label text-[10px] tracking-[0.5em] uppercase w-full cursor-not-allowed" disabled="">Forbidden</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Typography Section -->
+<section class="space-y-8">
+<div class="flex items-center gap-4 mb-6">
+<span class="font-label text-[10px] tracking-[0.5em] text-primary uppercase">02</span>
+<h2 class="text-2xl font-headline italic">Sacred Typography</h2>
+</div>
+<div class="glass-panel p-8 space-y-8">
+<div>
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase block mb-4">Display / Cinzel</label>
+<h3 class="font-cinzel text-4xl text-primary mb-2">Relic of Ancient Kings</h3>
+<h4 class="font-cinzel text-xl text-stone-300">Level 40 Sovereign Soul</h4>
+</div>
+<div class="border-t border-outline-variant pt-8">
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase block mb-4">Body / Lora</label>
+<p class="font-lora text-lg text-on-surface leading-relaxed italic">"The amber glow of the tree cast long, jagged shadows against the crumbling masonry of the archives. Here, knowledge was not merely stored—it was entombed."</p>
+</div>
+<div class="border-t border-outline-variant pt-8">
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase block mb-4">Metadata / Space Grotesk</label>
+<div class="flex gap-4">
+<span class="font-label text-[10px] tracking-[0.5em] uppercase px-3 py-1 bg-stone-900 text-primary border border-primary/20">ATTR: FAITH</span>
+<span class="font-label text-[10px] tracking-[0.5em] uppercase px-3 py-1 bg-stone-900 text-stone-500 border border-stone-800">REQ: 12</span>
+</div>
+</div>
+</div>
+</section>
+<!-- UI Patterns / Dropzone & Bars -->
+<section class="space-y-8">
+<div class="flex items-center gap-4 mb-6">
+<span class="font-label text-[10px] tracking-[0.5em] text-primary uppercase">03</span>
+<h2 class="text-2xl font-headline italic">Archive Patterns</h2>
+</div>
+<div class="space-y-6">
+<!-- Save File Dropzone -->
+<div class="relative group">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="border-2 border-dashed border-outline-variant p-12 flex flex-col items-center justify-center text-center space-y-4 group-hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-4xl text-primary transition-transform group-hover:scale-110">upload_file</span>
+<div>
+<h3 class="font-headline italic text-lg text-primary">Sacrifice Artifact</h3>
+<p class="font-lora text-stone-500 italic text-sm">Drag your scroll or artifact here to commence archival.</p>
+</div>
+</div>
+</div>
+<!-- Progress Bars -->
+<div class="glass-panel p-8 space-y-8">
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase">Communion Progress</label>
+<span class="font-label text-[10px] tracking-[0.5em] text-primary">78%</span>
+</div>
+<div class="h-1 w-full bg-stone-900 overflow-hidden">
+<div class="h-full rune-gradient gold-glow w-[78%] transition-all duration-1000 relative">
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white/20 blur-sm"></div>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<label class="font-label text-[10px] tracking-[0.5em] text-stone-500 uppercase">Toxicity Level</label>
+<span class="font-label text-[10px] tracking-[0.5em] text-error">24%</span>
+</div>
+<div class="h-1 w-full bg-stone-900 overflow-hidden">
+<div class="h-full bg-error w-[24%] transition-all duration-1000"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Accordions -->
+<section class="space-y-8">
+<div class="flex items-center gap-4 mb-6">
+<span class="font-label text-[10px] tracking-[0.5em] text-primary uppercase">04</span>
+<h2 class="text-2xl font-headline italic">Reliquary Slots</h2>
+</div>
+<div class="space-y-4">
+<!-- Closed Accordion -->
+<div class="group">
+<div class="bg-[#1b1b1d] border-l-2 border-transparent hover:border-primary/50 transition-all px-6 py-4 flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-stone-500 group-hover:text-primary transition-colors">history_edu</span>
+<h3 class="font-headline italic text-lg text-stone-400 group-hover:text-primary transition-colors">The First Liturgy</h3>
+</div>
+<span class="material-symbols-outlined text-stone-600">add</span>
+</div>
+<div class="h-[1px] w-full bg-stone-800/50 relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-1/3 rune-gradient opacity-50"></div>
+</div>
+</div>
+<!-- Open Accordion -->
+<div class="border border-primary/20">
+<div class="bg-primary/10 px-6 py-4 flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="font-headline italic text-lg text-primary">Tome of The Golden Order</h3>
+</div>
+<span class="material-symbols-outlined text-primary">remove</span>
+</div>
+<div class="h-[1px] w-full rune-gradient"></div>
+<div class="p-6 glass-panel border-none space-y-4">
+<p class="font-lora text-stone-300 italic leading-relaxed">
+                                    The foundation of all modern arcana. Within these pages lies the mathematical proof for the crystallization of grace. 
+                                </p>
+<div class="flex gap-2">
+<span class="font-label text-[10px] tracking-[0.2em] px-2 py-1 bg-stone-800 text-stone-400">ARTIFACT_ID: #8892</span>
+<span class="font-label text-[10px] tracking-[0.2em] px-2 py-1 bg-stone-800 text-stone-400">RARITY: LEGENDARY</span>
+</div>
+</div>
+</div>
+<!-- Closed Accordion 2 -->
+<div class="group">
+<div class="bg-[#1b1b1d] border-l-2 border-transparent hover:border-primary/50 transition-all px-6 py-4 flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-stone-500 group-hover:text-primary transition-colors">shield_with_heart</span>
+<h3 class="font-headline italic text-lg text-stone-400 group-hover:text-primary transition-colors">Fragment of the Shattered Wall</h3>
+</div>
+<span class="material-symbols-outlined text-stone-600">add</span>
+</div>
+<div class="h-[1px] w-full bg-stone-800/50 relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-2/3 rune-gradient opacity-50"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Background Decoration / Artifact Feel -->
+<div class="fixed bottom-12 right-12 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[300px] text-primary" style="font-variation-settings: 'FILL' 0, 'wght' 100;">temple_hindu</span>
+</div>
+</body></html>

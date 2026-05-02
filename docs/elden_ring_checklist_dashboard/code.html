@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600&amp;family=Space_Grotesk:wght@300;400;700&amp;family=Cinzel:wght@400;700;900&amp;family=Lora:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#484740",
+                    "outline-variant": "#4d4635",
+                    "tertiary-container": "#b6b3ab",
+                    "surface-container": "#201f21",
+                    "secondary-container": "#494740",
+                    "on-primary-fixed-variant": "#5d4201",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#0e0e10",
+                    "inverse-surface": "#e5e1e4",
+                    "surface-container-low": "#1b1b1d",
+                    "error-container": "#93000a",
+                    "on-background": "#e5e1e4",
+                    "secondary-fixed": "#e7e2d9",
+                    "on-error": "#690005",
+                    "on-primary": "#412d00",
+                    "surface": "#131315",
+                    "surface-variant": "#353437",
+                    "surface-tint": "#f1c97d",
+                    "surface-container-highest": "#353434",
+                    "tertiary-fixed-dim": "#cac6be",
+                    "background": "#131315",
+                    "primary-fixed-dim": "#e9c176",
+                    "primary-fixed": "#ffdea5",
+                    "surface-dim": "#131315",
+                    "on-primary-fixed": "#261900",
+                    "on-secondary-fixed": "#1d1c16",
+                    "surface-container-high": "#2a2a2c",
+                    "inverse-on-surface": "#313032",
+                    "secondary": "#cbc6be",
+                    "tertiary-fixed": "#e6e2d9",
+                    "on-primary-container": "#5b4000",
+                    "on-tertiary-fixed": "#1c1c16",
+                    "surface-bright": "#39393b",
+                    "inverse-primary": "#775a19",
+                    "on-surface-variant": "#d0c5af",
+                    "on-tertiary-container": "#47453f",
+                    "on-secondary-fixed-variant": "#494740",
+                    "primary-container": "#d4ad65",
+                    "on-secondary": "#32302b",
+                    "secondary-fixed-dim": "#cbc6be",
+                    "on-tertiary": "#32302a",
+                    "on-error-container": "#ffdad6",
+                    "tertiary": "#d2cec6",
+                    "outline": "#99907c",
+                    "on-secondary-container": "#b9b5ac",
+                    "on-surface": "#e5e1e4",
+                    "primary": "#f1c97d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Space Grotesk"],
+                    "cinzel": ["Cinzel"],
+                    "lora": ["Lora"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .grace-glow {
+            text-shadow: 0 0 15px rgba(241, 201, 125, 0.5);
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(19, 19, 21, 0.6);
+            border: 1px solid rgba(241, 201, 125, 0.1);
+        }
+        .void-gradient {
+            background: radial-gradient(circle at top, #353434 0%, #131315 70%, #0e0e10 100%);
+        }
+        .rune-border {
+            border-image: linear-gradient(to right, transparent, #f1c97d, transparent) 1;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary selection:text-on-primary-fixed-variant overflow-x-hidden min-h-screen void-gradient">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 bg-[#131315] shadow-[0_0_20px_rgba(241,201,125,0.15)]">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold text-[#f1c97d] tracking-tighter font-headline">Gilded Reliquary</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-['Noto_Serif'] tracking-widest uppercase text-xs text-[#353434] hover:text-[#f1c97d] transition-colors" href="#">Inventory</a>
+<a class="font-['Noto_Serif'] tracking-widest uppercase text-xs text-[#f1c97d] border-b-2 border-[#f1c97d] pb-1" href="#">Checklist</a>
+<a class="font-['Noto_Serif'] tracking-widest uppercase text-xs text-[#353434] hover:text-[#f1c97d] transition-colors" href="#">Map</a>
+<a class="font-['Noto_Serif'] tracking-widest uppercase text-xs text-[#353434] hover:text-[#f1c97d] transition-colors" href="#">Grace</a>
+</nav>
+<div class="flex items-center gap-6 text-[#f1c97d]">
+<span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" data-icon="account_circle">account_circle</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-110 transition-transform" data-icon="settings">settings</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full bg-gradient-to-b from-[#353434] to-transparent h-[2px]"></div>
+</header>
+<!-- Sidebar -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-5rem)] flex flex-col py-6 overflow-y-auto border-r border-[#353434]/30 w-64 bg-[#0e0e10] hidden lg:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 bg-surface-container-highest border border-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+</div>
+<div>
+<h3 class="text-xs font-headline font-bold text-primary">The Sovereign Archive</h3>
+<p class="text-[10px] font-label tracking-widest opacity-60">Level 150 - Elden Lord</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="px-6 py-3 cursor-pointer transition-transform duration-300 hover:text-[#f1c97d] hover:bg-[#353434]/20 flex items-center gap-4 text-[#353434] opacity-70 font-label text-[10px] tracking-[0.5em] uppercase">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+<span>Equipment</span>
+</div>
+<div class="px-6 py-3 cursor-pointer transition-transform duration-300 hover:text-[#f1c97d] hover:bg-[#353434]/20 flex items-center gap-4 text-[#353434] opacity-70 font-label text-[10px] tracking-[0.5em] uppercase">
+<span class="material-symbols-outlined" data-icon="magic_button">magic_button</span>
+<span>Magic</span>
+</div>
+<div class="px-6 py-3 cursor-pointer transition-transform duration-300 hover:text-[#f1c97d] hover:bg-[#353434]/20 flex items-center gap-4 text-[#353434] opacity-70 font-label text-[10px] tracking-[0.5em] uppercase">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+<span>Materials</span>
+</div>
+<div class="px-6 py-3 cursor-pointer transition-transform duration-300 text-[#f1c97d] bg-[#353434]/40 border-l-4 border-[#f1c97d] font-bold flex items-center gap-4 font-label text-[10px] tracking-[0.5em] uppercase">
+<span class="material-symbols-outlined" data-icon="vpn_key">vpn_key</span>
+<span>Key Items</span>
+</div>
+<div class="px-6 py-3 cursor-pointer transition-transform duration-300 hover:text-[#f1c97d] hover:bg-[#353434]/20 flex items-center gap-4 text-[#353434] opacity-70 font-label text-[10px] tracking-[0.5em] uppercase">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span>Info</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="pt-32 pb-20 px-8 lg:ml-64 flex flex-col items-center max-w-6xl mx-auto">
+<!-- Hero Header -->
+<div class="text-center mb-16 space-y-4">
+<h1 class="text-5xl md:text-6xl font-cinzel text-primary font-bold grace-glow tracking-tight uppercase">Elden Ring Automatic Checklist</h1>
+<div class="max-w-2xl mx-auto">
+<p class="font-lora text-on-surface-variant text-lg italic leading-relaxed">
+                    Ascend to your throne with absolute clarity. Upload your <span class="text-primary/80">.sl2 save file</span> to instantly cross-reference your progress against the vast treasures of the Lands Between.
+                </p>
+</div>
+</div>
+<!-- Upload Zone -->
+<section class="w-full max-w-3xl mb-16">
+<div class="group relative p-12 border-2 border-dashed border-primary/30 bg-surface/40 hover:bg-surface/60 transition-all duration-500 flex flex-col items-center justify-center space-y-4 cursor-pointer">
+<div class="absolute inset-0 opacity-0 group-hover:opacity-10 shadow-[0_0_40px_rgba(241,201,125,0.4)] transition-opacity"></div>
+<span class="material-symbols-outlined text-5xl text-primary grace-glow" data-icon="upload_file">upload_file</span>
+<div class="text-center">
+<p class="font-cinzel text-xl text-primary tracking-widest uppercase mb-2">Drop your .sl2 save file here</p>
+<p class="font-label text-[10px] tracking-[0.3em] uppercase opacity-50">Local analysis • No data leaves your machine</p>
+</div>
+</div>
+</section>
+<!-- Tabs -->
+<div class="w-full flex justify-center gap-12 mb-12 border-b border-surface-container-highest/50">
+<button class="relative pb-4 group">
+<span class="font-cinzel text-lg tracking-widest uppercase text-primary grace-glow">Missing Items</span>
+<div class="absolute bottom-0 left-0 w-full h-[2px] bg-primary shadow-[0_0_10px_#f1c97d]"></div>
+</button>
+<button class="relative pb-4 group opacity-40 hover:opacity-100 transition-opacity">
+<span class="font-cinzel text-lg tracking-widest uppercase text-on-surface">Owned Items</span>
+<div class="absolute bottom-0 left-0 w-0 group-hover:w-full h-[2px] bg-primary/50 transition-all duration-300"></div>
+</button>
+</div>
+<!-- Inventory Accordions -->
+<div class="w-full space-y-4">
+<!-- Weapons Accordion -->
+<div class="glass-panel overflow-hidden">
+<div class="flex items-center justify-between p-6 cursor-pointer group hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-primary/70" data-icon="swords">swords</span>
+<div>
+<h3 class="font-cinzel text-xl text-primary tracking-wide">Weapons</h3>
+<p class="font-lora text-sm italic opacity-60">Hand-held instruments of destruction</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-right">
+<span class="font-label text-[10px] tracking-widest uppercase block opacity-40 mb-1">Completion</span>
+<span class="font-headline font-bold text-primary">178 / 377</span>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Progress Line -->
+<div class="w-full h-[1px] bg-surface-container-highest">
+<div class="h-full bg-primary shadow-[0_0_8px_#f1c97d]" style="width: 47%"></div>
+</div>
+</div>
+<!-- Armor Accordion -->
+<div class="glass-panel overflow-hidden">
+<div class="flex items-center justify-between p-6 cursor-pointer group hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-primary/70" data-icon="shield_person">shield_person</span>
+<div>
+<h3 class="font-cinzel text-xl text-primary tracking-wide">Armor</h3>
+<p class="font-lora text-sm italic opacity-60">Tarnished steel and royal silk</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-right">
+<span class="font-label text-[10px] tracking-widest uppercase block opacity-40 mb-1">Completion</span>
+<span class="font-headline font-bold text-primary">50 / 100</span>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="w-full h-[1px] bg-surface-container-highest">
+<div class="h-full bg-primary shadow-[0_0_8px_#f1c97d]" style="width: 50%"></div>
+</div>
+</div>
+<!-- Talismans Accordion -->
+<div class="glass-panel overflow-hidden">
+<div class="flex items-center justify-between p-6 cursor-pointer group hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-primary/70" data-icon="brightness_7">brightness_7</span>
+<div>
+<h3 class="font-cinzel text-xl text-primary tracking-wide">Talismans</h3>
+<p class="font-lora text-sm italic opacity-60">Sacred trinkets blessed by the Erdtree</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-right">
+<span class="font-label text-[10px] tracking-widest uppercase block opacity-40 mb-1">Completion</span>
+<span class="font-headline font-bold text-primary">32 / 84</span>
+</div>
+<span class="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="w-full h-[1px] bg-surface-container-highest">
+<div class="h-full bg-primary shadow-[0_0_8px_#f1c97d]" style="width: 38%"></div>
+</div>
+</div>
+</div>
+<!-- Asymmetric Detail Section -->
+<section class="mt-24 grid grid-cols-1 md:grid-cols-2 gap-12 w-full">
+<div class="space-y-6">
+<h4 class="font-cinzel text-2xl text-primary uppercase tracking-widest">The Archive's Wisdom</h4>
+<div class="w-12 h-1 bg-primary"></div>
+<p class="font-lora text-on-surface-variant leading-relaxed">
+                    Every item in your inventory is a fragment of history. The Archive doesn't just track your items; it maps your legend across the fog-shrouded history of the Lands Between. Ensure no stone remains unturned, and no boss remains unchallenged.
+                </p>
+<div class="flex gap-4">
+<div class="px-6 py-3 bg-primary/10 border border-primary/30 font-label text-[10px] tracking-widest uppercase text-primary hover:bg-primary/20 transition-all cursor-pointer">
+                        Export Report
+                    </div>
+<div class="px-6 py-3 border border-surface-container-highest font-label text-[10px] tracking-widest uppercase text-on-surface/60 hover:text-on-surface transition-all cursor-pointer">
+                        View Map Locations
+                    </div>
+</div>
+</div>
+<div class="relative h-64 md:h-auto overflow-hidden border border-primary/10 group">
+<img alt="Elden Ring inspired dark fantasy architectural landscape" class="w-full h-full object-cover grayscale opacity-50 group-hover:scale-105 transition-transform duration-1000" data-alt="atmospheric cinematic shot of a gothic cathedral silhouette against a dark starry sky with golden embers floating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUr7ncY3_6Epoji5sXUuXY-QBOaQTxxcdwuIDLhZ5QUc6kFrJn-JsUwlGn2wdE2Ks9xttgaNqH0b9J9WisLUWOlApS6CJkjZY0lerk3K2YhqX1Op1KXe-pdF5__r5BhD9AxiPaWgyPpmWsYa1AS51fYyFBifOdSCOEHBsx_agqaKKojwXXPsVPmwKR7IeIXFYMwJpLnluzyPPks1ks36cs6_yk7PfSn4n1aAeJa0Kc_T9tsuNem2eWWwoVXy1tIWKjXgU8kJkj8uM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-6 left-6">
+<span class="font-label text-[10px] tracking-[0.5em] uppercase text-primary">Restored Archives</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Decoration -->
+<footer class="mt-20 py-12 border-t border-surface-container-highest flex flex-col items-center space-y-6">
+<div class="w-1 bg-primary/20 h-24"></div>
+<p class="font-cinzel text-[10px] tracking-[0.8em] uppercase opacity-30">May Grace Guide Thee</p>
+</footer>
+</body></html>
