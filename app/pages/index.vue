@@ -70,45 +70,27 @@ function handleFileInput(e: Event) {
 
     <!-- ── Upload Zone ──────────────────────────────────────────────────────── -->
     <section class="checklist-page__upload">
-      <label
-        class="upload-zone"
-        :class="{ 'upload-zone--dragging': isDragging }"
-        for="save-file-input"
-        @dragover="handleDragOver"
-        @dragleave="handleDragLeave"
-        @drop="handleDrop"
-      >
+      <label class="upload-zone" :class="{ 'upload-zone--dragging': isDragging }" for="save-file-input"
+        @dragover="handleDragOver" @dragleave="handleDragLeave" @drop="handleDrop">
         <div class="upload-zone__glow" />
-        <span class="material-symbols-outlined upload-zone__icon grace-glow">upload_file</span>
+        <Icon name="material-symbols:upload-file-outline" class="upload-zone__icon grace-glow" size="48" />
         <div class="upload-zone__copy">
           <p class="upload-zone__cta">Drop your .sl2 save file here</p>
           <p class="upload-zone__disclaimer">Local analysis · No data leaves your machine</p>
         </div>
-        <input
-          id="save-file-input"
-          type="file"
-          accept=".sl2"
-          class="upload-zone__input"
-          @change="handleFileInput"
-        >
+        <input id="save-file-input" type="file" accept=".sl2" class="upload-zone__input" @change="handleFileInput">
       </label>
     </section>
 
     <!-- ── Tabs ─────────────────────────────────────────────────────────────── -->
     <div class="checklist-page__tabs">
-      <button
-        class="checklist-tab"
-        :class="{ 'checklist-tab--active': activeTab === 'missing' }"
-        @click="activeTab = 'missing'"
-      >
+      <button class="checklist-tab" :class="{ 'checklist-tab--active': activeTab === 'missing' }"
+        @click="activeTab = 'missing'">
         <span class="checklist-tab__label">Missing Items</span>
         <div class="checklist-tab__bar" />
       </button>
-      <button
-        class="checklist-tab"
-        :class="{ 'checklist-tab--active': activeTab === 'owned' }"
-        @click="activeTab = 'owned'"
-      >
+      <button class="checklist-tab" :class="{ 'checklist-tab--active': activeTab === 'owned' }"
+        @click="activeTab = 'owned'">
         <span class="checklist-tab__label">Owned Items</span>
         <div class="checklist-tab__bar" />
       </button>
@@ -116,15 +98,8 @@ function handleFileInput(e: Event) {
 
     <!-- ── Inventory Accordions ──────────────────────────────────────────────── -->
     <section class="checklist-page__inventory" aria-label="Inventory categories">
-      <WikiReliquarySlot
-        v-for="cat in categories"
-        :key="cat.title"
-        :icon="cat.icon"
-        :title="cat.title"
-        :lore="cat.lore"
-        :owned="cat.owned"
-        :total="cat.total"
-      />
+      <WikiReliquarySlot v-for="cat in categories" :key="cat.title" :icon="cat.icon" :title="cat.title" :lore="cat.lore"
+        :owned="cat.owned" :total="cat.total" />
     </section>
 
     <!-- ── Archive Wisdom (asymmetric detail section) ─────────────────────── -->
@@ -146,12 +121,8 @@ function handleFileInput(e: Event) {
       <div class="wisdom-image">
         <NuxtImg
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUr7ncY3_6Epoji5sXUuXY-QBOaQTxxcdwuIDLhZ5QUc6kFrJn-JsUwlGn2wdE2Ks9xttgaNqH0b9J9WisLUWOlApS6CJkjZY0lerk3K2YhqX1Op1KXe-pdF5__r5BhD9AxiPaWgyPpmWsYa1AS51fYyFBifOdSCOEHBsx_agqaKKojwXXPsVPmwKR7IeIXFYMwJpLnluzyPPks1ks36cs6_yk7PfSn4n1aAeJa0Kc_T9tsuNem2eWWwoVXy1tIWKjXgU8kJkj8uM"
-          alt="Atmospheric dark fantasy architectural landscape — Restored Archives"
-          format="webp"
-          width="600"
-          height="400"
-          class="wisdom-image__img"
-        />
+          alt="Atmospheric dark fantasy architectural landscape — Restored Archives" format="webp" width="600"
+          height="400" class="wisdom-image__img" />
         <div class="wisdom-image__overlay" />
         <span class="wisdom-image__caption">Restored Archives</span>
       </div>
@@ -164,4 +135,3 @@ function handleFileInput(e: Event) {
     </footer>
   </div>
 </template>
-

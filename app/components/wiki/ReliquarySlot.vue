@@ -22,18 +22,11 @@ function toggle() {
 <template>
   <div class="reliquary-slot" :class="{ 'reliquary-slot--open': isOpen }">
     <!-- Accordion Header -->
-    <div
-      class="reliquary-slot__header"
-      role="button"
-      :tabindex="0"
-      :aria-expanded="isOpen"
-      :aria-label="`${title} — ${owned} of ${total} collected`"
-      @click="toggle"
-      @keydown.enter="toggle"
-      @keydown.space.prevent="toggle"
-    >
+    <div class="reliquary-slot__header" role="button" :tabindex="0" :aria-expanded="isOpen"
+      :aria-label="`${title} — ${owned} of ${total} collected`" @click="toggle" @keydown.enter="toggle"
+      @keydown.space.prevent="toggle">
       <div class="reliquary-slot__info">
-        <span class="material-symbols-outlined reliquary-slot__icon">{{ icon }}</span>
+        <Icon :name="`material-symbols:${icon.replace(/_/g, '-')}-outline`" class="reliquary-slot__icon" size="24" />
         <div class="reliquary-slot__text">
           <h3 class="reliquary-slot__title">{{ title }}</h3>
           <p class="reliquary-slot__lore">{{ lore }}</p>
@@ -45,33 +38,29 @@ function toggle() {
           <span class="reliquary-slot__count-label">Completion</span>
           <span class="reliquary-slot__count-value">{{ owned }} / {{ total }}</span>
         </div>
-        <span
-          class="material-symbols-outlined reliquary-slot__chevron"
+        <Icon
+          name="material-symbols:expand-more"
+          class="reliquary-slot__chevron"
           aria-hidden="true"
-        >
-          expand_more
-        </span>
+          size="20"
+        />
       </div>
     </div>
 
     <!-- Progress Line (1px, Rune Gradient) -->
     <div class="reliquary-slot__progress-track">
-      <div
-        class="reliquary-slot__progress-fill"
-        :style="{ width: `${progress}%` }"
-      />
+      <div class="reliquary-slot__progress-fill" :style="{ width: `${progress}%` }" />
     </div>
 
     <!-- Expanded content slot -->
-    <Transition name="slot-expand">
-      <div v-if="isOpen" class="reliquary-slot__body">
+    <div class="reliquary-slot__body-wrapper" :class="{ 'reliquary-slot__body-wrapper--open': isOpen }">
+      <div class="reliquary-slot__body">
         <slot>
           <p class="reliquary-slot__empty">
             Upload your <em>.sl2</em> save file to populate this category.
           </p>
         </slot>
       </div>
-    </Transition>
+    </div>
   </div>
 </template>
-

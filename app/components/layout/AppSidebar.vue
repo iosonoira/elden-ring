@@ -19,7 +19,7 @@ const items: SidebarItem[] = [
     <!-- User profile card -->
     <div class="app-sidebar__profile">
       <div class="app-sidebar__avatar">
-        <span class="material-symbols-outlined">person</span>
+        <Icon name="material-symbols:person-outline" size="24" />
       </div>
       <div class="app-sidebar__identity">
         <h3 class="app-sidebar__username">The Sovereign Archive</h3>
@@ -38,10 +38,10 @@ const items: SidebarItem[] = [
         :tabindex="0"
         :aria-label="item.label"
       >
-        <span class="material-symbols-outlined app-sidebar__item-icon">{{ item.icon }}</span>
+        <Icon :name="`material-symbols:${item.icon.replace(/_/g, '-')}-outline`" class="app-sidebar__item-icon" size="20" />
         <span class="app-sidebar__item-label">{{ item.label }}</span>
       </div>
     </nav>
+
   </aside>
 </template>
-

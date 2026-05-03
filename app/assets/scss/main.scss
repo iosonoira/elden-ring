@@ -17,6 +17,7 @@
 // 4. Layout (header, footer, navigation, grid, etc handled in Vue for Nuxt, but keeping structure ready)
 @use 'layout/app-header';
 @use 'layout/app-sidebar';
+@use 'layout/mobile-menu';
 @use 'layout/default';
 
 // 5. Components (buttons, cards, etc)

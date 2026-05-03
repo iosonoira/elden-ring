@@ -1,0 +1,141 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: $z-overlay;
+  display: flex;
+  justify-content: flex-end;
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba($color-surface, 0.8);
+    backdrop-filter: blur(8px);
+  }
+
+  &__panel {
+    position: relative;
+    width: 85%;
+    max-width: 320px;
+    height: 100%;
+    background: $color-surface-lowest;
+    display: flex;
+    flex-direction: column;
+    @include gold-glow-box(0.1);
+    border-left: 1px solid rgba($color-primary, 0.2);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-6 $space-6;
+    border-bottom: 1px solid rgba($color-surface-container-highest, 0.4);
+  }
+
+  &__close {
+    color: $color-primary;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-8 $space-6;
+    display: flex;
+    flex-direction: column;
+    gap: $space-10;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__label {
+    @include label-style;
+    opacity: 0.4;
+    letter-spacing: 0.3em;
+    font-size: 0.625rem;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  &__link {
+    font-family: $font-cinzel;
+    font-size: 1.25rem;
+    color: $color-on-surface;
+    text-decoration: none;
+    padding: $space-2 0;
+    transition: color $transition-base;
+
+    &--active {
+      color: $color-primary;
+      @include gold-glow-text;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-4;
+  }
+
+  &__icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2;
+    padding: $space-4;
+    background: rgba($color-surface-container-highest, 0.2);
+    border: 1px solid rgba($color-surface-container-highest, 0.4);
+    border-radius: $radius-sm;
+    color: $color-on-surface;
+    font-family: $font-label;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    text-align: center;
+    transition: all $transition-base;
+
+    &--active {
+      background: rgba($color-primary, 0.05);
+      border-color: rgba($color-primary, 0.4);
+      color: $color-primary;
+    }
+  }
+
+  &__footer {
+    padding: $space-8;
+    text-align: center;
+    border-top: 1px solid rgba($color-surface-container-highest, 0.4);
+  }
+}
+
+// ── Transitions ───────────────────────────────────────────────────────────────
+.mobile-fade-enter-active,
+.mobile-fade-leave-active {
+  transition: opacity 0.4s ease;
+
+  .mobile-menu__panel {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+.mobile-fade-enter-from,
+.mobile-fade-leave-to {
+  opacity: 0;
+
+  .mobile-menu__panel {
+    transform: translateX(100%);
+  }
+}

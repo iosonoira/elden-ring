@@ -12,6 +12,20 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n'
   ],
 
+  fonts: {
+    defaults: {
+      weights: [300, 400, 500, 600, 700, 900],
+      styles: ['normal', 'italic'],
+    },
+    families: [
+      { name: 'Cinzel', provider: 'google', weights: [400, 700, 900] },
+      { name: 'Noto Serif', provider: 'google', weights: [400, 700], styles: ['normal', 'italic'] },
+      { name: 'Lora', provider: 'google', weights: [400, 500], styles: ['normal', 'italic'] },
+      { name: 'Manrope', provider: 'google', weights: [300, 400, 600] },
+      { name: 'Space Grotesk', provider: 'google', weights: [300, 400, 700] }
+    ],
+  },
+
   // Global SCSS: variabili e mixin disponibili in ogni componente scoped
   css: ['~/assets/scss/main.scss'],
 

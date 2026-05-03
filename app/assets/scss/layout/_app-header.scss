@@ -21,6 +21,21 @@
     gap: $space-4;
   }
 
+  &__hamburger {
+    display: flex;
+    align-items: center;
+    color: $color-primary;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $space-2;
+    margin-left: -$space-2;
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
+  }
+
   &__logo {
     font-family: $font-headline;
     font-size: 1.5rem;
@@ -34,7 +49,7 @@
     gap: $space-8;
     align-items: center;
 
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
       display: flex;
     }
   }
