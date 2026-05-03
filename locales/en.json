@@ -29,5 +29,20 @@
     "footer": {
       "motto": "May Grace Guide Thee"
     }
+  },
+  "wiki": {
+    "page": {
+      "titleFallback": "Wiki | Gilded Reliquary",
+      "descFallback": "Discover the secrets of the Lands Between."
+    },
+    "error": {
+      "title": "Fragment Not Found",
+      "message": "The search in the sacred archive yielded no results."
+    },
+    "label": {
+      "location": "Location",
+      "quote": "Ancient Quote",
+      "weight": "Weight"
+    }
   }
 }

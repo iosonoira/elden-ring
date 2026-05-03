@@ -29,5 +29,20 @@
     "footer": {
       "motto": "La Grazia ti guidi"
     }
+  },
+  "wiki": {
+    "page": {
+      "titleFallback": "Wiki | Gilded Reliquary",
+      "descFallback": "Scopri i segreti delle Terre di Mezzo."
+    },
+    "error": {
+      "title": "Frammento non trovato",
+      "message": "La ricerca nell'archivio sacro non ha prodotto risultati."
+    },
+    "label": {
+      "location": "Luogo Certo",
+      "quote": "Citazione Antica",
+      "weight": "Peso"
+    }
   }
 }

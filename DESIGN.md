@@ -68,3 +68,16 @@ Elevation is communicated through light and transparency rather than literal sha
 - **No Rounded Corners:** Avoid pill-shaped buttons or high-radius cards. Keep `roundedness` at 1 (max 2-4px) to preserve a sharp, architectural feel.
 - **No Flat Grays:** Every neutral should have a slight warmth or "stone" undertone to avoid a "generic dark mode" look.
 - **No Standard Grids:** Break the horizontal flow with asymmetrical headers or overlapping image elements.
+
+### 7. Architectural Integrity & Separation of Concerns
+
+**1. SCSS Architecture (7-1 Pattern):**
+- The project strictly adheres to the SASS 7-1 pattern (https://sass-guidelin.es/#architecture).
+- **NEVER** write `<style>` or `<style scoped>` directly inside Vue components or pages.
+- All styles must be written in separate files inside `app/assets/scss/` (e.g., `components/`, `pages/`) and imported globally in `main.scss` or explicitly injected via build tools. Component/page files must remain devoid of embedded stylistic logic.
+
+**2. Data Flow & API Integrity (Nuxt 4 Directory Structure):**
+- We strictly follow the **Nuxt 4 Directory Structure** (https://nuxt.com/docs/4.x/directory-structure/): the Vue application lives entirely inside the `app/` directory, while server endpoints live in `server/`, and shared logic in `shared/`.
+- **NEVER** perform raw data fetching (e.g., `useFetch`, `$fetch`, `useAsyncData`) directly inside the `<script>` section of a `.vue` component.
+- All external API calls, complex state management, and side effects must be sequestered in dedicated composables (e.g., `app/composables/useEldenRingApi.ts`), utilities (`app/utils/`), or Pinia stores.
+- A Vue component's script section is reserved *only* for wiring up the view layer — reading from composables, invoking actions, and reacting to computed state.
