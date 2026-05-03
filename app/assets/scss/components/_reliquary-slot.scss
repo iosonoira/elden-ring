@@ -1,0 +1,145 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.reliquary-slot {
+  @include glass-panel;
+  overflow: hidden;
+  border-radius: $radius-sm;
+  transition: box-shadow $transition-base;
+
+  &:hover,
+  &--open {
+    @include gold-glow-box(0.08);
+  }
+
+  // ── Header ────────────────────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-6;
+    cursor: pointer;
+    transition: background $transition-base;
+
+    &:hover {
+      background: rgba($color-primary, 0.05);
+    }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: $space-6;
+  }
+
+  &__icon {
+    color: rgba($color-primary, 0.7);
+    font-size: 1.5rem;
+    transition: color $transition-base;
+
+    .reliquary-slot__header:hover & {
+      color: $color-primary;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  &__title {
+    font-family: $font-cinzel;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: $color-primary;
+    letter-spacing: 0.05em;
+  }
+
+  &__lore {
+    @include lore-text;
+    font-size: 0.875rem;
+    color: $color-on-surface;
+    opacity: 0.6;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: $space-8;
+  }
+
+  &__count {
+    text-align: right;
+  }
+
+  &__count-label {
+    @include label-style;
+    display: block;
+    opacity: 0.4;
+    margin-bottom: $space-1;
+  }
+
+  &__count-value {
+    font-family: $font-headline;
+    font-weight: 700;
+    font-size: 1rem;
+    color: $color-primary;
+  }
+
+  &__chevron {
+    color: rgba($color-primary, 0.4);
+    transition: transform $transition-base, color $transition-base;
+
+    .reliquary-slot--open & {
+      transform: rotate(180deg);
+      color: $color-primary;
+    }
+
+    .reliquary-slot__header:hover & {
+      color: $color-primary;
+    }
+  }
+
+  // ── Progress Line ──────────────────────────────────────────────────────────
+  &__progress-track {
+    width: 100%;
+    height: 1px;
+    background: $color-surface-container-highest;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background: $color-primary;
+    box-shadow: 0 0 8px $color-primary;
+    transition: width $transition-slow;
+  }
+
+  // ── Body (expanded content) ────────────────────────────────────────────────
+  &__body {
+    padding: $space-6;
+    border-top: 1px solid rgba($color-surface-container-highest, 0.4);
+  }
+
+  &__empty {
+    @include lore-text;
+    color: $color-on-surface-variant;
+    opacity: 0.7;
+    text-align: center;
+    padding: $space-4 0;
+  }
+}
+
+// ── Transition ────────────────────────────────────────────────────────────────
+.slot-expand-enter-active,
+.slot-expand-leave-active {
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  overflow: hidden;
+  max-height: 400px;
+}
+
+.slot-expand-enter-from,
+.slot-expand-leave-to {
+  max-height: 0;
+  opacity: 0;
+}

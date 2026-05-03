@@ -1,0 +1,16 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+body {
+  @include void-gradient;
+}
+
+// --- Utility: Grace Glow Text ---
+.grace-glow {
+  @include gold-glow-text;
+}
+
+// --- Utility: Glass Panel ---
+.glass-panel {
+  @include glass-panel;
+}

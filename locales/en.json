@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "button": {
+      "export": "Export Report",
+      "map": "View Map Locations"
+    }
+  },
+  "checklist": {
+    "hero": {
+      "title": "Elden Ring Automatic Checklist",
+      "lede": "Ascend to your throne with absolute clarity. Upload your {file} to instantly cross-reference your progress against the vast treasures of the Lands Between."
+    },
+    "upload": {
+      "cta": "Drop your .sl2 save file here",
+      "disclaimer": "Local analysis · No data leaves your machine"
+    },
+    "tab": {
+      "missing": "Missing Items",
+      "owned": "Owned Items"
+    },
+    "category": {
+      "completion": "Completion"
+    },
+    "wisdom": {
+      "title": "The Archive's Wisdom",
+      "body": "Every item in your inventory is a fragment of history. The Archive doesn't just track your items; it maps your legend across the fog-shrouded history of the Lands Between. Ensure no stone remains unturned, and no boss remains unchallenged.",
+      "caption": "Restored Archives"
+    },
+    "footer": {
+      "motto": "May Grace Guide Thee"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+// =============================================================================
+// Gilded Reliquary — Main SCSS file (7-1 Pattern)
+// =============================================================================
+
+// 1. Abstracts (variables, functions, mixins)
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+
+// 2. Vendors (normalize, grid, bootstrap if any)
+// @use 'vendors/...';
+
+// 3. Base (reset, typography, utilities/base)
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/utilities';
+
+// 4. Layout (header, footer, navigation, grid, etc handled in Vue for Nuxt, but keeping structure ready)
+@use 'layout/app-header';
+@use 'layout/app-sidebar';
+@use 'layout/default';
+
+// 5. Components (buttons, cards, etc)
+@use 'components/reliquary-slot';
+
+// 6. Pages (home, about specific styles)
+@use 'pages/home';
+
+// 7. Themes (admin, default)
+// @use 'themes/...';

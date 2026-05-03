@@ -20,19 +20,22 @@ The palette is built on a foundation of obsidian and stone, punctuated by "Rune 
 
 ### 3. Typography
 
-The system employs a tri-font strategy to balance elegance with technical precision.
+The system employs a **penta-font strategy** to balance elegance, fantasy gravitas, and technical precision.
 
-- **Display & Headlines (Noto Serif):** Used for titles and key brand moments. It conveys a sense of history and gravitas.
-- **Body (Manrope):** A clean, modern sans-serif that ensures legibility for descriptions and long-form data.
-- **Labels (Space Grotesk):** A monospaced-adjacent sans-serif used for metadata, status tags, and technical specs.
+- **Hero Display (Cinzel):** Used exclusively for top-level hero headlines, page titles, and primary CTAs. Its engraved, lapidary quality evokes stone inscriptions and ancient authority.
+- **Editorial Headlines (Noto Serif):** Used for section headers, card titles, and key brand moments. It conveys a sense of manuscript history and gravitas. Use `italic` variant for brand-specific terminology.
+- **Lore Body (Lora):** An italic-first serif used for descriptive, atmospheric, and lore text — item descriptions, flavor copy, in-world writing. Always in `italic`.
+- **UI Body (Manrope):** A clean, modern sans-serif for legible UI descriptions, stat blocks, and long-form data.
+- **Labels (Space Grotesk):** A monospaced-adjacent sans-serif for metadata, status tags, technical specs, and all uppercase utility labels.
 
 **Typographic Scale (Ground Truth):**
 
-- **Hero Headline:** 3.75rem (60px) – Extreme scale for editorial impact.
-- **Section Header:** 2.25rem (36px).
-- **Sub-header:** 1.5rem (24px).
-- **Standard Body:** 0.875rem (14px).
-- **Utility Label:** 10px (0.625rem) – Set in uppercase with 0.5em letter spacing.
+- **Hero Headline (Cinzel):** 3.75rem (60px) – Extreme scale for editorial impact. Uppercase.
+- **Section Header (Noto Serif):** 2.25rem (36px). Italic for lore contexts.
+- **Sub-header (Noto Serif):** 1.5rem (24px).
+- **Lore Text (Lora italic):** 1rem–1.125rem – Reserved for in-world flavor copy and item descriptions.
+- **Standard Body (Manrope):** 0.875rem (14px).
+- **Utility Label (Space Grotesk):** 10px (0.625rem) – Uppercase with 0.5em letter spacing.
 
 ### 4. Elevation & Depth
 
@@ -53,7 +56,10 @@ Elevation is communicated through light and transparency rather than literal sha
 
 **Do:**
 
-- Use `italic` Noto Serif for brand-specific terminology to add character.
+- Use **Cinzel** for hero-level page titles and primary CTAs — never for body or metadata.
+- Use `italic` **Noto Serif** for brand-specific section headers and key editorial moments.
+- Use `italic` **Lora** for all in-world lore, item descriptions, and atmospheric flavor text.
+- Use **Manrope** for all UI-facing body copy and stats.
 - Maintain generous whitespace (`spacing: 3`) to allow elements to "breathe" like artifacts in a museum.
 - Use uppercase labels for all metadata to create a "technical blueprint" feel.
 

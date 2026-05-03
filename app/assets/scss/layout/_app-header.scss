@@ -1,0 +1,87 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: $z-header;
+  height: $header-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $space-8;
+  background: $color-surface;
+  @include gold-glow-box(0.15);
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+  }
+
+  &__logo {
+    font-family: $font-headline;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-primary;
+    letter-spacing: -0.02em;
+  }
+
+  &__nav {
+    display: none;
+    gap: $space-8;
+    align-items: center;
+
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  }
+
+  &__nav-link {
+    font-family: $font-headline;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: $color-surface-container-highest;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    &--active {
+      color: $color-primary;
+      border-bottom: 2px solid $color-primary;
+      padding-bottom: $space-1;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $space-6;
+    color: $color-primary;
+  }
+
+  &__icon-btn {
+    display: flex;
+    align-items: center;
+    color: $color-primary;
+    transition: transform $transition-fast;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &__glow-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, $color-surface-container-highest, transparent);
+  }
+}

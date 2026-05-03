@@ -1,0 +1,15 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.default-layout {
+  min-height: 100vh;
+
+  &__main {
+    padding-top: $header-height;
+    padding-bottom: $space-24;
+
+    @media (min-width: 1024px) {
+      margin-left: $sidebar-width;
+    }
+  }
+}

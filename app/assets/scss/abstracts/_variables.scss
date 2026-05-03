@@ -1,0 +1,74 @@
+// =============================================================================
+// Gilded Reliquary — Design Tokens
+// Source of truth: DESIGN.md
+// =============================================================================
+
+// --- Colors ---
+$color-primary:                 #f1c97d;   // Rune Gold
+$color-primary-dim:             #e9c176;
+$color-primary-container:       #d4ad65;   // Rune Gradient end
+
+$color-surface-lowest:          #0e0e10;
+$color-surface:                 #131315;
+$color-surface-low:             #1b1b1d;
+$color-surface-container:       #201f21;
+$color-surface-container-high:  #2a2a2c;
+$color-surface-container-highest: #353434;
+$color-surface-bright:          #39393b;
+
+$color-on-surface:              #e5e1e4;
+$color-on-surface-variant:      #d0c5af;
+$color-outline:                 #99907c;
+$color-outline-variant:         #4d4635;
+
+$color-error:                   #ffb4ab;
+$color-error-container:         #93000a;
+
+// --- Typography ---
+$font-cinzel:       'Cinzel', serif;
+$font-headline:     'Noto Serif', serif;
+$font-lora:         'Lora', serif;
+$font-body:         'Manrope', sans-serif;
+$font-label:        'Space Grotesk', sans-serif;
+
+// --- Typographic Scale ---
+$text-hero:         3.75rem;  // 60px — Cinzel, uppercase
+$text-section:      2.25rem;  // 36px — Noto Serif
+$text-subheader:    1.5rem;   // 24px — Noto Serif
+$text-lore:         1rem;     // 16px — Lora italic
+$text-body:         0.875rem; // 14px — Manrope
+$text-label:        0.625rem; // 10px — Space Grotesk, uppercase
+
+// --- Spacing (base unit 8px) ---
+$space-1:  0.25rem;  // 4px
+$space-2:  0.5rem;   // 8px
+$space-3:  0.75rem;  // 12px
+$space-4:  1rem;     // 16px
+$space-5:  1.25rem;  // 20px
+$space-6:  1.5rem;   // 24px
+$space-8:  2rem;     // 32px
+$space-10: 2.5rem;   // 40px
+$space-12: 3rem;     // 48px
+$space-16: 4rem;     // 64px
+$space-24: 6rem;     // 96px
+
+// --- Border Radius (max 4px per DESIGN.md) ---
+$radius-default: 2px;
+$radius-sm:      1px;
+$radius-md:      4px;
+
+// --- Layout ---
+$sidebar-width:  16rem;   // 256px
+$header-height:  5rem;    // 80px
+$content-max-w:  72rem;   // 1152px
+
+// --- Z-index ---
+$z-header:  50;
+$z-sidebar: 40;
+$z-overlay: 30;
+
+// --- Transitions ---
+$transition-fast:   150ms ease;
+$transition-base:   300ms ease;
+$transition-slow:   500ms ease;
+$transition-crawl: 1000ms ease;

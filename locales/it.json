@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "button": {
+      "export": "Esporta Report",
+      "map": "Vedi Posizioni Mappa"
+    }
+  },
+  "checklist": {
+    "hero": {
+      "title": "Elden Ring Checklist Automatica",
+      "lede": "Ascendi al tuo trono con assoluta chiarezza. Carica il tuo {file} per confrontare istantaneamente i tuoi progressi con i vasti tesori delle Terre di Mezzo."
+    },
+    "upload": {
+      "cta": "Trascina qui il tuo file .sl2",
+      "disclaimer": "Analisi locale · Nessun dato lascia il tuo dispositivo"
+    },
+    "tab": {
+      "missing": "Oggetti Mancanti",
+      "owned": "Oggetti Posseduti"
+    },
+    "category": {
+      "completion": "Completamento"
+    },
+    "wisdom": {
+      "title": "La Saggezza dell'Archivio",
+      "body": "Ogni oggetto nel tuo inventario è un frammento di storia. L'Archivio non si limita a tracciare i tuoi oggetti; mappa la tua leggenda attraverso la storia avvolta nella nebbia delle Terre di Mezzo. Assicurati che nessuna pietra rimanga non sollevata, e nessun boss non affrontato.",
+      "caption": "Archivi Restaurati"
+    },
+    "footer": {
+      "motto": "La Grazia ti guidi"
+    }
+  }
+}

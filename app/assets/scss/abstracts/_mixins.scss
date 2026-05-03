@@ -1,0 +1,130 @@
+// =============================================================================
+// Gilded Reliquary — Mixins
+// =============================================================================
+@use 'variables' as *;
+
+// Glass panel: high-priority elevated cards
+@mixin glass-panel {
+  backdrop-filter: blur(20px);
+  background: rgba(19, 19, 21, 0.6);
+  border: 1px solid rgba(241, 201, 125, 0.1);
+}
+
+// Gold glow: text emission effect for hero/active elements
+@mixin gold-glow-text {
+  text-shadow: 0 0 15px rgba(241, 201, 125, 0.5);
+}
+
+// Ambient gold shadow for UI elements
+@mixin gold-glow-box($strength: 0.15) {
+  box-shadow: 0 0 20px rgba(241, 201, 125, $strength);
+}
+
+// Rune gradient: gold metallic gradient for CTAs
+@mixin rune-gradient {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-container 100%);
+}
+
+// Rune gradient border (image)
+@mixin rune-border-top {
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(to right, transparent, $color-primary, transparent) 1;
+}
+
+// Void gradient: background depth effect
+@mixin void-gradient {
+  background: radial-gradient(circle at top, $color-surface-container-highest 0%, $color-surface 70%, $color-surface-lowest 100%);
+}
+
+// Label style: uppercase metadata
+@mixin label-style {
+  font-family: $font-label;
+  font-size: $text-label;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+}
+
+// Cinzel title
+@mixin cinzel-hero {
+  font-family: $font-cinzel;
+  font-size: $text-hero;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+// Section header Noto Serif
+@mixin section-header {
+  font-family: $font-headline;
+  font-size: $text-section;
+  font-weight: 700;
+}
+
+// Lore italic copy
+@mixin lore-text {
+  font-family: $font-lora;
+  font-style: italic;
+  font-size: $text-lore;
+  line-height: 1.7;
+}
+
+// Progress bar thin glow
+@mixin progress-glow {
+  height: 1px;
+  background: $color-primary;
+  box-shadow: 0 0 8px $color-primary;
+}
+
+// Hover lift micro-animation
+@mixin hover-lift {
+  transition: transform $transition-base;
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Ghost button
+@mixin ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-3 $space-6;
+  border: 1px solid rgba($color-primary, 0.3);
+  background: rgba(169, 109, 23, 0.08); // amber-900/8
+  color: $color-primary;
+  font-family: $font-label;
+  font-size: $text-label;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  cursor: pointer;
+  transition: background $transition-base, border-color $transition-base;
+  border-radius: $radius-sm;
+
+  &:hover {
+    background: rgba($color-primary, 0.12);
+    border-color: rgba($color-primary, 0.5);
+  }
+}
+
+// Muted ghost button (secondary)
+@mixin muted-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-3 $space-6;
+  border: 1px solid $color-surface-container-highest;
+  background: transparent;
+  color: rgba($color-on-surface, 0.6);
+  font-family: $font-label;
+  font-size: $text-label;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  cursor: pointer;
+  transition: color $transition-base, border-color $transition-base;
+  border-radius: $radius-sm;
+
+  &:hover {
+    color: $color-on-surface;
+    border-color: $color-outline;
+  }
+}
