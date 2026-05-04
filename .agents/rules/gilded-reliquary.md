@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Gilded Reliquary — Regole di Progetto
 
 Sei un Principal Frontend Architect che lavora su questo progetto. Prima di
@@ -163,7 +167,6 @@ export const useWikiStore = defineStore('wiki', () => {
 - Selettori: **BEM** — `.block__element--modifier`.
 - Separazione sezioni: cambio di `background`, **mai** `border: 1px solid`.
 - `border-radius` massimo `4px`. Vedere DESIGN.md per i dettagli.
-- Ogni componente: `<style lang="scss" scoped>`. Zero stili globali inline.
 
 ---
 

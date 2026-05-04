@@ -1,0 +1,215 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.item-inspector {
+  @include glass-panel;
+  padding: $space-1;
+  position: relative;
+
+  &__loader-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    background: rgba($color-surface-container, 0.4);
+    backdrop-filter: blur(2px);
+  }
+  
+  &__content {
+    background: $color-surface-container;
+    border: 1px solid rgba($color-primary, 0.2);
+    padding: $space-6;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $space-6;
+  }
+
+  &__name {
+    @include section-header;
+    font-size: 1.5rem;
+    color: $color-primary;
+    margin-bottom: 2px;
+  }
+
+  &__class {
+    @include label-style;
+    font-size: 10px;
+    color: rgba($color-on-surface, 0.4);
+    letter-spacing: 0.2em;
+  }
+
+  &__star {
+    color: $color-primary;
+    filter: drop-shadow(0 0 10px $color-primary);
+  }
+
+  &__media {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: $color-surface-lowest;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: $space-8;
+    border: 1px solid rgba($color-outline-variant, 0.3);
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+  }
+
+  &__media-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  }
+
+  &__media-badge {
+    position: absolute;
+    bottom: $space-4;
+    left: $space-4;
+    background: rgba(0,0,0,0.6);
+    padding: $space-1 $space-3;
+    border: 1px solid rgba($color-primary, 0.2);
+    font-size: 9px;
+    color: $color-primary;
+    backdrop-filter: blur(4px);
+  }
+
+  &__stat-group {
+    margin-bottom: $space-8;
+  }
+
+  &__stat-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: $space-2;
+    border-bottom: 1px solid rgba($color-outline-variant, 0.3);
+    margin-bottom: $space-4;
+    
+    span {
+      color: rgba($color-on-surface, 0.4);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+    }
+
+    .color-primary {
+      color: $color-primary;
+    }
+  }
+
+  &__stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-2;
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding-right: $space-4;
+    }
+
+    .border-left {
+      border-left: 1px solid rgba($color-outline-variant, 0.2);
+      padding-left: $space-4;
+      padding-right: 0;
+    }
+
+    .stat-label {
+      color: rgba($color-on-surface, 0.5);
+      font-size: 12px;
+    }
+
+    .stat-value {
+      color: $color-on-surface;
+      font-family: $font-label;
+      font-size: 12px;
+    }
+  }
+
+  &__scaling-flex {
+    display: flex;
+    gap: $space-2;
+
+    .scaling-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: $space-2;
+      @include glass-panel;
+      border-color: rgba($color-outline-variant, 0.3);
+      
+      &--active {
+        border-color: rgba($color-primary, 0.3);
+        .scaling-value {
+          color: $color-primary;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .scaling-label {
+      font-size: 8px;
+      @include label-style;
+      color: rgba($color-on-surface, 0.4);
+      margin-bottom: 2px;
+    }
+
+    .scaling-value {
+      @include section-header;
+      font-size: 1.125rem;
+      color: $color-on-surface;
+    }
+  }
+
+  &__lore {
+    @include lore-text;
+    font-size: 13px;
+    color: rgba($color-on-surface, 0.7);
+    line-height: 1.6;
+  }
+
+  &__action {
+    width: 100%;
+    margin-top: $space-8;
+    padding: $space-4;
+    background: rgba($color-primary, 0.05);
+    border: 1px solid rgba($color-primary, 0.3);
+    color: $color-primary;
+    cursor: pointer;
+    transition: all $transition-base;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+
+    &:hover {
+      background: rgba($color-primary, 0.1);
+      border-color: $color-primary;
+    }
+
+    &--missing {
+      background: rgba($color-error, 0.05);
+      border-color: rgba($color-error, 0.3);
+      color: $color-error;
+      
+      &:hover {
+        background: rgba($color-error, 0.1);
+        border-color: $color-error;
+      }
+    }
+  }
+
+  &__placeholder {
+    padding: $space-12 0;
+    text-align: center;
+  }
+}

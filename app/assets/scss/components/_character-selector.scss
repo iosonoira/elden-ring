@@ -1,0 +1,122 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.character-selector {
+  @include glass-panel;
+  margin: $space-10 0;
+  padding: $space-8;
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-sm;
+
+  &__title {
+    @include section-header;
+    font-style: italic; // Editorial look
+    margin-bottom: $space-8;
+    color: $color-primary;
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba($color-primary, 0.2), transparent);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: $space-4;
+  }
+}
+
+.char-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: $space-6;
+  background: rgba($color-surface-lowest, 0.4);
+  border: 1px solid rgba($color-primary, 0.05);
+  text-align: left;
+  transition: all $transition-base;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: $radius-sm;
+
+  &__name {
+    font-family: $font-headline;
+    font-size: 1.25rem;
+    color: $color-on-surface;
+    margin-bottom: $space-1;
+    transition: color $transition-base;
+  }
+
+  &__meta {
+    @include label-style;
+    color: $color-on-surface-variant;
+    opacity: 0.5;
+    transition: opacity $transition-base;
+  }
+
+  &__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba($color-primary, 0.1) 0%, transparent 80%);
+    opacity: 0;
+    transition: opacity $transition-base;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: $color-primary;
+    transform: scaleY(0);
+    transition: transform $transition-base;
+    box-shadow: 0 0 10px $color-primary;
+  }
+
+  &:hover {
+    background: rgba($color-surface-container-highest, 0.3);
+    border-color: rgba($color-primary, 0.2);
+    transform: translateY(-2px);
+    
+    .char-btn__glow {
+      opacity: 1;
+    }
+
+    .char-btn__meta {
+      opacity: 0.8;
+    }
+  }
+
+  &--active {
+    background: rgba($color-primary, 0.05);
+    border-color: rgba($color-primary, 0.4);
+    @include gold-glow-box(0.1);
+
+    &::before {
+      transform: scaleY(1);
+    }
+
+    .char-btn__name {
+      color: $color-primary;
+      @include gold-glow-text;
+    }
+
+    .char-btn__meta {
+      opacity: 1;
+      color: $color-primary;
+    }
+
+    .char-btn__glow {
+      opacity: 0.4;
+    }
+  }
+}

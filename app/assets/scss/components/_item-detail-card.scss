@@ -1,0 +1,172 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.item-detail-card {
+  @include glass-panel;
+  padding: $space-1;
+  border-radius: $radius-sm;
+  border-color: rgba($color-outline, 0.2);
+  cursor: pointer;
+  transition: all $transition-base;
+  position: relative;
+  overflow: hidden;
+
+  &__inner {
+    background: $color-surface-low;
+    padding: $space-4;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  &:hover {
+    border-color: rgba($color-primary, 0.4);
+    @include gold-glow-box(0.1);
+    
+    .item-detail-card__image {
+      transform: scale(1.05);
+    }
+  }
+
+  &--selected {
+    border-color: $color-primary;
+    @include gold-glow-box(0.2);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba($color-primary, 0.05);
+      pointer-events: none;
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: $space-2;
+    right: $space-2;
+    z-index: 2;
+  }
+
+  .badge {
+    @include label-style;
+    font-size: 9px;
+    padding: $space-1 $space-2;
+    border-radius: $radius-sm;
+    letter-spacing: 0.2em;
+
+    &--owned {
+      background: rgba($color-primary, 0.1);
+      border: 1px solid rgba($color-primary, 0.2);
+      color: $color-primary;
+    }
+
+    &--missing {
+      background: rgba($color-error, 0.1);
+      border: 1px solid rgba($color-error, 0.2);
+      color: $color-error;
+    }
+  }
+
+  &__image-wrap {
+    width: 100%;
+    aspect-ratio: 1;
+    background: rgba($color-surface-lowest, 0.6);
+    margin-bottom: $space-4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid rgba($color-outline, 0.1);
+    transition: border-color $transition-base;
+
+    .item-detail-card:hover & {
+      border-color: rgba($color-primary, 0.2);
+    }
+  }
+
+  &__image {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+    transition: transform $transition-slow;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+  }
+
+  &__image-placeholder {
+    opacity: 0.2;
+    color: $color-primary;
+  }
+
+  &__info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    @include section-header;
+    font-size: 1.125rem;
+    margin-bottom: $space-1;
+    color: $color-on-surface;
+    transition: color $transition-base;
+
+    .item-detail-card:hover & {
+      color: $color-primary;
+    }
+  }
+
+  &__meta {
+    @include label-style;
+    font-size: 9px;
+    color: $color-on-surface-variant;
+    opacity: 0.6;
+    letter-spacing: 0.2em;
+    margin-bottom: $space-4;
+  }
+
+  &__progress {
+    margin-top: auto;
+    height: 1px;
+    background: $color-surface-container-highest;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    @include rune-gradient;
+    box-shadow: 0 0 8px $color-primary;
+    transition: width $transition-slow;
+  }
+
+  // Missing State modifiers
+  &--missing {
+    .item-detail-card__image {
+      filter: grayscale(1) contrast(1.2) opacity(0.4);
+    }
+    
+    .item-detail-card__name {
+      color: rgba($color-on-surface, 0.4);
+    }
+
+    .item-detail-card__progress-fill {
+      width: 0 !important;
+    }
+  }
+
+  &__loader {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid rgba($color-primary, 0.1);
+    border-top-color: $color-primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

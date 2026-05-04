@@ -6,13 +6,20 @@ interface Props {
   lore: string
   owned: number
   total: number
+  label?: string
 }
 
 const props = defineProps<Props>()
 
 const isOpen = ref(false)
 
-const progress = computed(() => Math.round((props.owned / props.total) * 100))
+const progress = computed(() => {
+  if (props.total === 0) return 0;
+  // If label is "Missing", we calculate based on the REMAINING items.
+  // Wait, actually, the Index passes the "result" of the subtraction to 'owned' prop if missing.
+  // So 'owned' becomes 'count' in this context.
+  return Math.round((props.owned / props.total) * 100)
+})
 
 function toggle() {
   isOpen.value = !isOpen.value
@@ -23,7 +30,7 @@ function toggle() {
   <div class="reliquary-slot" :class="{ 'reliquary-slot--open': isOpen }">
     <!-- Accordion Header -->
     <div class="reliquary-slot__header" role="button" :tabindex="0" :aria-expanded="isOpen"
-      :aria-label="`${title} — ${owned} of ${total} collected`" @click="toggle" @keydown.enter="toggle"
+      :aria-label="`${title} — ${owned} of ${total} ${label || 'collected'}`" @click="toggle" @keydown.enter="toggle"
       @keydown.space.prevent="toggle">
       <div class="reliquary-slot__info">
         <Icon :name="`material-symbols:${icon.replace(/_/g, '-')}-outline`" class="reliquary-slot__icon" size="24" />
@@ -35,7 +42,7 @@ function toggle() {
 
       <div class="reliquary-slot__meta">
         <div class="reliquary-slot__count">
-          <span class="reliquary-slot__count-label">Completion</span>
+          <span class="reliquary-slot__count-label">{{ label || 'Completion' }}</span>
           <span class="reliquary-slot__count-value">{{ owned }} / {{ total }}</span>
         </div>
         <Icon
@@ -54,7 +61,7 @@ function toggle() {
 
     <!-- Expanded content slot -->
     <div class="reliquary-slot__body-wrapper" :class="{ 'reliquary-slot__body-wrapper--open': isOpen }">
-      <div class="reliquary-slot__body">
+      <div v-if="isOpen" class="reliquary-slot__body">
         <slot>
           <p class="reliquary-slot__empty">
             Upload your <em>.sl2</em> save file to populate this category.

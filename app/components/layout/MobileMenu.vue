@@ -81,6 +81,4 @@ defineEmits(['close'])
   </Transition>
 </template>
 
-<style lang="scss">
-// Stili verranno messi in un file SCSS dedicato
-</style>
+

@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { useSaveStore } from '~/stores/useSaveStore'
+
 definePageMeta({ layout: 'default' })
+
+const store = useSaveStore()
+const { stats, globalStats, selectedCharacterIndex, isLoaded, ownedItems, missingItems } = storeToRefs(store)
 
 useSeoMeta({
   title: 'Elden Ring Automatic Checklist — Gilded Reliquary',
@@ -7,23 +12,71 @@ useSeoMeta({
 })
 
 // ── State ─────────────────────────────────────────────────────────────────────
-const activeTab = ref<'missing' | 'owned'>('missing')
+const activeTab = ref<'missing' | 'owned'>('owned')
 const isDragging = ref(false)
 
-// ── Inventory categories (placeholder data) ────────────────────────────────────
-interface Category {
-  icon: string
-  title: string
-  lore: string
-  owned: number
-  total: number
-}
+onMounted(() => {
+  store.loadDatabase()
+})
 
-const categories: Category[] = [
-  { icon: 'swords', title: 'Weapons', lore: 'Hand-held instruments of destruction', owned: 178, total: 377 },
-  { icon: 'shield_person', title: 'Armor', lore: 'Tarnished steel and royal silk', owned: 50, total: 100 },
-  { icon: 'brightness_7', title: 'Talismans', lore: 'Sacred trinkets blessed by the Erdtree', owned: 32, total: 84 },
-]
+type CategoryKey = 'armament' | 'armor' | 'talisman' | 'magic' | 'ashesOfWar' | 'spiritAshes'
+
+// ── Categories Mapping ────────────────────────────────────────────────────────
+const categories = computed(() => {
+  const s = stats.value
+  
+  const cats: { key: CategoryKey, icon: string, title: string, lore: string, owned: number, total: number }[] = [
+    { 
+      key: 'armament',
+      icon: 'swords', 
+      title: 'Weapons', 
+      lore: 'Hand-held instruments of destruction', 
+      owned: s?.armament?.owned || 0, 
+      total: s?.armament?.total || 0 
+    },
+    { 
+      key: 'armor',
+      icon: 'shield_person', 
+      title: 'Armor', 
+      lore: 'Tarnished steel and royal silk', 
+      owned: s?.armor?.owned || 0, 
+      total: s?.armor?.total || 0 
+    },
+    { 
+      key: 'talisman',
+      icon: 'brightness_7', 
+      title: 'Talismans', 
+      lore: 'Sacred trinkets blessed by the Erdtree', 
+      owned: s?.talisman?.owned || 0, 
+      total: s?.talisman?.total || 0 
+    },
+    { 
+      key: 'magic',
+      icon: 'auto_awesome', 
+      title: 'Magic', 
+      lore: 'Spells and incantations of the primeval current', 
+      owned: s?.magic?.owned || 0, 
+      total: s?.magic?.total || 0 
+    },
+    { 
+      key: 'ashesOfWar',
+      icon: 'settings_backup_restore',
+      title: 'Ashes of War', 
+      lore: 'Techniques of legendary warriors', 
+      owned: s?.ashesOfWar?.owned || 0, 
+      total: s?.ashesOfWar?.total || 0 
+    },
+    { 
+      key: 'spiritAshes',
+      icon: 'person_outline', 
+      title: 'Spirit Ashes', 
+      lore: 'Spectral remains of fallen combatants', 
+      owned: s?.spiritAshes?.owned || 0, 
+      total: s?.spiritAshes?.total || 0 
+    },
+  ]
+  return cats
+})
 
 // ── Upload zone handlers ───────────────────────────────────────────────────────
 function handleDragOver(e: DragEvent) {
@@ -40,15 +93,16 @@ function handleDrop(e: DragEvent) {
   isDragging.value = false
   const file = e.dataTransfer?.files?.[0]
   if (file) {
-    // placeholder — real parsing logic goes here
-    if (import.meta.dev) console.log('[checklist] dropped file:', file.name)
+    store.handleFileUpload(file)
   }
 }
 
 function handleFileInput(e: Event) {
   const input = e.target as HTMLInputElement
   const file = input.files?.[0]
-  if (file && import.meta.dev) console.log('[checklist] selected file:', file.name)
+  if (file) {
+    store.handleFileUpload(file)
+  }
 }
 </script>
 
@@ -80,26 +134,48 @@ function handleFileInput(e: Event) {
         </div>
         <input id="save-file-input" type="file" accept=".sl2" class="upload-zone__input" @change="handleFileInput">
       </label>
+
+      <!-- ── Character Selector (Visible only when file loaded) ────────────────── -->
+      <WikiCharacterSelector v-if="store.isLoaded" />
     </section>
 
     <!-- ── Tabs ─────────────────────────────────────────────────────────────── -->
-    <div class="checklist-page__tabs">
-      <button class="checklist-tab" :class="{ 'checklist-tab--active': activeTab === 'missing' }"
-        @click="activeTab = 'missing'">
-        <span class="checklist-tab__label">Missing Items</span>
-        <div class="checklist-tab__bar" />
-      </button>
+    <div v-if="selectedCharacterIndex !== null" class="checklist-page__tabs">
       <button class="checklist-tab" :class="{ 'checklist-tab--active': activeTab === 'owned' }"
         @click="activeTab = 'owned'">
-        <span class="checklist-tab__label">Owned Items</span>
+        <span class="checklist-tab__label">
+          Owned Items
+          <span v-if="globalStats" class="checklist-tab__count">({{ globalStats.owned }})</span>
+        </span>
+        <div class="checklist-tab__bar" />
+      </button>
+      <button class="checklist-tab" :class="{ 'checklist-tab--active': activeTab === 'missing' }"
+        @click="activeTab = 'missing'">
+        <span class="checklist-tab__label">
+          Missing Items
+          <span v-if="globalStats" class="checklist-tab__count">({{ globalStats.total - globalStats.owned }})</span>
+        </span>
         <div class="checklist-tab__bar" />
       </button>
     </div>
 
     <!-- ── Inventory Accordions ──────────────────────────────────────────────── -->
-    <section class="checklist-page__inventory" aria-label="Inventory categories">
-      <WikiReliquarySlot v-for="cat in categories" :key="cat.title" :icon="cat.icon" :title="cat.title" :lore="cat.lore"
-        :owned="cat.owned" :total="cat.total" />
+    <section v-if="selectedCharacterIndex !== null" class="checklist-page__inventory" aria-label="Inventory categories">
+      <WikiReliquarySlot 
+        v-for="cat in categories" 
+        :key="cat.key" 
+        :icon="cat.icon" 
+        :title="cat.title" 
+        :lore="cat.lore"
+        :owned="activeTab === 'missing' ? (cat.total - cat.owned) : cat.owned" 
+        :total="cat.total"
+        :label="activeTab === 'missing' ? 'Missing' : 'Owned'"
+      >
+        <WikiItemGrid 
+          :items="activeTab === 'missing' ? missingItems?.[cat.key] || [] : ownedItems?.[cat.key] || []" 
+          :category="cat.key" 
+        />
+      </WikiReliquarySlot>
     </section>
 
     <!-- ── Archive Wisdom (asymmetric detail section) ─────────────────────── -->

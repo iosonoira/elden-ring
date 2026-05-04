@@ -1,10 +1,13 @@
 <script setup lang="ts">
+const localePath = useLocalePath();
+const route = useRoute();
+
 // Navigation items
 const navItems = [
-  { label: 'Inventory', href: '#' },
-  { label: 'Checklist', href: '#', active: true },
-  { label: 'Map', href: '#' },
-  { label: 'Grace', href: '#' },
+  { label: 'Checklist', href: localePath('/'), active: route.path === '/' },
+  { label: 'Archives', href: localePath('/inventory/armament'), active: route.path.startsWith('/inventory') },
+  { label: 'Map', href: '#', active: false },
+  { label: 'Grace', href: '#', active: false },
 ]
 
 // Sidebar items (copied here for mobile view consistency)

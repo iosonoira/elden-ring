@@ -22,9 +22,14 @@
 
 // 5. Components (buttons, cards, etc)
 @use 'components/reliquary-slot';
+@use 'components/character-selector';
+@use 'components/item-grid';
+@use 'components/item-detail-card';
+@use 'components/item-inspector';
 
 // 6. Pages (home, about specific styles)
 @use 'pages/home';
+@use 'pages/inventory-detail';
 @use 'pages/wiki-detail';
 
 // 7. Themes (admin, default)
