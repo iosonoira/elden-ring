@@ -5,9 +5,8 @@ const route = useRoute();
 // Navigation items
 const navItems = [
   { label: 'Checklist', href: localePath('/'), active: route.path === '/' },
-  { label: 'Archives', href: localePath('/inventory/armament'), active: route.path.startsWith('/inventory') },
-  { label: 'Map', href: '#', active: false },
-  { label: 'Grace', href: '#', active: false },
+  { label: 'Archives', href: localePath('/archives/armament'), active: route.path.startsWith('/archives') },
+  { label: 'Inventory', href: localePath('/inventory/armament'), active: route.path.startsWith('/inventory') },
 ]
 
 // Sidebar items (copied here for mobile view consistency)
