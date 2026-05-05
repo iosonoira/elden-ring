@@ -9,7 +9,7 @@ See: .planning/PROJECT.md (updated 2026-05-05)
 
 **Core value:** Players can instantly see what items they have, what's missing, and explore the game's vast encyclopedia — all in a polished, immersive dark interface.
 
-**Current focus:** Initialization complete — ready to plan phases
+**Current focus:** Phase 1: UI Animation Improvements
 
 ## Phase Progress
 

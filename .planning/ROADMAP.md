@@ -12,6 +12,15 @@
 
 **Requirements:** UI-01, UI-02
 
+**Plans:** 5 plans in 4 waves
+
+**Plan list:**
+- [ ] 01-01-PLAN.md — SCSS animations foundation with easing curves
+- [ ] 01-02-PLAN.md — Page transitions via Vue Transition
+- [ ] 01-03-PLAN.md — Staggered grid animations
+- [ ] 01-04-PLAN.md — Hover/focus micro-interactions
+- [ ] 01-05-PLAN.md — Expand/collapse accordion transitions
+
 **Success Criteria:**
 1. Page transitions work smoothly between routes
 2. List/grid items animate in with staggered effect

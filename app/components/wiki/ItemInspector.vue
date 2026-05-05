@@ -121,7 +121,3 @@ watch(
     </div>
   </div>
 </template>
-
-<style lang="scss">
-// Styles in components/_item-inspector.scss
-</style>
