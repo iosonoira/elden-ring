@@ -13,7 +13,17 @@ interface SidebarItem {
   total: number
 }
 
-const localePath = useLocalePath();
+const localePath = useLocalePath()
+const route = useRoute()
+
+const getIconName = (item: SidebarItem) => {
+  const base = item.icon.replace(/_/g, '-')
+  const isActive = route.path.includes(item.key)
+  if (item.icon.endsWith('outline')) {
+    return isActive ? `material-symbols:${base.replace('-outline', '')}` : `material-symbols:${base}`
+  }
+  return isActive ? `material-symbols:${base}` : `material-symbols:${base}-outline`
+}
 
 const items = computed<SidebarItem[]>(() => {
   const s = stats.value;
@@ -49,7 +59,7 @@ const items = computed<SidebarItem[]>(() => {
     { 
       key: 'ashesOfWar', 
       label: 'Ashes of War', 
-      icon: 'settings_backup_restore', 
+      icon: 'settings', 
       owned: s?.ashesOfWar?.owned || 0, 
       total: s?.ashesOfWar?.total || 0 
     },
@@ -96,7 +106,7 @@ const items = computed<SidebarItem[]>(() => {
         :aria-label="item.label"
       >
         <div class="app-sidebar__item-main">
-          <Icon :name="`material-symbols:${item.icon.replace(/_/g, '-')}-outline`" class="app-sidebar__item-icon" size="20" />
+          <Icon :name="getIconName(item)" class="app-sidebar__item-icon" size="20" />
           <span class="app-sidebar__item-label">{{ item.label }}</span>
         </div>
         <div class="app-sidebar__item-stat label-mono" v-if="item.total > 0">

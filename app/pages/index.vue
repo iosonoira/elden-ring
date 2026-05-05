@@ -60,7 +60,7 @@ const categories = computed(() => {
     },
     { 
       key: 'ashesOfWar',
-      icon: 'settings_backup_restore',
+      icon: 'settings',
       title: 'Ashes of War', 
       lore: 'Techniques of legendary warriors', 
       owned: s?.ashesOfWar?.owned || 0, 

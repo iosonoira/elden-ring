@@ -33,7 +33,7 @@ function toggle() {
       :aria-label="`${title} — ${owned} of ${total} ${label || 'collected'}`" @click="toggle" @keydown.enter="toggle"
       @keydown.space.prevent="toggle">
       <div class="reliquary-slot__info">
-        <Icon :name="`material-symbols:${icon.replace(/_/g, '-')}-outline`" class="reliquary-slot__icon" size="24" />
+        <Icon :name="`material-symbols:${icon.replace(/_/g, '-')}`" class="reliquary-slot__icon" size="24" />
         <div class="reliquary-slot__text">
           <h3 class="reliquary-slot__title">{{ title }}</h3>
           <p class="reliquary-slot__lore">{{ lore }}</p>

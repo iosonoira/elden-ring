@@ -7,6 +7,14 @@ const props = defineProps<{
 }>()
 
 defineEmits(['close'])
+
+const getIconName = (icon: string, active: boolean) => {
+  const base = icon.replace(/_/g, '-')
+  if (icon.endsWith('outline')) {
+    return active ? `material-symbols:${base.replace('-outline', '')}` : `material-symbols:${base}`
+  }
+  return active ? `material-symbols:${base}` : `material-symbols:${base}-outline`
+}
 </script>
 
 <template>
@@ -66,7 +74,7 @@ defineEmits(['close'])
                 :class="{ 'mobile-menu__icon-item--active': item.active }"
                 @click="$emit('close')"
               >
-                <Icon :name="`material-symbols:${item.icon.replace(/_/g, '-')}-outline`" size="24" />
+                <Icon :name="getIconName(item.icon, !!item.active)" size="24" />
                 <span>{{ item.label }}</span>
               </div>
             </div>
