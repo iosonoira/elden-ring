@@ -15,12 +15,12 @@ See: .planning/PROJECT.md (updated 2026-05-05)
 
 | Phase | Status | Plans | Progress |
 |-------|--------|-------|----------|
-
-No phases planned yet.
+| 1 | ○ | 0/1 | 0% |
 
 ## Last Activity
 
 - 2026-05-05 - Project initialized
+- 2026-05-05 - Roadmap created (Phase 1: UI Animation Improvements)
 
 ## Blockers/Concerns
 
