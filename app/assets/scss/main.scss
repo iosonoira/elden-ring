@@ -5,6 +5,7 @@
 // 1. Abstracts (variables, functions, mixins)
 @use 'abstracts/variables';
 @use 'abstracts/mixins';
+@use 'abstracts/animations';
 
 // 2. Vendors (normalize, grid, bootstrap if any)
 // @use 'vendors/...';
