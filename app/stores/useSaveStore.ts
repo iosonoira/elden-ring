@@ -124,7 +124,10 @@ export const useSaveStore = defineStore('save', () => {
   });
 
   const ownedItems = computed(() => {
-    if (!db.value || foundItemIds.value.length === 0) return null;
+    if (!db.value) return null;
+    if (foundItemIds.value.length === 0) {
+      return { armament: [], armor: [], ashesOfWar: [], magic: [], spiritAshes: [], talisman: [] };
+    }
     
     const owned = {
       armament: [] as any[],
