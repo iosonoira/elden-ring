@@ -61,7 +61,7 @@ function toggle() {
 
     <!-- Expanded content slot -->
     <div class="reliquary-slot__body-wrapper" :class="{ 'reliquary-slot__body-wrapper--open': isOpen }">
-      <div v-if="isOpen" class="reliquary-slot__body">
+      <div v-show="isOpen" class="reliquary-slot__body">
         <slot>
           <p class="reliquary-slot__empty">
             Upload your <em>.sl2</em> save file to populate this category.

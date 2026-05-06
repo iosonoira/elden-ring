@@ -19,7 +19,7 @@
 - [x] 01-02-PLAN.md — Page transitions via Vue Transition
 - [x] 01-03-PLAN.md — Staggered grid animations
 - [x] 01-04-PLAN.md — Hover/focus micro-interactions
-- [ ] 01-05-PLAN.md — Expand/collapse accordion transitions
+- [x] 01-05-PLAN.md — Expand/collapse accordion transitions ✓ COMPLETE
 
 **Success Criteria:**
 1. Page transitions work smoothly between routes
@@ -67,7 +67,7 @@
 | UI-02 | Phase 1 | ✓ Done (plan 01-03) |
 | UI-03 | Phase 1 | ✓ Done (plan 01-04) |
 | UI-04 | Phase 1 | ✓ Done (plan 01-01) |
-| UI-05 | Phase 1 | Pending |
+| UI-05 | Phase 1 | ✓ Done (plan 01-05) |
 | UI-06 | Phase 1 | ✓ Done (plan 01-01) |
 
 **Coverage:**
