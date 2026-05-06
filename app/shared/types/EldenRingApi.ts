@@ -19,6 +19,7 @@ export interface ApiResponse<T> {
   data: T
 }
 
+// Tipo per le chiavi interne dell'applicazione
 export type WikiCategory = 
   | 'armament' 
   | 'armor' 
@@ -26,9 +27,13 @@ export type WikiCategory =
   | 'magic' 
   | 'ashesOfWar' 
   | 'spiritAshes'
+
+// Tipo separato per i path dell'API esterna (usato solo nel composable)
+export type ApiCategory =
   | 'weapons'
   | 'armors'
   | 'talismans'
   | 'sorceries'
   | 'ashes'
   | 'spirits'
+  | 'shields'

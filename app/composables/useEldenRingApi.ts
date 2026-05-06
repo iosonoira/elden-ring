@@ -1,4 +1,4 @@
-import type { ApiResponse, WikiCategory, WikiEntity } from "~/shared/types/EldenRingApi";
+import type { ApiResponse, WikiCategory, ApiCategory, WikiEntity } from "~/shared/types/EldenRingApi";
 
 const BASE_URL = 'https://eldenring.fanapis.com/api'
 
@@ -25,13 +25,13 @@ export function useEldenRingApi() {
 
   function getByName<T extends WikiEntity>(category: string, name: string, options: any = {}) {
     // Map internal categories to Fan API categories
-    const apiCategoryMap: Record<string, string> = {
-      'armament': 'weapons',
-      'armor': 'armors',
-      'talisman': 'talismans',
-      'magic': 'sorceries',
+    const apiCategoryMap: Record<WikiCategory, ApiCategory> = {
+      'armament':   'weapons',
+      'armor':      'armors',
+      'talisman':   'talismans',
+      'magic':      'sorceries',
       'ashesOfWar': 'ashes',
-      'spiritAshes': 'spirits'
+      'spiritAshes':'spirits'
     }
     
     const finalCategory = apiCategoryMap[category] || category
