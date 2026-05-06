@@ -18,6 +18,7 @@ See: .planning/PROJECT.md (updated 2026-05-05)
 - 2026-05-06 - Plan 01-01 complete (SCSS animations foundation)
 - 2026-05-06 - Plan 01-02 complete (page transitions)
 - 2026-05-06 - Plan 01-03 complete (staggered grid animations)
+- 2026-05-06 - Plan 01-04 complete (hover/focus micro-interactions)
 
 ## Blockers/Concerns
 

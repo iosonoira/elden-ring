@@ -18,7 +18,7 @@
 - [x] 01-01-PLAN.md — SCSS animations foundation with easing curves
 - [x] 01-02-PLAN.md — Page transitions via Vue Transition
 - [x] 01-03-PLAN.md — Staggered grid animations
-- [ ] 01-04-PLAN.md — Hover/focus micro-interactions
+- [x] 01-04-PLAN.md — Hover/focus micro-interactions
 - [ ] 01-05-PLAN.md — Expand/collapse accordion transitions
 
 **Success Criteria:**
@@ -65,7 +65,7 @@
 |-------------|-------|--------|
 | UI-01 | Phase 1 | ✓ Done (plan 01-02) |
 | UI-02 | Phase 1 | ✓ Done (plan 01-03) |
-| UI-03 | Phase 1 | Pending |
+| UI-03 | Phase 1 | ✓ Done (plan 01-04) |
 | UI-04 | Phase 1 | ✓ Done (plan 01-01) |
 | UI-05 | Phase 1 | Pending |
 | UI-06 | Phase 1 | ✓ Done (plan 01-01) |

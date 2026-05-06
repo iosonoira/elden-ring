@@ -16,14 +16,30 @@
   padding: 0.75rem;
   background: rgba($color-surface-container-highest, 0.4);
   border: 1px solid rgba($color-primary, 0.05);
-  transition: all 0.3s ease;
+  transition:
+    transform 300ms $ease-out-expo,
+    box-shadow 300ms $ease-out-expo,
+    border-color 300ms $ease-out-expo,
+    background 300ms $ease-out-expo;
   content-visibility: auto;
-  contain-intrinsic-size: 140px 200px; /* Suggestion for the browser to keep space */
+  contain-intrinsic-size: 140px 200px;
+  cursor: pointer;
 
   &:hover {
-    border-color: rgba($color-primary, 0.2);
-    transform: translateY(-4px);
+    border-color: rgba($color-primary, 0.25);
+    transform: translateY(-4px) scale(1.02);
     background: rgba($color-surface-container-highest, 0.6);
+    @include gold-glow-box(0.25);
+  }
+
+  &:focus-visible {
+    outline: 1px solid $color-primary;
+    outline-offset: 2px;
+    transform: translateY(-2px);
+  }
+
+  &--loading {
+    pointer-events: none;
   }
 
   &__image-container {

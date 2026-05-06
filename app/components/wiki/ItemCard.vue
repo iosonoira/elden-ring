@@ -55,10 +55,23 @@ function getWikiUrl(name: string) {
   const cleanName = name.replace(/ \+\d+$/, '').replaceAll(' ', '+');
   return `https://eldenring.wiki.fextralife.com/${cleanName}`
 }
+
+function openWiki() {
+  window.open(getWikiUrl(props.item.name), '_blank')
+}
+</script>
 </script>
 
 <template>
-  <div ref="cardRef" class="item-card glass-panel" :class="{ 'item-card--loading': isPending }">
+  <div 
+    ref="cardRef" 
+    class="item-card glass-panel" 
+    :class="{ 'item-card--loading': isPending }"
+    tabindex="0"
+    role="button"
+    @keydown.enter="openWiki"
+    @keydown.space.prevent="openWiki"
+  >
     <div class="item-card__image-container">
       <NuxtImg 
         v-if="apiInfo"
