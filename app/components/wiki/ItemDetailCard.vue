@@ -18,8 +18,8 @@ defineEmits(['select'])
 const wikiStore = useWikiStore()
 
 // Use global cache for images
-const apiInfo = wikiStore.getCachedItem(props.category, props.item.name)
-const isLoading = wikiStore.isItemLoading(props.category, props.item.name)
+const apiInfo = computed(() => wikiStore.getCachedItem(props.category, props.item.name))
+const isLoading = computed(() => wikiStore.isItemLoading(props.category, props.item.name))
 
 onMounted(() => {
   // If not in cache, start fetching

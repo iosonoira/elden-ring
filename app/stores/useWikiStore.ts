@@ -53,11 +53,11 @@ export const useWikiStore = defineStore('wiki', () => {
   }
 
   const getCachedItem = (category: string, name: string) => {
-    return computed(() => cache.value[`${category}-${name}`] || null)
+    return cache.value[`${category}-${name}`] || null
   }
 
   const isItemLoading = (category: string, name: string) => {
-    return computed(() => loading.value[`${category}-${name}`] || false)
+    return loading.value[`${category}-${name}`] || false
   }
 
   return {

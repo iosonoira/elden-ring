@@ -24,6 +24,7 @@ type CategoryKey = 'armament' | 'armor' | 'talisman' | 'magic' | 'ashesOfWar' | 
 // ── Categories Mapping ────────────────────────────────────────────────────────
 const categories = computed(() => {
   const s = stats.value
+  if (!s) return []
   
   const cats: { key: CategoryKey, icon: string, title: string, lore: string, owned: number, total: number }[] = [
     { 
@@ -159,20 +160,21 @@ function handleFileInput(e: Event) {
       </button>
     </div>
 
-    <!-- ── Inventory Accordions ──────────────────────────────────────────────── -->
+<!-- ── Inventory Accordions ──────────────────────────────────────────────── -->
     <section v-if="selectedCharacterIndex !== null" class="checklist-page__inventory" aria-label="Inventory categories">
       <WikiReliquarySlot 
         v-for="cat in categories" 
-        :key="cat.key" 
-        :icon="cat.icon" 
-        :title="cat.title" 
+        :key="cat.key"
+        :icon="cat.icon"
+        :title="cat.title"
         :lore="cat.lore"
         :owned="activeTab === 'missing' ? (cat.total - cat.owned) : cat.owned" 
         :total="cat.total"
         :label="activeTab === 'missing' ? 'Missing' : 'Owned'"
       >
         <WikiItemGrid 
-          :items="activeTab === 'missing' ? missingItems?.[cat.key] || [] : ownedItems?.[cat.key] || []" 
+          v-if="cat.key"
+          :items="activeTab === 'missing' ? (missingItems?.[cat.key] || []) : (ownedItems?.[cat.key] || [])" 
           :category="cat.key" 
         />
       </WikiReliquarySlot>

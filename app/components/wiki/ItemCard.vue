@@ -81,7 +81,7 @@ function openWiki() {
   >
     <div class="item-card__image-container">
       <NuxtImg 
-        v-if="apiInfo"
+        v-if="apiInfo && apiInfo.image"
         :src="apiInfo.image"
         :alt="item.name"
         class="item-card__image"
