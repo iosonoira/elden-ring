@@ -37,3 +37,21 @@ export type ApiCategory =
   | 'ashes'
   | 'spirits'
   | 'shields'
+
+// Tipo per le chiavi delle categorie interne (usato in store e composables)
+export type CategoryKey =
+  | 'armament'
+  | 'armor'
+  | 'ashesOfWar'
+  | 'magic'
+  | 'spiritAshes'
+  | 'talisman'
+
+// Tipo per un item del database con il suo ID aggiunto
+export interface ItemData {
+  name: string
+  class?: string
+  category?: string
+}
+
+export type ItemWithId = ItemData & { id: string }

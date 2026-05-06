@@ -1,7 +1,9 @@
+import { CATEGORY_CONFIG } from '~/utils/categories'
 import { useSaveStore } from '~/stores/useSaveStore'
 
+import type { CategoryKey } from '~/shared/types/EldenRingApi'
+
 type FilterValue = 'all' | 'owned' | 'missing'
-type CategoryKey = 'armament' | 'armor' | 'talisman' | 'magic' | 'ashesOfWar' | 'spiritAshes'
 
 interface CategoryPageItem {
   id: string
@@ -11,21 +13,14 @@ interface CategoryPageItem {
   owned: boolean
 }
 
-const CATEGORY_TITLES: Record<string, string> = {
-  armament: 'Armaments & Weapons',
-  armor: 'Ancient Protections',
-  talisman: 'Sacred Talismans',
-  magic: 'Sorceries & Incantations',
-  ashesOfWar: 'Ashes of War',
-  spiritAshes: 'Spectral Spirits'
-}
-
 export function useCategoryPage(defaultFilter: FilterValue) {
   const route = useRoute()
   const store = useSaveStore()
 
   const category = computed(() => route.params.category as string)
-  const categoryTitle = computed(() => CATEGORY_TITLES[category.value] ?? 'The Archive')
+  const categoryTitle = computed(() =>
+    CATEGORY_CONFIG[category.value as CategoryKey]?.title ?? 'The Archive'
+  )
   const activeFilter = ref<FilterValue>(defaultFilter)
   const PAGE_SIZE = 60
   const page = ref(1)

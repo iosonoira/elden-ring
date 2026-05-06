@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import type { WikiCategory } from '~/shared/types/EldenRingApi'
 
 definePageMeta({ layout: 'default' })
@@ -7,10 +6,10 @@ definePageMeta({ layout: 'default' })
 const route = useRoute()
 const { t } = useI18n()
 
-const category = route.params.category as string
-const id = route.params.id as string
+const category = computed(() => route.params.category as WikiCategory)
+const id = computed(() => route.params.id as string)
 
-const { item, pending, error } = useWikiItem(category as WikiCategory, id)
+const { item, pending, error } = useWikiItem(category.value, id.value)
 
 useSeoMeta({
   title: computed(() => item.value?.name ? `${item.value.name} | Gilded Reliquary` : t('wiki.page.titleFallback')),

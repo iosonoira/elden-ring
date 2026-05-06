@@ -6,6 +6,7 @@ interface Item {
   name: string
   class?: string
   image?: string
+  owned: boolean
 }
 
 const props = defineProps<{
@@ -15,7 +16,9 @@ const props = defineProps<{
   isSelected?: boolean
 }>()
 
-defineEmits(['select'])
+const emit = defineEmits<{
+  select: [item: Item]
+}>()
 
 const wikiStore = useWikiStore()
 
@@ -38,7 +41,7 @@ onMounted(() => {
       'item-detail-card--missing': !isOwned,
       'item-detail-card--selected': isSelected 
     }"
-    @click="$emit('select', item)"
+    @click="emit('select', item)"
   >
     <div class="item-detail-card__inner">
       <!-- Status Badge -->

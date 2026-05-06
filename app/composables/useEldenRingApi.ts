@@ -23,7 +23,11 @@ export function useEldenRingApi() {
     )
   }
 
-  function getByName<T extends WikiEntity>(category: string, name: string, options: any = {}) {
+  function getByName<T extends WikiEntity>(
+    category: WikiCategory,
+    name: string,
+    options?: { lazy?: boolean; immediate?: boolean }
+  ) {
     // Map internal categories to Fan API categories
     const apiCategoryMap: Record<WikiCategory, ApiCategory> = {
       'armament':   'weapons',

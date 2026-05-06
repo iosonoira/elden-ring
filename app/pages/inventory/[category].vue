@@ -19,22 +19,9 @@ const {
   selectItem
 } = useCategoryPage('owned') // inventory: default 'owned'
 
-const sentinel = useTemplateRef('sentinel')
+useInfiniteScroll(loadMore)
 
-let _sentinelObserver: IntersectionObserver | null = null
-
-onMounted(() => {
-  if (!sentinel.value) return
-  _sentinelObserver = new IntersectionObserver(
-    (entries) => { if (entries[0]?.isIntersecting) loadMore() },
-    { rootMargin: '300px' }
-  )
-  _sentinelObserver.observe(sentinel.value)
-})
-
-onUnmounted(() => _sentinelObserver?.disconnect())
-
-useSeoMeta({ title: computed(() => `${categoryTitle.value} | Gilded Reliquary`) })
+useSeoMeta({ title: () => `${categoryTitle.value} | Gilded Reliquary` })
 </script>
 
 <template>

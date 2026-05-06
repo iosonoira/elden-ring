@@ -21,6 +21,9 @@ export default defineNuxtPlugin(() => {
     }
   }
 
+  // Avvia il caricamento del DB subito, senza aspettare il mount del layout
+  store.loadDatabase()
+
   watch(
     () => ({
       characters: store.characters,

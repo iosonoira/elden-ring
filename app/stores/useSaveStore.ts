@@ -1,12 +1,6 @@
-import { defineStore } from 'pinia';
-import { SaveParser, type CharacterSlot } from '../utils/save-parser';
-
-// Types for the JSON data structure
-interface ItemData {
-  name: string;
-  class?: string;
-  category?: string;
-}
+import { defineStore } from 'pinia'
+import { SaveParser, type CharacterSlot } from '../utils/save-parser'
+import type { ItemData, CategoryKey, ItemWithId } from '~/shared/types/EldenRingApi'
 
 interface ItemDatabase {
   armament: Record<string, ItemData>;
@@ -44,7 +38,7 @@ export const useSaveStore = defineStore('save', () => {
         import('../assets/data/dlc_items.json')
       ]);
 
-      const baseDb: ItemDatabase = JSON.parse(JSON.stringify(all.default));
+      const baseDb: ItemDatabase = structuredClone(all.default as ItemDatabase)
       
       // Merge extra data
       // Armor
@@ -62,9 +56,11 @@ export const useSaveStore = defineStore('save', () => {
       
       db.value = baseDb;
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      dbLoadError.value = `Failed to load item database: ${message}`;
+      const message = error instanceof Error ? error.message : 'Unknown error'
+      dbLoadError.value = `Failed to load item database: ${message}`
       if (import.meta.dev) console.error(dbLoadError.value, error)
+    } finally {
+      dbLoading.value = false
     }
   }
 
@@ -114,14 +110,14 @@ export const useSaveStore = defineStore('save', () => {
   const missingItems = computed(() => {
     if (!db.value) return null;
     
-    const missing = {
-      armament: [] as any[],
-      armor: [] as any[],
-      ashesOfWar: [] as any[],
-      magic: [] as any[],
-      spiritAshes: [] as any[],
-      talisman: [] as any[],
-    };
+    const missing: Record<CategoryKey, ItemWithId[]> = {
+      armament: [],
+      armor: [],
+      ashesOfWar: [],
+      magic: [],
+      spiritAshes: [],
+      talisman: [],
+    }
     
     const ownedIds = new Set(foundItemIds.value);
     
@@ -144,14 +140,14 @@ export const useSaveStore = defineStore('save', () => {
       return { armament: [], armor: [], ashesOfWar: [], magic: [], spiritAshes: [], talisman: [] };
     }
     
-    const owned = {
-      armament: [] as any[],
-      armor: [] as any[],
-      ashesOfWar: [] as any[],
-      magic: [] as any[],
-      spiritAshes: [] as any[],
-      talisman: [] as any[],
-    };
+    const owned: Record<CategoryKey, ItemWithId[]> = {
+      armament: [],
+      armor: [],
+      ashesOfWar: [],
+      magic: [],
+      spiritAshes: [],
+      talisman: [],
+    }
     
     // deduplicate IDs and check against DB
     const uniqueIds = new Set(foundItemIds.value);

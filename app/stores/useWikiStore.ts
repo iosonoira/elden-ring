@@ -30,22 +30,21 @@ export const useWikiStore = defineStore('wiki', () => {
       }
       
       const finalCategory = apiCategoryMap[category] || category
-      const BASE_URL = 'https://eldenring.fanapis.com/api'
-      
+
       // Attempt 1: Default mapping
-      let response = await $fetch<ApiResponse<WikiEntity[]>>(`${BASE_URL}/${finalCategory}`, {
+      let response = await $fetch<ApiResponse<WikiEntity[]>>(`https://eldenring.fanapis.com/api/${finalCategory}`, {
         query: { name }
       })
 
       // Attempt 2: If armament and not found in weapons, try shields
       if (category === 'armament' && (!response.data || response.data.length === 0)) {
-        response = await $fetch<ApiResponse<WikiEntity[]>>(`${BASE_URL}/shields`, {
+        response = await $fetch<ApiResponse<WikiEntity[]>>(`https://eldenring.fanapis.com/api/shields`, {
           query: { name }
         })
       }
 
       if (response.success && response.data && response.data.length > 0) {
-        cache.value[cacheKey] = response.data[0] as any
+        cache.value[cacheKey] = response.data[0] ?? null
       } else {
         // item cercato, non trovato
         cache.value[cacheKey] = null

@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import { useSaveStore } from '~/stores/useSaveStore'
-
-const store = useSaveStore()
-onMounted(() => { store.loadDatabase() })
-</script>
-
 <template>
   <div class="default-layout">
     <LayoutAppHeader />
@@ -14,4 +7,3 @@ onMounted(() => { store.loadDatabase() })
     </main>
   </div>
 </template>
-
