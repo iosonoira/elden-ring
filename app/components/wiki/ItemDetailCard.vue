@@ -75,7 +75,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style lang="scss">
-// Styles are in components/_item-detail-card.scss
-</style>
