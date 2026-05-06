@@ -15,7 +15,8 @@ See: .planning/PROJECT.md (updated 2026-05-05)
 
 - 2026-05-05 - Project initialized
 - 2026-05-05 - Roadmap created (Phase 1: UI Animation Improvements)
-- 2026-05-06 - Phase 1 complete (plan 01-01)
+- 2026-05-06 - Plan 01-01 complete (SCSS animations foundation)
+- 2026-05-06 - Plan 01-02 complete (page transitions)
 
 ## Blockers/Concerns
 

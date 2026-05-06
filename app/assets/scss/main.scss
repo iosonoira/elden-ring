@@ -14,6 +14,7 @@
 @use 'base/reset';
 @use 'base/typography';
 @use 'base/utilities';
+@use 'base/transitions';
 
 // 4. Layout (header, footer, navigation, grid, etc handled in Vue for Nuxt, but keeping structure ready)
 @use 'layout/app-header';
