@@ -10,20 +10,21 @@ const props = defineProps<{
   category: string
 }>()
 
-function getWikiUrl(name: string) {
-  return `https://eldenring.wiki.fextralife.com/${name.replace(/ \+\d+$/, '').replaceAll(' ', '+')}`
+function getItemDelay(index: number) {
+  return `${index * 50}ms`
 }
 </script>
 
 <template>
-  <div class="item-grid">
+  <TransitionGroup tag="div" name="item-grid" class="item-grid">
     <LazyWikiItemCard 
-      v-for="item in items" 
+      v-for="(item, index) in items" 
       :key="item.id" 
       :item="item"
       :category="category"
+      :style="{ '--delay': getItemDelay(index) }"
     />
-  </div>
+  </TransitionGroup>
 </template>
 
 
