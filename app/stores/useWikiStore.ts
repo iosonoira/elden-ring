@@ -2,16 +2,21 @@ import { defineStore } from 'pinia'
 import type { WikiEntity, ApiResponse } from '~/shared/types/EldenRingApi'
 
 export const useWikiStore = defineStore('wiki', () => {
-  const cache = ref<Record<string, WikiEntity>>({})
+  // null = "cercato ma non trovato". Key assente = "non ancora cercato".
+  const cache = ref<Record<string, WikiEntity | null>>({})
   const loading = ref<Record<string, boolean>>({})
+
+  // Lock per prevenire fetch concorrenti sulla stessa chiave
+  const inFlight = new Set<string>()
 
   async function fetchItemDetails(category: string, name: string) {
     // Guard against null/undefined values
     if (!category || !name) return
     
     const cacheKey = `${category}-${name}`
-    if (cache.value[cacheKey] || loading.value[cacheKey]) return
-    
+    if (cacheKey in cache.value || inFlight.has(cacheKey)) return
+
+    inFlight.add(cacheKey)
     loading.value[cacheKey] = true
     
     try {
@@ -42,12 +47,13 @@ export const useWikiStore = defineStore('wiki', () => {
       if (response.success && response.data && response.data.length > 0) {
         cache.value[cacheKey] = response.data[0] as any
       } else {
-        // Mark as empty to avoid re-fetching failed items
-        cache.value[cacheKey] = { id: 'null', name, image: '', description: 'No data found in digital archives.' } as any
+        // item cercato, non trovato
+        cache.value[cacheKey] = null
       }
     } catch (e) {
       console.error(`WikiStore: Failed to fetch ${name}`, e)
     } finally {
+      inFlight.delete(cacheKey)
       loading.value[cacheKey] = false
     }
   }
