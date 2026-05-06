@@ -89,8 +89,15 @@ export const useSaveStore = defineStore('save', () => {
 
   function selectCharacter(index: number) {
     if (!parserInstance.value) return;
-    
+
     const result = parserInstance.value.getInventoryIds(index);
+
+    // DEBUG TEMPORANEO — rimuovere dopo
+    console.log('[SaveStore] slot:', index)
+    console.log('[SaveStore] ids found:', result.ids.length)
+    console.log('[SaveStore] isDlc:', result.isDlc)
+    console.log('[SaveStore] first 5 ids:', result.ids.slice(0, 5))
+
     foundItemIds.value = result.ids;
     isDlc.value = result.isDlc;
     selectedCharacterIndex.value = index;
@@ -125,6 +132,11 @@ export const useSaveStore = defineStore('save', () => {
 
   const ownedItems = computed(() => {
     if (!db.value) return null;
+
+    // DEBUG TEMPORANEO — rimuovere dopo
+    console.log('[SaveStore] foundItemIds.length:', foundItemIds.value.length)
+    console.log('[SaveStore] db.armament keys sample:', Object.keys(db.value.armament).slice(0, 3))
+
     if (foundItemIds.value.length === 0) {
       return { armament: [], armor: [], ashesOfWar: [], magic: [], spiritAshes: [], talisman: [] };
     }
