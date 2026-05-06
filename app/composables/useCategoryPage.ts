@@ -28,18 +28,22 @@ export function useCategoryPage(defaultFilter: FilterValue) {
   const category = computed(() => route.params.category as string)
   const categoryTitle = computed(() => CATEGORY_TITLES[category.value] ?? 'The Archive')
   const activeFilter = ref<FilterValue>(defaultFilter)
+  const PAGE_SIZE = 60
+  const page = ref(1)
+
+  watch([activeFilter, category], () => { page.value = 1 })
 
   const items = computed<CategoryPageItem[]>(() => {
     const result: CategoryPageItem[] = []
     const catKey = category.value as CategoryKey
 
-    if (activeFilter.value !== 'missing' && store.ownedItems?.[catKey]) {
+    if (activeFilter.value !== 'missing' && store.ownedItems !== null) {
       (store.ownedItems[catKey] as CategoryPageItem[]).forEach(i =>
         result.push({ ...i, owned: true })
       )
     }
 
-    if (activeFilter.value !== 'owned' && store.missingItems?.[catKey]) {
+    if (activeFilter.value !== 'owned' && store.missingItems !== null) {
       (store.missingItems[catKey] as CategoryPageItem[]).forEach(i =>
         result.push({ ...i, owned: false })
       )
@@ -47,6 +51,18 @@ export function useCategoryPage(defaultFilter: FilterValue) {
 
     return result.sort((a, b) => a.name.localeCompare(b.name))
   })
+
+  const paginatedItems = computed(() =>
+    items.value.slice(0, page.value * PAGE_SIZE)
+  )
+
+  const hasMore = computed(() =>
+    paginatedItems.value.length < items.value.length
+  )
+
+  function loadMore() {
+    page.value++
+  }
 
   const stats = computed(() => {
     const catKey = category.value as CategoryKey
@@ -73,6 +89,9 @@ export function useCategoryPage(defaultFilter: FilterValue) {
     categoryTitle,
     activeFilter,
     items,
+    paginatedItems,
+    hasMore,
+    loadMore,
     stats,
     selectedItem,
     selectItem

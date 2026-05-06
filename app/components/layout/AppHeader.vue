@@ -3,11 +3,11 @@ const localePath = useLocalePath();
 const route = useRoute();
 
 // Navigation items
-const navItems = [
+const navItems = computed(() => [
   { label: 'Checklist', href: localePath('/'), active: route.path === '/' },
   { label: 'Archives', href: localePath('/archives/armament'), active: route.path.startsWith('/archives') },
   { label: 'Inventory', href: localePath('/inventory/armament'), active: route.path.startsWith('/inventory') },
-]
+])
 
 // Sidebar items (copied here for mobile view consistency)
 const sidebarItems = [
@@ -29,14 +29,14 @@ const isMobileMenuOpen = ref(false)
     </button>
 
     <div class="app-header__brand">
-      <span class="app-header__logo">Gilded Reliquary</span>
+      <NuxtLink to="/" class="app-header__logo">Gilded Reliquary</NuxtLink>
     </div>
 
     <nav class="app-header__nav">
-      <a v-for="item in navItems" :key="item.label" :href="item.href" class="app-header__nav-link"
+      <NuxtLink v-for="item in navItems" :key="item.label" :to="item.href" class="app-header__nav-link"
         :class="{ 'app-header__nav-link--active': item.active }">
         {{ item.label }}
-      </a>
+      </NuxtLink>
     </nav>
 
     <div class="app-header__actions">

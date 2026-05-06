@@ -99,6 +99,11 @@
     gap: $space-6;
   }
 
+  &__sentinel {
+    grid-column: 1 / -1;
+    height: 1px;
+  }
+
   &__side-panel {
     .sticky-top {
       position: sticky;

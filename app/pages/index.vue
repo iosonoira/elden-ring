@@ -4,7 +4,6 @@ import { useSaveStore } from '~/stores/useSaveStore'
 definePageMeta({ layout: 'default' })
 
 const store = useSaveStore()
-await callOnce(() => store.loadDatabase())
 
 const { stats, globalStats, selectedCharacterIndex, isLoaded, ownedItems, missingItems } = storeToRefs(store)
 
@@ -123,22 +122,39 @@ function handleFileInput(e: Event) {
 
     <!-- ── Upload Zone ──────────────────────────────────────────────────────── -->
     <section class="checklist-page__upload">
-      <label class="upload-zone" :class="{ 'upload-zone--dragging': isDragging }" for="save-file-input"
-        @dragover="handleDragOver" @dragleave="handleDragLeave" @drop="handleDrop">
-        <div class="upload-zone__glow" />
-        <Icon name="material-symbols:upload-file-outline" class="upload-zone__icon grace-glow" size="48" />
-        <div class="upload-zone__copy">
-          <p class="upload-zone__cta">Drop your .sl2 save file here</p>
-          <p class="upload-zone__disclaimer">Local analysis · No data leaves your machine</p>
-        </div>
-        <input id="save-file-input" type="file" accept=".sl2" class="upload-zone__input" @change="handleFileInput">
-      </label>
+      <ClientOnly>
+        <template v-if="store.isLoaded">
+          <div class="upload-zone upload-zone--loaded">
+            <div class="upload-zone__glow" />
+            <Icon name="material-symbols:check-circle-outline" class="upload-zone__icon grace-glow" size="48" />
+            <div class="upload-zone__copy">
+              <p class="upload-zone__cta">Save file loaded</p>
+              <p class="upload-zone__disclaimer">
+                <button class="upload-zone__reset" @click="store.resetSave()">
+                  Change file
+                </button>
+              </p>
+            </div>
+          </div>
+          <WikiCharacterSelector />
+        </template>
 
-      <!-- ── Character Selector (Visible only when file loaded) ────────────────── -->
-      <WikiCharacterSelector v-if="store.isLoaded" />
+        <label v-else class="upload-zone" :class="{ 'upload-zone--dragging': isDragging }"
+          for="save-file-input"
+          @dragover="handleDragOver" @dragleave="handleDragLeave" @drop="handleDrop">
+          <div class="upload-zone__glow" />
+          <Icon name="material-symbols:upload-file-outline" class="upload-zone__icon grace-glow" size="48" />
+          <div class="upload-zone__copy">
+            <p class="upload-zone__cta">Drop your .sl2 save file here</p>
+            <p class="upload-zone__disclaimer">Local analysis · No data leaves your machine</p>
+          </div>
+          <input id="save-file-input" type="file" accept=".sl2" class="upload-zone__input" @change="handleFileInput">
+        </label>
+      </ClientOnly>
     </section>
 
     <!-- ── Tabs ─────────────────────────────────────────────────────────────── -->
+    <ClientOnly>
     <div v-if="selectedCharacterIndex !== null" class="checklist-page__tabs">
       <button class="checklist-tab" :class="{ 'checklist-tab--active': activeTab === 'owned' }"
         @click="activeTab = 'owned'">
@@ -157,8 +173,10 @@ function handleFileInput(e: Event) {
         <div class="checklist-tab__bar" />
       </button>
     </div>
+    </ClientOnly>
 
 <!-- ── Inventory Accordions ──────────────────────────────────────────────── -->
+    <ClientOnly>
     <section v-if="selectedCharacterIndex !== null" class="checklist-page__inventory" aria-label="Inventory categories">
       <WikiReliquarySlot 
         v-for="cat in categories" 
@@ -169,6 +187,7 @@ function handleFileInput(e: Event) {
         :owned="activeTab === 'missing' ? (cat.total - cat.owned) : cat.owned" 
         :total="cat.total"
         :label="activeTab === 'missing' ? 'Missing' : 'Owned'"
+        :reset-key="activeTab"
       >
         <WikiItemGrid 
           v-if="cat.key"
@@ -177,6 +196,7 @@ function handleFileInput(e: Event) {
         />
       </WikiReliquarySlot>
     </section>
+    </ClientOnly>
 
     <!-- ── Archive Wisdom (asymmetric detail section) ─────────────────────── -->
     <section class="checklist-page__wisdom">
@@ -188,10 +208,6 @@ function handleFileInput(e: Event) {
           your items; it maps your legend across the fog-shrouded history of the Lands Between.
           Ensure no stone remains unturned, and no boss remains unchallenged.
         </p>
-        <div class="wisdom-copy__actions">
-          <button class="wisdom-btn wisdom-btn--ghost">Export Report</button>
-          <button class="wisdom-btn wisdom-btn--muted">View Map Locations</button>
-        </div>
       </div>
 
       <div class="wisdom-image">

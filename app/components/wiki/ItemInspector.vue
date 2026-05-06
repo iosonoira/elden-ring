@@ -111,11 +111,6 @@ watch(
       <div v-else class="item-inspector__placeholder">
         <p class="label-mono opacity-40">Consulting the Archives...</p>
       </div>
-
-      <!-- Action -->
-      <button class="item-inspector__action label-mono" :class="{ 'item-inspector__action--missing': !isOwned }">
-        {{ isOwned ? 'MARK AS UNOWNED' : 'MARK AS ACQUIRED' }}
-      </button>
     </div>
   </div>
 </template>

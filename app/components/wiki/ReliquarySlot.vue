@@ -7,22 +7,27 @@ interface Props {
   owned: number
   total: number
   label?: string
+  resetKey?: string | number
 }
 
 const props = defineProps<Props>()
 
 const isOpen = ref(false)
+const hasBeenOpened = ref(false)
+
+watch(() => props.resetKey, () => {
+  isOpen.value = false
+  hasBeenOpened.value = false
+})
 
 const progress = computed(() => {
   if (props.total === 0) return 0;
-  // If label is "Missing", we calculate based on the REMAINING items.
-  // Wait, actually, the Index passes the "result" of the subtraction to 'owned' prop if missing.
-  // So 'owned' becomes 'count' in this context.
   return Math.round((props.owned / props.total) * 100)
 })
 
 function toggle() {
   isOpen.value = !isOpen.value
+  if (isOpen.value) hasBeenOpened.value = true
 }
 </script>
 
@@ -61,8 +66,8 @@ function toggle() {
 
     <!-- Expanded content slot -->
     <div class="reliquary-slot__body-wrapper" :class="{ 'reliquary-slot__body-wrapper--open': isOpen }">
-      <div v-show="isOpen" class="reliquary-slot__body">
-        <slot>
+      <div class="reliquary-slot__body">
+        <slot v-if="hasBeenOpened">
           <p class="reliquary-slot__empty">
             Upload your <em>.sl2</em> save file to populate this category.
           </p>

@@ -1,5 +1,8 @@
 <script setup lang="ts">
-// Default layout wrapping all pages
+import { useSaveStore } from '~/stores/useSaveStore'
+
+const store = useSaveStore()
+onMounted(() => { store.loadDatabase() })
 </script>
 
 <template>

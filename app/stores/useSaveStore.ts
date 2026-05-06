@@ -27,13 +27,14 @@ export const useSaveStore = defineStore('save', () => {
   // Database state
   const db = ref<ItemDatabase | null>(null);
   const dbLoadError = ref<string | null>(null);
+  const dbLoading = ref(false);
 
   async function loadDatabase() {
+    if (import.meta.server) return;
     dbLoadError.value = null;
     if (db.value) return;
-    
-    // In a real Nuxt apps, we might fetch these or import them
-    // For now, let's assume we can import them from the assets
+
+    dbLoading.value = true;
     try {
       const [all, altered, unobtainable, dlc] = await Promise.all([
         import('../assets/data/all_items.json'),
@@ -73,13 +74,13 @@ export const useSaveStore = defineStore('save', () => {
     reader.onload = async (e) => {
       const buffer = e.target?.result as ArrayBuffer;
       if (!buffer) return;
-      
+
       const parser = new SaveParser(buffer);
       if (!parser.isValid()) {
         alert('Invalid Elden Ring save file (.sl2)');
         return;
       }
-      
+
       parserInstance.value = parser;
       characters.value = parser.getCharacterNames();
       isLoaded.value = true;
@@ -87,25 +88,25 @@ export const useSaveStore = defineStore('save', () => {
     reader.readAsArrayBuffer(file);
   }
 
-  function selectCharacter(index: number) {
+  async function selectCharacter(index: number) {
     if (!parserInstance.value) return;
 
+    await loadDatabase();
+
     const result = parserInstance.value.getInventoryIds(index);
-
-    // DEBUG TEMPORANEO — rimuovere dopo
-    console.log('[DEBUG] ids sample:', result.ids.slice(0, 10))
-    console.log('[DEBUG] DB armament sample keys:', Object.keys(db.value?.armament ?? {}).slice(0, 5))
-
-    // Check manuale primo ID
-    const firstId = result.ids[0]
-    console.log('[DEBUG] first ID:', firstId)
-    console.log('[DEBUG] exists in armament?', firstId ? firstId in (db.value?.armament ?? {}) : 'no id')
-    console.log('[DEBUG] exists in armor?', firstId ? firstId in (db.value?.armor ?? {}) : 'no id')
-    console.log('[DEBUG] db loaded?', !!db.value)
 
     foundItemIds.value = result.ids;
     isDlc.value = result.isDlc;
     selectedCharacterIndex.value = index;
+  }
+
+  function resetSave() {
+    isLoaded.value = false
+    characters.value = []
+    selectedCharacterIndex.value = null
+    foundItemIds.value = []
+    isDlc.value = false
+    parserInstance.value = null
   }
 
   const missingItems = computed(() => {
@@ -214,13 +215,16 @@ export const useSaveStore = defineStore('save', () => {
     selectedCharacterIndex,
     selectedCharacter,
     foundItemIds,
+    isDlc,
     ownedItems,
     missingItems,
     stats,
     globalStats,
     dbLoadError,
+    dbLoading,
     loadDatabase,
     handleFileUpload,
-    selectCharacter
+    selectCharacter,
+    resetSave
   };
 });

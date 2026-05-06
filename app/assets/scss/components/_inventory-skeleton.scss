@@ -1,0 +1,116 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/animations' as *;
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+
+.skeleton-block {
+  background: linear-gradient(
+    90deg,
+    rgba($color-surface-container-high, 0.6)  0%,
+    rgba($color-primary, 0.06)               35%,
+    rgba($color-surface-container-high, 0.6) 60%
+  );
+  background-size: 600px 100%;
+  animation: skeleton-shimmer 1.6s $ease-smooth infinite;
+  animation-delay: calc(var(--i, 0) * 40ms);
+  border-radius: $radius-sm;
+}
+
+.inventory-skeleton {
+  padding: $space-8 $space-10;
+  max-width: 1600px;
+  margin: 0 auto;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $space-12;
+    gap: $space-6;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  &__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  &__subtitle {
+    width: 120px;
+    height: 10px;
+  }
+
+  &__title {
+    width: 260px;
+    height: 48px;
+  }
+
+  &__filter {
+    width: 180px;
+    height: 36px;
+    align-self: flex-end;
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    padding-bottom: $space-6;
+    margin-bottom: $space-8;
+    border-bottom: 1px solid rgba($color-outline-variant, 0.2);
+  }
+
+  &__icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  &__category-name {
+    width: 140px;
+    height: 24px;
+  }
+
+  &__badge {
+    width: 56px;
+    height: 20px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: $space-6;
+  }
+}
+
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-3;
+  background: rgba($color-surface-container-highest, 0.25);
+  border: 1px solid rgba($color-primary, 0.04);
+
+  &__image {
+    aspect-ratio: 1;
+    width: 100%;
+  }
+
+  &__name {
+    height: 14px;
+    width: 80%;
+  }
+
+  &__sub {
+    height: 10px;
+    width: 50%;
+  }
+}
