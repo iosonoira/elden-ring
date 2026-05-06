@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useRoute } from 'nuxt/app';
 import { useI18n } from 'vue-i18n';
-import { useAsyncData, useSeoMeta, definePageMeta } from '#imports';
-import { useEldenRingApi } from '~/composables/useEldenRingApi';
+import { useSeoMeta, definePageMeta } from '#imports';
+import { useWikiItem } from '~/composables/useWikiItem';
+import type { WikiCategory } from '~/shared/types/EldenRingApi'
 
 const route = useRoute();
 const { t } = useI18n();
@@ -11,10 +11,7 @@ const { t } = useI18n();
 const category = route.params.category as string;
 const id = route.params.id as string;
 
-const { fetchEntity } = useEldenRingApi();
-const { data: entityData, pending, error } = await fetchEntity<any>(category, id);
-
-const item = computed(() => entityData.value?.data);
+const { item, pending, error } = useWikiItem(category as WikiCategory, id)
 
 useSeoMeta({
   title: computed(() => item.value?.name ? `${item.value.name} | Gilded Reliquary` : t('wiki.page.titleFallback')),
