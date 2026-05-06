@@ -26,8 +26,10 @@ export const useSaveStore = defineStore('save', () => {
   
   // Database state
   const db = ref<ItemDatabase | null>(null);
+  const dbLoadError = ref<string | null>(null);
 
   async function loadDatabase() {
+    dbLoadError.value = null;
     if (db.value) return;
     
     // In a real Nuxt apps, we might fetch these or import them
@@ -58,7 +60,9 @@ export const useSaveStore = defineStore('save', () => {
       
       db.value = baseDb;
     } catch (error) {
-      console.error('Failed to load item database', error);
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      dbLoadError.value = `Failed to load item database: ${message}`;
+      console.error(dbLoadError.value, error);
     }
   }
 
@@ -199,6 +203,7 @@ export const useSaveStore = defineStore('save', () => {
     missingItems,
     stats,
     globalStats,
+    dbLoadError,
     loadDatabase,
     handleFileUpload,
     selectCharacter
