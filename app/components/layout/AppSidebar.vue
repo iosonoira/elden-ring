@@ -16,6 +16,20 @@ interface SidebarItem {
 const localePath = useLocalePath()
 const route = useRoute()
 
+const getInventoryTarget = (category: string) => {
+  return isLoaded.value 
+    ? localePath(`/inventory/${category}`)
+    : localePath(`/archives/${category}`)
+}
+
+const getItemTooltip = (item: SidebarItem) => {
+  const target = getInventoryTarget(item.key)
+  const targetLabel = target.includes('/inventory/') ? 'Inventory' : 'Archives'
+  return isLoaded.value 
+    ? `${item.label} — Go to Inventory`
+    : `${item.label} — Redirects to Archives (no save loaded)`
+}
+
 const getIconName = (item: SidebarItem) => {
   const base = item.icon.replace(/_/g, '-')
   const isActive = route.path.includes(item.key)
@@ -99,11 +113,12 @@ const items = computed<SidebarItem[]>(() => {
       <NuxtLink
         v-for="item in items"
         :key="item.key"
-        :to="localePath(`/inventory/${item.key}`)"
+        :to="getInventoryTarget(item.key)"
         class="app-sidebar__item"
         active-class="app-sidebar__item--active"
         role="link"
-        :aria-label="item.label"
+        :aria-label="getItemTooltip(item)"
+        :title="getItemTooltip(item)"
       >
         <div class="app-sidebar__item-main">
           <Icon :name="getIconName(item)" class="app-sidebar__item-icon" size="20" />

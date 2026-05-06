@@ -1,74 +1,23 @@
 <script setup lang="ts">
+import { useCategoryPage } from '~/composables/useCategoryPage'
 import { useSaveStore } from '~/stores/useSaveStore'
 
 definePageMeta({ layout: 'default' })
 
-const route = useRoute()
 const store = useSaveStore()
 await callOnce(() => store.loadDatabase())
 
-const category = computed(() => route.params.category as string)
+const {
+  category,
+  categoryTitle,
+  activeFilter,
+  items,
+  stats,
+  selectedItem,
+  selectItem
+} = useCategoryPage('owned') // inventory: default 'owned'
 
-const categoryTitle = computed(() => {
-  const titles: Record<string, string> = {
-    armament: 'Armaments & Weapons',
-    armor: 'Ancient Protections',
-    talisman: 'Sacred Talismans',
-    magic: 'Sorceries & Incantations',
-    ashesOfWar: 'Ashes of War',
-    spiritAshes: 'Spectral Spirits'
-  }
-  return titles[category.value] || 'The Archive'
-})
-
-// Filter state
-const activeFilter = ref<'all' | 'owned' | 'missing'>('owned')
-
-// Data
-const items = computed(() => {
-  const allInCat: any[] = []
-  const catKey = category.value as keyof typeof store.ownedItems
-  
-  if (activeFilter.value !== 'missing' && store.ownedItems?.[catKey]) {
-    (store.ownedItems[catKey] as any[]).forEach((i: any) => allInCat.push({ ...i, owned: true }))
-  }
-  
-  if (activeFilter.value !== 'owned' && store.missingItems?.[catKey]) {
-    (store.missingItems[catKey] as any[]).forEach((i: any) => allInCat.push({ ...i, owned: false }))
-  }
-  
-  // Sort alphabetically by name
-  return allInCat.sort((a, b) => a.name.localeCompare(b.name))
-})
-
-const stats = computed(() => {
-  const catKey = category.value as keyof typeof store.stats
-  return store.stats?.[catKey] || { owned: 0, total: 0 }
-})
-
-// Selection logic
-const selectedItem = ref<any>(null)
-const selectItem = (item: any) => {
-  selectedItem.value = item
-}
-
-// Reset selection when items change or filter changes
-watch([items, category], () => {
-  if (items.value.length > 0) {
-    // Keep selection if still in list, otherwise select first
-    const stillExists = items.value.find(i => i.id === selectedItem.value?.id)
-    if (!stillExists) {
-      selectedItem.value = items.value[0]
-    }
-  } else {
-    selectedItem.value = null
-  }
-}, { immediate: true })
-
-// SEO
-useSeoMeta({
-  title: `${categoryTitle.value} | Gilded Reliquary`,
-})
+useSeoMeta({ title: `${categoryTitle.value} | Gilded Reliquary` })
 </script>
 
 <template>
