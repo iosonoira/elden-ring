@@ -30,6 +30,8 @@ const isPending = computed(() => {
 let observer: IntersectionObserver | null = null;
 
 onMounted(() => {
+  if (!cardRef.value) return;
+
   observer = new IntersectionObserver((entries) => {
     if (entries && entries[0] && entries[0].isIntersecting) {
       isVisible.value = true;
@@ -48,9 +50,7 @@ onMounted(() => {
     threshold: 0.01
   });
 
-  if (cardRef.value) {
-    observer.observe(cardRef.value);
-  }
+  observer.observe(cardRef.value);
 });
 
 onUnmounted(() => {
