@@ -9,18 +9,13 @@ See: .planning/PROJECT.md (updated 2026-05-05)
 
 **Core value:** Players can instantly see what items they have, what's missing, and explore the game's vast encyclopedia — all in a polished, immersive dark interface.
 
-**Current focus:** Phase 1: UI Animation Improvements
-
-## Phase Progress
-
-| Phase | Status | Plans | Progress |
-|-------|--------|-------|----------|
-| 1 | ○ | 0/1 | 0% |
+**Current focus:** Phase 1 complete
 
 ## Last Activity
 
 - 2026-05-05 - Project initialized
 - 2026-05-05 - Roadmap created (Phase 1: UI Animation Improvements)
+- 2026-05-06 - Phase 1 complete (plan 01-01)
 
 ## Blockers/Concerns
 

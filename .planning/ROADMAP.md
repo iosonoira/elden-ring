@@ -15,7 +15,7 @@
 **Plans:** 5 plans in 4 waves
 
 **Plan list:**
-- [ ] 01-01-PLAN.md — SCSS animations foundation with easing curves
+- [x] 01-01-PLAN.md — SCSS animations foundation with easing curves
 - [ ] 01-02-PLAN.md — Page transitions via Vue Transition
 - [ ] 01-03-PLAN.md — Staggered grid animations
 - [ ] 01-04-PLAN.md — Hover/focus micro-interactions
@@ -66,9 +66,9 @@
 | UI-01 | Phase 1 | Pending |
 | UI-02 | Phase 1 | Pending |
 | UI-03 | Phase 1 | Pending |
-| UI-04 | Phase 1 | Pending |
+| UI-04 | Phase 1 | ✓ Done (plan 01-01) |
 | UI-05 | Phase 1 | Pending |
-| UI-06 | Phase 1 | Pending |
+| UI-06 | Phase 1 | ✓ Done (plan 01-01) |
 
 **Coverage:**
 - v1 requirements: 6 total
@@ -78,4 +78,4 @@
 ---
 
 *Roadmap created: 2026-05-05*
-*Last updated: 2026-05-05*
+*Last updated: 2026-05-06*
