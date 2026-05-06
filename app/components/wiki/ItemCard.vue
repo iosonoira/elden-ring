@@ -17,9 +17,15 @@ const wikiStore = useWikiStore();
 const cardRef = ref<HTMLElement | null>(null);
 const isVisible = ref(false);
 
-// Use global cache instead of local fetch
-const apiInfo = wikiStore.getCachedItem(props.category, props.item.name);
-const isPending = wikiStore.isItemLoading(props.category, props.item.name);
+// Use global cache instead of local fetch (defensive check)
+const apiInfo = computed(() => {
+  if (!props.category || !props.item?.name) return null
+  return wikiStore.getCachedItem(props.category, props.item.name)
+})
+const isPending = computed(() => {
+  if (!props.category || !props.item?.name) return false
+  return wikiStore.isItemLoading(props.category, props.item.name)
+})
 
 let observer: IntersectionObserver | null = null;
 
@@ -27,8 +33,10 @@ onMounted(() => {
   observer = new IntersectionObserver((entries) => {
     if (entries && entries[0] && entries[0].isIntersecting) {
       isVisible.value = true;
-      // Trigger global fetch (it will skip if already in cache)
-      wikiStore.fetchItemDetails(props.category, props.item.name);
+      // Defensive: skip fetch if category or name is missing
+      if (props.category && props.item?.name) {
+        wikiStore.fetchItemDetails(props.category, props.item.name);
+      }
       
       if (observer) {
         observer.disconnect();
@@ -59,7 +67,6 @@ function getWikiUrl(name: string) {
 function openWiki() {
   window.open(getWikiUrl(props.item.name), '_blank')
 }
-</script>
 </script>
 
 <template>

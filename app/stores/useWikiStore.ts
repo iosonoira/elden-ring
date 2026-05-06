@@ -6,6 +6,9 @@ export const useWikiStore = defineStore('wiki', () => {
   const loading = ref<Record<string, boolean>>({})
 
   async function fetchItemDetails(category: string, name: string) {
+    // Guard against null/undefined values
+    if (!category || !name) return
+    
     const cacheKey = `${category}-${name}`
     if (cache.value[cacheKey] || loading.value[cacheKey]) return
     
