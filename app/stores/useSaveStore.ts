@@ -93,10 +93,15 @@ export const useSaveStore = defineStore('save', () => {
     const result = parserInstance.value.getInventoryIds(index);
 
     // DEBUG TEMPORANEO — rimuovere dopo
-    console.log('[SaveStore] slot:', index)
-    console.log('[SaveStore] ids found:', result.ids.length)
-    console.log('[SaveStore] isDlc:', result.isDlc)
-    console.log('[SaveStore] first 5 ids:', result.ids.slice(0, 5))
+    console.log('[DEBUG] ids sample:', result.ids.slice(0, 10))
+    console.log('[DEBUG] DB armament sample keys:', Object.keys(db.value?.armament ?? {}).slice(0, 5))
+
+    // Check manuale primo ID
+    const firstId = result.ids[0]
+    console.log('[DEBUG] first ID:', firstId)
+    console.log('[DEBUG] exists in armament?', firstId ? firstId in (db.value?.armament ?? {}) : 'no id')
+    console.log('[DEBUG] exists in armor?', firstId ? firstId in (db.value?.armor ?? {}) : 'no id')
+    console.log('[DEBUG] db loaded?', !!db.value)
 
     foundItemIds.value = result.ids;
     isDlc.value = result.isDlc;
@@ -132,11 +137,6 @@ export const useSaveStore = defineStore('save', () => {
 
   const ownedItems = computed(() => {
     if (!db.value) return null;
-
-    // DEBUG TEMPORANEO — rimuovere dopo
-    console.log('[SaveStore] foundItemIds.length:', foundItemIds.value.length)
-    console.log('[SaveStore] db.armament keys sample:', Object.keys(db.value.armament).slice(0, 3))
-
     if (foundItemIds.value.length === 0) {
       return { armament: [], armor: [], ashesOfWar: [], magic: [], spiritAshes: [], talisman: [] };
     }
