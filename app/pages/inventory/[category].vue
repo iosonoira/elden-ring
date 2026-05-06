@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useSaveStore } from '~/stores/useSaveStore'
+
+definePageMeta({ layout: 'default' })
+
 const route = useRoute()
 const store = useSaveStore()
-const category = computed(() => route.params.category as string)
+await callOnce(() => store.loadDatabase())
 
-onMounted(() => {
-  store.loadDatabase()
-})
+const category = computed(() => route.params.category as string)
 
 const categoryTitle = computed(() => {
   const titles: Record<string, string> = {
@@ -68,8 +69,6 @@ watch([items, category], () => {
 useSeoMeta({
   title: `${categoryTitle.value} | Gilded Reliquary`,
 })
-
-definePageMeta({ layout: 'default' })
 </script>
 
 <template>

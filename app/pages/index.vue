@@ -4,6 +4,8 @@ import { useSaveStore } from '~/stores/useSaveStore'
 definePageMeta({ layout: 'default' })
 
 const store = useSaveStore()
+await callOnce(() => store.loadDatabase())
+
 const { stats, globalStats, selectedCharacterIndex, isLoaded, ownedItems, missingItems } = storeToRefs(store)
 
 useSeoMeta({
@@ -14,10 +16,6 @@ useSeoMeta({
 // ── State ─────────────────────────────────────────────────────────────────────
 const activeTab = ref<'missing' | 'owned'>('owned')
 const isDragging = ref(false)
-
-onMounted(() => {
-  store.loadDatabase()
-})
 
 type CategoryKey = 'armament' | 'armor' | 'talisman' | 'magic' | 'ashesOfWar' | 'spiritAshes'
 
