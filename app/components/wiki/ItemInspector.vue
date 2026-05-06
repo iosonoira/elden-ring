@@ -20,13 +20,11 @@ const wikiStore = useWikiStore()
 const apiInfo = computed(() => wikiStore.cache[`${props.category}-${props.item.name}`] || null)
 const isLoading = computed(() => wikiStore.loading[`${props.category}-${props.item.name}`] || false)
 
-// Trigger fetch when item changes if not in cache
+// Trigger fetch when item changes
 watch(
   () => [props.category, props.item.name] as const,
   ([cat, name]) => {
-    if (name && !wikiStore.cache[`${cat}-${name}`]) {
-      wikiStore.fetchItemDetails(cat, name)
-    }
+    if (name) wikiStore.fetchItemDetails(cat, name)
   },
   { immediate: true }
 )
