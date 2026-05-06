@@ -26,7 +26,7 @@ Players can instantly see what items they have, what's missing, and explore the 
 
 - [ ] Visual & UX Upgrade — Transform UI to modern FromSoftware dark aesthetic
 - [ ] Save file integration improvements — Better parsing, more character data
-- [ ] UI animations — Smooth, polished transitions and interactions
+- [ ] Navigation & State Persistence — Fix data display logic and state management
 
 ### Out of Scope
 
@@ -68,7 +68,20 @@ Players can instantly see what items they have, what's missing, and explore the 
 
 ---
 
-*Last updated: 2026-05-05 after project initialization*
+## Current Milestone: v1.0 Navigation & State Persistence
+
+**Goal:** Fix data display logic between Archives/Inventory sections and ensure save file state persists during navigation
+
+**Target features:**
+- Archives shows full encyclopedia items
+- Inventory shows only user-owned items from save file
+- Save file state persists globally across navigation
+- Smart redirect: no save → Archives, save loaded → Inventory
+
+---
+
+*Last updated: 2026-05-06*
+*Milestone v1.0 started: 2026-05-06*
 
 ## Evolution
 
