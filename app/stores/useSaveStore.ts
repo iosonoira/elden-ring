@@ -28,6 +28,7 @@ export const useSaveStore = defineStore('save', () => {
   const db = ref<ItemDatabase | null>(null);
   const dbLoadError = ref<string | null>(null);
   const dbLoading = ref(false);
+  const uploadError = ref<string | null>(null);
 
   async function loadDatabase() {
     if (import.meta.server) return;
@@ -63,13 +64,14 @@ export const useSaveStore = defineStore('save', () => {
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       dbLoadError.value = `Failed to load item database: ${message}`;
-      console.error(dbLoadError.value, error);
+      if (import.meta.dev) console.error(dbLoadError.value, error)
     }
   }
 
   const parserInstance = shallowRef<SaveParser | null>(null);
 
   function handleFileUpload(file: File) {
+    uploadError.value = null
     const reader = new FileReader();
     reader.onload = async (e) => {
       const buffer = e.target?.result as ArrayBuffer;
@@ -77,7 +79,7 @@ export const useSaveStore = defineStore('save', () => {
 
       const parser = new SaveParser(buffer);
       if (!parser.isValid()) {
-        alert('Invalid Elden Ring save file (.sl2)');
+        uploadError.value = 'invalid_save_file'
         return;
       }
 
@@ -222,6 +224,7 @@ export const useSaveStore = defineStore('save', () => {
     globalStats,
     dbLoadError,
     dbLoading,
+    uploadError,
     loadDatabase,
     handleFileUpload,
     selectCharacter,

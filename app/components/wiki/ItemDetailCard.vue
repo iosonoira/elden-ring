@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useWikiStore } from '~/stores/useWikiStore'
+
 interface Item {
   id: string
   name: string

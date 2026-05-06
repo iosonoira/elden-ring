@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useEldenRingApi } from '~/composables/useEldenRingApi';
+import { useWikiStore } from '~/stores/useWikiStore'
 
 interface Item {
   id: string
   name: string
 }
-
-import { useWikiStore } from '~/stores/useWikiStore';
 
 const props = defineProps<{
   item: Item

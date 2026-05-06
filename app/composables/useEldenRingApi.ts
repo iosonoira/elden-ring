@@ -48,7 +48,7 @@ export function useEldenRingApi() {
           }
           return null
         } catch (e) {
-          console.error(`Failed to fetch ${name} from ${finalCategory}`, e)
+          if (import.meta.dev) console.error(`Failed to fetch ${name} from ${finalCategory}`, e)
           return null
         }
       },

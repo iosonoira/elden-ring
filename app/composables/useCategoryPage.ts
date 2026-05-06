@@ -1,4 +1,3 @@
-import type { Ref } from 'vue'
 import { useSaveStore } from '~/stores/useSaveStore'
 
 type FilterValue = 'all' | 'owned' | 'missing'

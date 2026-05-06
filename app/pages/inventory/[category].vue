@@ -21,17 +21,20 @@ const {
 
 const sentinel = useTemplateRef('sentinel')
 
+let _sentinelObserver: IntersectionObserver | null = null
+
 onMounted(() => {
   if (!sentinel.value) return
-  const observer = new IntersectionObserver(
+  _sentinelObserver = new IntersectionObserver(
     (entries) => { if (entries[0]?.isIntersecting) loadMore() },
     { rootMargin: '300px' }
   )
-  observer.observe(sentinel.value)
-  onUnmounted(() => observer.disconnect())
+  _sentinelObserver.observe(sentinel.value)
 })
 
-useSeoMeta({ title: `${categoryTitle.value} | Gilded Reliquary` })
+onUnmounted(() => _sentinelObserver?.disconnect())
+
+useSeoMeta({ title: computed(() => `${categoryTitle.value} | Gilded Reliquary`) })
 </script>
 
 <template>

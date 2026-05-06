@@ -17,8 +17,8 @@ const wikiStore = useWikiStore()
 
 // computed reattivi al cambio di props — getCachedItem ritorna un computed
 // ma il computed esterno garantisce che la chiave si aggiorni se props cambiano
-const apiInfo = computed(() => wikiStore.cache[`${props.category}-${props.item.name}`] || null)
-const isLoading = computed(() => wikiStore.loading[`${props.category}-${props.item.name}`] || false)
+const apiInfo = computed(() => wikiStore.getCachedItem(props.category, props.item.name))
+const isLoading = computed(() => wikiStore.isItemLoading(props.category, props.item.name))
 
 // Trigger fetch when item changes
 watch(

@@ -1,26 +1,21 @@
 <script setup lang="ts">
-import { useRoute } from 'nuxt/app';
-import { useI18n } from 'vue-i18n';
-import { useSeoMeta, definePageMeta } from '#imports';
-import { useWikiItem } from '~/composables/useWikiItem';
+import { useI18n } from 'vue-i18n'
 import type { WikiCategory } from '~/shared/types/EldenRingApi'
 
-const route = useRoute();
-const { t } = useI18n();
+definePageMeta({ layout: 'default' })
 
-const category = route.params.category as string;
-const id = route.params.id as string;
+const route = useRoute()
+const { t } = useI18n()
+
+const category = route.params.category as string
+const id = route.params.id as string
 
 const { item, pending, error } = useWikiItem(category as WikiCategory, id)
 
 useSeoMeta({
   title: computed(() => item.value?.name ? `${item.value.name} | Gilded Reliquary` : t('wiki.page.titleFallback')),
   description: computed(() => item.value?.description || t('wiki.page.descFallback'))
-});
-
-definePageMeta({
-  layout: 'default'
-});
+})
 </script>
 
 <template>

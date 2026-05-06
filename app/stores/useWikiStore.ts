@@ -51,7 +51,7 @@ export const useWikiStore = defineStore('wiki', () => {
         cache.value[cacheKey] = null
       }
     } catch (e) {
-      console.error(`WikiStore: Failed to fetch ${name}`, e)
+      if (import.meta.dev) console.error(`WikiStore: Failed to fetch ${name}`, e)
     } finally {
       inFlight.delete(cacheKey)
       loading.value[cacheKey] = false
