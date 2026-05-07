@@ -87,13 +87,7 @@ const items = computed<SidebarItem[]>(() => {
       owned: s?.spiritAshes?.owned || 0, 
       total: s?.spiritAshes?.total || 0 
     },
-    { 
-      key: 'wiki', 
-      label: 'Wiki', 
-      icon: 'menu_book', 
-      owned: 0, 
-      total: 0 
-    },
+    
   ]
 });
 </script>
