@@ -1,127 +1,178 @@
 # Coding Conventions
 
-**Analysis Date:** 2026-05-05
+**Analysis Date:** 2026-05-06
 
 ## Naming Patterns
 
 **Files:**
-- TypeScript utilities/composables: camelCase - `save-parser.ts`, `useEldenRingApi.ts`
-- Vue components: PascalCase - `AppSidebar.vue`, `ItemCard.vue`
-- Store files: camelCase with `useXxxStore` prefix - `useWikiStore.ts`, `useSaveStore.ts`
-- Type definition files: PascalCase - `EldenRingApi.ts`
+- TypeScript files: `camelCase.ts` (e.g., `useSaveStore.ts`, `save-parser.ts`)
+- Vue components: `PascalCase.vue` (e.g., `ItemCard.vue`, `ItemGrid.vue`)
+- Directories: `kebab-case` (e.g., `app/stores`, `app/composables`)
 
 **Functions:**
-- Composable functions: camelCase with `use` prefix - `useEldenRingApi()`, `useWikiItem()`
-- Store functions: camelCase - `fetchItemDetails()`, `handleFileUpload()`
-- Class methods: camelCase - `isValid()`, `getCharacterNames()`
+- Composables: `useCamelCase` prefix (e.g., `useCategoryPage`, `useEldenRingApi`)
+- Regular functions: `camelCase` (e.g., `loadMore`, `selectItem`, `getWikiUrl`)
+- Store actions: `camelCase` (e.g., `loadDatabase`, `handleFileUpload`, `selectCharacter`)
 
 **Variables:**
-- camelCase - `isLoaded`, `characters`, `foundItemIds`
-- Constants: UPPER_SNAKE_CASE for magic numbers within modules
-- Boolean variables: prefix with `is`, `has`, `should` - `isDlc`, `isValid`
+- Local variables: `camelCase` (e.g., `category`, `page`, `isLoaded`)
+- Constants: `UPPER_SNAKE_CASE` for configuration objects (e.g., `CATEGORY_TITLES`)
+- Refs/computed: `camelCase` with descriptive names (e.g., `selectedItem`, `activeFilter`)
 
 **Types:**
-- Interfaces: PascalCase - `CharacterSlot`, `InventoryItem`, `WikiEntity`
-- Type aliases: PascalCase - `WikiCategory`
-- Generic type parameters: PascalCase - `T extends WikiEntity`
+- Interfaces: `PascalCase` with descriptive names (e.g., `CategoryPageItem`, `ItemData`, `CharacterSlot`)
+- Type aliases: `PascalCase` (e.g., `FilterValue`, `CategoryKey`, `WikiCategory`)
+- Generic type parameters: `PascalCase` (e.g., `T extends WikiEntity`)
 
 ## Code Style
 
 **Formatting:**
-- Tool: Nuxt ESLint module (uses ESLint with Prettier integration via Nuxt)
-- Config: `.nuxt/eslint.config.mjs` (generated, extends user config in `eslint.config.mjs`)
-- Single quotes for strings (observed in source)
-- Semicolons: used in store files, optional in other files
+- Tool: Nuxt ESLint module with flat config
+- Config: `.nuxt/eslint.config.mjs` extends Nuxt defaults
+- Semi-colons: Used in some files (see `useSaveStore.ts`), optional in others
+- Quotes: Single quotes preferred in new files, consistent within files
 
 **Linting:**
-- Framework: ESLint via `@nuxt/eslint` module (v1.15.2)
-- Package version: ESLint v10.3.0
-- Type checking: `// @ts-check` used in config files
+- Framework: `@nuxt/eslint` v1.15.2 with ESLint v10.3.0
+- Type checking: `// @ts-check` in config files
+- Vue SFC: Uses `<script setup lang="ts">` syntax
+
+**Indentation:**
+- 2 spaces for TypeScript
+- 2 spaces for Vue templates
+- SCSS: Follows SCSS nesting conventions
 
 ## Import Organization
 
-**Order:**
-1. External framework imports - `import { defineStore } from 'pinia'`
-2. Type imports - `import type { WikiEntity, ApiResponse } from '~/shared/types/EldenRingApi'`
-3. Relative imports - `import { SaveParser, type CharacterSlot } from '../utils/save-parser'`
+**Order (observed pattern):**
+1. Vue/Nuxt built-ins (automatically available)
+2. Pinia stores (`~/stores/*`)
+3. Composables (`~/composables/*`)
+4. Shared types (`~/shared/types/*`)
+5. Utils (`~/utils/*`)
+6. Vue components (`~/components/*`)
 
 **Path Aliases:**
-- `~` or `~/` - maps to app directory (Nuxt default)
-- Example: `import type { ... } from "~/shared/types/EldenRingApi"`
+- `~/*` - Maps to `app/` directory
+- `@/*` - Nuxt alias (same as `~`)
+- Auto-imports enabled for composables and components
+
+**Example:**
+```typescript
+import { useSaveStore } from '~/stores/useSaveStore'  // Pinia store
+import type { WikiEntity, ApiResponse } from '~/shared/types/EldenRingApi'  // Types
+```
 
 ## Error Handling
 
 **Patterns:**
-- Try-catch blocks with console.error for logging
-- Return null/default values on failure instead of throwing
-- Use alerts for user-facing errors: `alert('Invalid Elden Ring save file (.sl2)')`
-- Error messages include context: `console.error(\`Failed to fetch ${name}\`, e)`
 
-**Validation:**
-- Check for undefined/null before accessing properties
-- Use optional chaining: `response.data?.[0]`
-- Early returns for invalid states: `if (!buffer) return;`
+1. **Try/catch with dev-only logging:**
+   ```typescript
+   try {
+     // async operation
+   } catch (error) {
+     const message = error instanceof Error ? error.message : 'Unknown error'
+     dbLoadError.value = `Failed to load item database: ${message}`
+     if (import.meta.dev) console.error(dbLoadError.value, error)
+   }
+   ```
+
+2. **Guard clauses for null/undefined:**
+   ```typescript
+   if (!category || !name) return
+   if (cacheKey in cache.value || inFlight.has(cacheKey)) return
+   ```
+
+3. **Early returns for validation:**
+   ```typescript
+   if (import.meta.server) return
+   if (db.value) return
+   ```
+
+4. **Error state in stores:**
+   - Dedicated error ref per operation (e.g., `dbLoadError`, `uploadError`)
+   - Error messages as string values
 
 ## Logging
 
-**Framework:** Console API
+**Framework:** `console` (native browser)
 
 **Patterns:**
-- Use `console.error` for failures: `console.error(\`WikiStore: Failed to fetch ${name}\`, e)`
-- Log to help debug API calls: `console.error(\`Failed to fetch ${name} from ${finalCategory}\`, e)`
+- Development-only errors: `if (import.meta.dev) console.error(...)`
+- Errors include context: `Failed to fetch ${name} from ${finalCategory}`
+- No info-level logging in production
 
 ## Comments
 
 **When to Comment:**
-- Document file purpose and logic source: `// Based on Elden-Ring-Automatic-Checklist logic`
-- Explain hardcoded values with source references: `// BND4 check`, `// Slot offsets from script.js`
-- Mark TODO-like notes: `// In a real Nuxt apps...`, `// For now, let's assume...`
+- Complex business logic (see `save-parser.ts` line 1-4 JSDoc)
+- Magic numbers or offsets (see `save-parser.ts` lines 36-40, 60-70)
+- Workarounds or non-obvious decisions (see `useSaveStore.ts` lines 47 "Merge extra data")
+- Guard reasoning (see `useWikiStore.ts` line 5 "null = 'cercato ma non trovato'")
 
 **JSDoc/TSDoc:**
-- Not heavily used; minimal documentation in current codebase
-- One file uses block comment for file-level docs: `/** Caveman Parser... */`
+- Used for classes: `@see` references to external documentation
+- Not used for every function; focus on public APIs and complex logic
+
+**Language:** English (code), Italian (inline comments in some places)
 
 ## Function Design
 
-**Size:** Functions are kept reasonably small with single responsibilities
+**Size:** Keep small; composables typically <100 lines
 
 **Parameters:**
-- Use explicit typing for all parameters
-- Optional parameters with defaults: `params?: { limit?: number; page?: number }`
-- Generic type constraints: `<T extends WikiEntity>`
+- Use TypeScript interfaces for complex objects
+- Avoid too many parameters; group related params in objects
+- Use generic type parameters when applicable (e.g., `<T extends WikiEntity>`)
 
 **Return Values:**
-- Explicit return types in composables via `useAsyncData<T>` wrapper
-- Store functions return reactive state and methods
-- Class methods return typed interfaces
+- Composables return object with reactive refs/computeds
+- Store actions return void or update internal state
+- API composables use `useAsyncData` for SSR support
 
 ## Module Design
 
 **Exports:**
-- Named exports for utilities: `export class SaveParser`, `export interface CharacterSlot`
-- Composables return object with methods: `return { fetchEntity, fetchList, getByName }`
-- Store returns all state and methods: `return { isLoaded, characters, ... }`
+- Named exports for composables: `export function useX(...)`
+- Named exports for stores: `export const useXStore = defineStore(...)`
+- Named exports for types: `export interface X`, `export type X = ...`
 
-**Barrel Files:**
-- Not used - direct imports from files
-- Types defined in dedicated type files: `app/shared/types/EldenRingApi.ts`
+**Barrel Files:** Not used; direct imports from individual files
 
-## Vue/Nuxt Conventions
+**Auto-imports:**
+- Nuxt auto-imports composables from `app/composables/`
+- Nuxt auto-imports components from `app/components/`
+- Pinia stores require explicit imports
 
-**Component Structure:**
-- Auto-imports enabled (Nuxt default)
-- Components in `app/components/` organized by feature: `layout/`, `wiki/`
-- Pages in `app/pages/` with dynamic routes: `[category].vue`, `[id].vue`
+## Vue Component Conventions
 
-**Composables:**
-- Named with `use` prefix
-- Return reactive data and functions
-- Located in `app/composables/`
+**Script Setup:**
+```vue
+<script setup lang="ts">
+// imports
+// props with defineProps
+// composables
+// refs/computed
+// methods
+// lifecycle hooks
+</script>
 
-**State Management:**
-- Pinia stores with Composition API syntax
-- Stores use `defineStore` with arrow function returning state/computed/methods
+<template>
+<!-- template content -->
+</template>
+
+<style scoped lang="scss">
+/* component styles */
+</style>
+```
+
+**Component Patterns:**
+- Props use `defineProps<{ ... }>()` generic syntax
+- Use `ref<T | null>(null)` pattern for nullable refs
+- Components lazy-loaded in grids: `<LazyWikiItemCard ...>`
+- Use `v-for` with `:key` (usually item.id)
 
 ---
 
-*Convention analysis: 2026-05-05*
+*Convention analysis: 2026-05-06*

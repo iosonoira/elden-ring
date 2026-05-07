@@ -1,158 +1,173 @@
-<!-- refreshed: 2026-05-05 -->
 # Codebase Structure
 
-**Analysis Date:** 2026-05-05
+**Analysis Date:** 2026-05-06
 
 ## Directory Layout
 
 ```
 elden-ring/
-├── .agents/               # Agent skills and configuration
-├── .nuxt/                 # Nuxt build output (generated)
-├── .output/               # Nitro output (generated)
-├── .opencode/             # IDE configuration
-├── app/                   # Application source
-│   ├── app.vue            # Root component
-│   ├── assets/            # Static assets and data
-│   ├── components/       # Vue components
-│   ├── composables/       # Vue composables
-│   ├── layouts/           # Nuxt layouts
-│   ├── pages/             # Nuxt pages (routing)
-│   ├── shared/            # Shared types
-│   ├── stores/            # Pinia stores
-│   └── utils/             # Utility functions
-├── docs/                  # Documentation
+├── app/
+│   ├── assets/
+│   │   ├── data/             # Static JSON item databases
+│   │   │   ├── all_items.json
+│   │   │   ├── altered_armor.json
+│   │   │   ├── dlc_items.json
+│   │   │   ├── item_counter.json
+│   │   │   ├── unobtainable.json
+│   │   │   └── item_dict_template.json
+│   │   └── scss/             # Global SCSS
+│   │       ├── abstracts/    # _variables.scss, _mixins.scss, _animations.scss
+│   │       ├── base/         # _reset.scss, _typography.scss, _transitions.scss
+│   │       ├── components/   # Component-specific styles
+│   │       ├── layout/       # Layout styles
+│   │       ├── pages/        # Page-specific styles
+│   │       └── main.scss    # Imports all partials
+│   ├── components/
+│   │   ├── layout/          # Layout components
+│   │   │   ├── AppHeader.vue
+│   │   │   ├── AppSidebar.vue
+│   │   │   └── MobileMenu.vue
+│   │   └── wiki/            # Wiki feature components
+│   │       ├── ItemCard.vue
+│   │       ├── ItemDetailCard.vue
+│   │       ├── ItemGrid.vue
+│   │       ├── ItemInspector.vue
+│   │       ├── InventorySkeleton.vue
+│   │       ├── ReliquarySlot.vue
+│   │       └── CharacterSelector.vue
+│   ├── composables/         # Composition functions
+│   │   ├── useCategoryPage.ts
+│   │   ├── useEldenRingApi.ts
+│   │   └── useWikiItem.ts
+│   ├── layouts/
+│   │   └── default.vue
+│   ├── pages/              # Nuxt file-based routing
+│   │   ├── index.vue        # Homepage (checklist upload)
+│   │   ├── wiki/
+│   │   │   └── [category]/
+│   │   │       └── [id].vue  # Wiki detail page
+│   │   ├── inventory/
+│   │   │   └── [category].vue
+│   │   └── archives/
+│   │       └── [category].vue
+│   ├── plugins/            # Nuxt plugins
+│   │   └── save-store-persist.client.ts
+│   ├── shared/
+│   │   └── types/          # Shared TypeScript types
+│   │       └── EldenRingApi.ts
+│   ├── stores/             # Pinia stores
+│   │   ├── useSaveStore.ts
+│   │   └── useWikiStore.ts
+│   ├── utils/
+│   │   └── save-parser.ts  # Binary .sl2 parser
+│   └── app.vue            # Root component
 ├── locales/               # i18n translation files
-├── public/                # Public static files
-├── .gitignore
-├── DESIGN.md              # Design documentation
-├── eslint.config.mjs      # ESLint configuration
-├── llms-full.txt          # LLM context file
-├── nuxt.config.ts         # Nuxt configuration
-├── package.json           # Dependencies
-├── pnpm-lock.yaml         # Lockfile
-├── README.md              # Project readme
-└── tsconfig.json          # TypeScript configuration
+│   ├── en.json
+│   └── it.json
+├── public/                # Static public assets
+├── nuxt.config.ts        # Nuxt configuration
+├── package.json
+├── tsconfig.json
+└── eslint.config.mjs
 ```
 
 ## Directory Purposes
 
-**app/assets/:**
-- Purpose: Static assets including SCSS styles and JSON data
-- Contains: SCSS partials, item databases (JSON)
-- Key files: `app/assets/scss/main.scss`, `app/assets/data/all_items.json`
+**app/assets/data:**
+- Purpose: Static JSON item databases used for cross-referencing save file inventory
+- Contains: `all_items.json` (main), plus override patches (`altered_armor.json`, `unobtainable.json`, `dlc_items.json`)
+- Key files: All items grouped by category (armament, armor, talisman, magic, ashesOfWar, spiritAshes)
 
-**app/components/:**
-- Purpose: Reusable Vue components
-- Contains: Layout components, wiki item components
-- Key files: `app/components/layout/AppHeader.vue`, `app/components/wiki/ItemCard.vue`
+**app/components:**
+- Purpose: Reusable Vue SFC components
+- Contains: `layout/` (global navigation), `wiki/` (item display/selection)
 
-**app/composables/:**
-- Purpose: Vue composables for reusable stateful logic
-- Contains: API clients, data fetching hooks
-- Key files: `app/composables/useEldenRingApi.ts`, `app/composables/useWikiItem.ts`
+**app/composables:**
+- Purpose: Reusable composition API functions
+- Contains: API clients and fetch utilities
 
-**app/layouts/:**
-- Purpose: Nuxt layout wrappers for pages
-- Contains: Default layout with header/sidebar
-- Key files: `app/layouts/default.vue`
-
-**app/pages/:**
+**app/pages:**
 - Purpose: Nuxt file-based routing
-- Contains: Route handlers and page components
-- Key files: `app/pages/index.vue`, `app/pages/inventory/[category].vue`
+- Contains: `index.vue` (checklist), `wiki/[category]/[id].vue` (detail), inventory/archives pages
 
-**app/shared/:**
-- Purpose: Shared TypeScript type definitions
-- Contains: API response types, entity interfaces
-- Key files: `app/shared/types/EldenRingApi.ts`
+**app/stores:**
+- Purpose: Pinia state management
+- Contains: `useSaveStore` (save file + inventory), `useWikiStore` (API cache)
 
-**app/stores/:**
-- Purpose: Pinia state management stores
-- Contains: Application state for wiki and save data
-- Key files: `app/stores/useWikiStore.ts`, `app/stores/useSaveStore.ts`
+**app/utils:**
+- Purpose: Binary file parsing utilities
+- Contains: `save-parser.ts` (Elden Ring .sl2 save file parser)
 
-**app/utils/:**
-- Purpose: Pure utility functions and classes
-- Contains: Save file parser
-- Key files: `app/utils/save-parser.ts`
-
-**locales/:**
-- Purpose: i18n translation files
-- Contains: English and Italian translations
-- Files: `en.json`, `it.json`
+**app/shared/types:**
+- Purpose: Shared TypeScript interfaces
+- Contains: `WikiEntity`, `ApiResponse`, category types
 
 ## Key File Locations
 
 **Entry Points:**
-- `app/app.vue`: Root component rendering NuxtLayout + NuxtPage
-- `app/layouts/default.vue`: Default layout wrapping all pages
+- `app/app.vue`: Root app component
+- `app/layouts/default.vue`: Default layout wrapper
+- `app/pages/index.vue`: Homepage/checklist route
 
 **Configuration:**
-- `nuxt.config.ts`: Nuxt configuration with modules, fonts, CSS, i18n
-- `tsconfig.json`: TypeScript paths and options
-- `eslint.config.mjs`: ESLint rules via @nuxt/eslint
+- `nuxt.config.ts`: Nuxt configuration (modules, fonts, i18n, CSS)
 
 **Core Logic:**
-- `app/stores/useSaveStore.ts`: Save file handling, inventory parsing, stats computation
-- `app/utils/save-parser.ts`: Binary .sl2 file parser extracting character names and inventory IDs
+- `app/stores/useSaveStore.ts`: Save file handling and inventory cross-reference
+- `app/utils/save-parser.ts`: Binary .sl2 parsing logic
 
 **Testing:**
-- No test files detected (no .test.* or .spec.* files)
+- No test directory detected - no test files in repository
 
 ## Naming Conventions
 
 **Files:**
-- Components: `PascalCase.vue` (e.g., `AppHeader.vue`, `ItemCard.vue`)
-- TypeScript: `camelCase.ts` (e.g., `save-parser.ts`, `useEldenRingApi.ts`)
-- Stores: `use*Store.ts` (e.g., `useWikiStore.ts`, `useSaveStore.ts`)
-- Composables: `use*.ts` (e.g., `useEldenRingApi.ts`, `useWikiItem.ts`)
+- PascalCase: Components, composables, stores, pages (e.g., `ItemCard.vue`, `useSaveStore.ts`, `index.vue`)
+- kebab-case: SCSS partials (e.g., `_item-card.scss`, `_variables.scss`)
 
 **Directories:**
-- Feature directories: `lowercase/` (e.g., `components/wiki/`, `pages/inventory/`)
-- SCSS partials: `kebab-case/` with underscore prefix (e.g., `_variables.scss`, `_mixins.scss`)
+- Lowercase: Feature directories (`assets`, `components`, `composables`, `pages`)
+- kebab-case for SCSS subdirectories (`scss/base`, `scss/pages`)
+
+**TypeScript:**
+- PascalCase: Interfaces, types, classes (e.g., `WikiEntity`, `SaveParser`)
+- camelCase: Functions, variables (e.g., `fetchEntity`, `isLoaded`)
 
 ## Where to Add New Code
 
-**New Feature (e.g., new page):**
-- Primary code: `app/pages/` - create `[new-feature].vue`
-- Data handling: Consider adding to `app/stores/` if state needed
+**New Feature:**
+- Primary code: `app/components/` (if UI) or `app/composables/` (if logic)
+- Tests: No test directory - follow existing pattern if tests added
 
-**New Component:**
-- Implementation: `app/components/` - subdirectory by feature area
-- Styling: `app/assets/scss/components/_component-name.scss`
+**New Component/Module:**
+- Implementation: Create in appropriate subdirectory under `app/components/`
 
-**New Utility:**
-- Implementation: `app/utils/`
+**Utilities:**
+- Shared helpers: `app/utils/` for binary/data processing, `app/composables/` for Vue composition
 
-**New Store:**
-- Implementation: `app/stores/useNewStore.ts`
+**State:**
+- New Pinia store: Add to `app/stores/`
 
-**New Type Definition:**
-- Implementation: `app/shared/types/`
+**Types:**
+- New types: Add to `app/shared/types/` (shared interfaces) or inline in feature files (local types)
 
 ## Special Directories
 
-**.nuxt/:**
-- Purpose: Nuxt build cache and generated files
-- Generated: Yes (by Nuxt during build)
-- Committed: No (in .gitignore)
+**app/assets/data:**
+- Purpose: Static JSON files merged at runtime to form complete item database
+- Generated: No - manually maintained JSON
+- Committed: Yes
 
-**.output/:**
-- Purpose: Production output bundle
-- Generated: Yes (by Nitro during build)
-- Committed: No (in .gitignore)
+**app/plugins:**
+- Purpose: Client-side Nuxt plugins for persistence and hydration
+- Generated: No
+- Committed: Yes
 
-**node_modules/:**
-- Purpose: Installed dependencies
-- Generated: Yes (by pnpm install)
-- Committed: No (in .gitignore)
-
-**app/assets/data/:**
-- Purpose: Static JSON databases of game items
-- Generated: No (manually maintained)
+**locales:**
+- Purpose: i18n translation strings
+- Generated: No
 - Committed: Yes
 
 ---
 
-*Structure analysis: 2026-05-05*
+*Structure analysis: 2026-05-06*

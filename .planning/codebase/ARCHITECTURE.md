@@ -1,211 +1,182 @@
-<!-- refreshed: 2026-05-05 -->
+<!-- refreshed: 2026-05-06 -->
 # Architecture
 
-**Analysis Date:** 2026-05-05
+**Analysis Date:** 2026-05-06
 
 ## System Overview
 
-This is a **Nuxt 3** application that serves as an Elden Ring wiki and inventory checklist. Users can upload their game save files (.sl2) to track which items they have collected.
-
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│                    Pages & Components                        │
-│  `app/pages/` `app/components/`                             │
+│                    Nuxt 4 Router / Pages                     │
 ├──────────────────┬──────────────────┬───────────────────────┤
-│   Wiki Pages     │  Inventory Pages │   Layout Components   │
-│  wiki/[category] │ inventory/[cat]  │   AppHeader/Sidebar   │
+│   index.vue      │  wiki/[category] │  inventory/[cat]   │
+│   (Checklist)    │   /[id].vue      │   archives/[cat]    │
 └────────┬─────────┴────────┬─────────┴──────────┬────────────┘
          │                  │                     │
          ▼                  ▼                     ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    Composables & Stores                     │
-│  `app/composables/` `app/stores/`                           │
-│         useEldenRingApi   │   useWikiStore                  │
-│         useWikiItem       │   useSaveStore                  │
-└───────────────────────────┴──────────────────────────────────┘
-         │                           │
-         ▼                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Utils & Data Layer                       │
-│  `app/utils/save-parser.ts`  │  `app/assets/data/*.json`   │
-│  Binary save parsing         │  Item databases              │
+│                    Pinia Stores                          │
+│    useSaveStore.ts    │    useWikiStore.ts              │
 └─────────────────────────────────────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                 External Services                           │
-│  https://eldenring.fanapis.com/api  (External Wiki API)    │
-└─────────────────────────────────────────────────────────────┘
+         │                  │
+         ▼                  ▼
+┌─────────────────┐  ┌─────────────────────────────────────────────────┐
+│  SaveParser     │  │  useEldenRingApi + External Fan API            │
+│  (.sl2 binary) │  │  (eldenring.fanapis.com)                     │
+└─────────────────┘  └─────────────────────────────────────────────────┘
 ```
 
 ## Component Responsibilities
 
 | Component | Responsibility | File |
 |-----------|----------------|------|
-| `useSaveStore` | Manages save file upload, item parsing, inventory state, and completion statistics | `app/stores/useSaveStore.ts` |
-| `useWikiStore` | Caches and fetches item details from external API | `app/stores/useWikiStore.ts` |
-| `useEldenRingApi` | Provides typed API client for Elden Ring Fan API | `app/composables/useEldenRingApi.ts` |
-| `useWikiItem` | Composable for fetching single wiki items | `app/composables/useWikiItem.ts` |
-| `SaveParser` | Parses binary .sl2 save files to extract inventory IDs | `app/utils/save-parser.ts` |
+| `useSaveStore` | Save file upload, parsing, inventory cross-reference | `app/stores/useSaveStore.ts` |
+| `useWikiStore` | Wiki API response caching | `app/stores/useWikiStore.ts` |
+| `useEldenRingApi` | Fan API client | `app/composables/useEldenRingApi.ts` |
+| `useWikiItem` | Single wiki item fetcher | `app/composables/useWikiItem.ts` |
+| `SaveParser` | Binary .sl2 parsing | `app/utils/save-parser.ts` |
 
 ## Pattern Overview
 
-**Overall:** Nuxt 3 with Pinia State Management + Composition API
+**Overall:** Nuxt 4 SPA with Pinia state management
 
 **Key Characteristics:**
-- **Composition API** - All Vue components use `<script setup>` with `ref`, `computed`, and composables
-- **Pinia Stores** - State management via `defineStore` with setup syntax
-- **Nuxt Auto-imports** - Components, composables, and utilities auto-imported via Nuxt conventions
-- **External API Integration** - Fan API for wiki data, no backend server required
+- Static JSON item database merged at runtime from multiple sources
+- External Fan API for wiki detail data
+- Client-only operations for file upload and local storage persistence
+- Scoped SCSS with globally injected variables and mixins
 
 ## Layers
 
-**Pages & UI Layer:**
-- Purpose: Route handlers and view components
-- Location: `app/pages/`, `app/components/`
-- Contains: Vue pages with route params, UI components
-- Depends on: Composables and stores
-- Used by: Vue Router (Nuxt file-based routing)
+**Pages (Route Layer):**
+- Purpose: Route handlers rendering Vue components
+- Location: `app/pages/`
+- Contains: `index.vue`, `wiki/[category]/[id].vue`, `inventory/[category].vue`, `archives/[category].vue`
+- Depends on: Stores, Composables
+- Used by: Nuxt router
 
-**Composables Layer:**
-- Purpose: Reusable stateful logic and API clients
-- Location: `app/composables/`
-- Contains: `useEldenRingApi`, `useWikiItem`
-- Depends on: Shared types, $fetch (Nuxt)
-- Used by: Pages, components, stores
-
-**Stores Layer (Pinia):**
-- Purpose: Application state management
+**Stores (State Layer):**
+- Purpose: Centralized state management
 - Location: `app/stores/`
-- Contains: `useWikiStore` (API caching), `useSaveStore` (save parsing & inventory)
-- Depends on: Composables, utilities, JSON data files
-- Used by: Pages, components
+- Contains: `useSaveStore.ts`, `useWikiStore.ts`
+- Depends on: Utils, External APIs
+- Used by: Pages, Components
 
-**Utils Layer:**
-- Purpose: Pure logic and binary parsing
+**Composables (Logic Layer):**
+- Purpose: Reusable composition logic and API clients
+- Location: `app/composables/`
+- Contains: `useEldenRingApi.ts`, `useWikiItem.ts`, `useCategoryPage.ts`
+- Depends on: Types
+- Used by: Pages, Components
+
+**Components (UI Layer):**
+- Purpose: Reusable Vue components
+- Location: `app/components/`
+- Contains: Layout components (`AppHeader`, `AppSidebar`, `MobileMenu`), Wiki components (`ItemGrid`, `ItemCard`, `ReliquarySlot`, etc.)
+- Depends on: Stores, Types
+- Used by: Pages
+
+**Utilities (Infrastructure Layer):**
+- Purpose: Binary parsing and data transformation
 - Location: `app/utils/`
-- Contains: `SaveParser` class for binary .sl2 parsing
-- Depends on: None (standalone)
-- Used by: Stores
-
-**Data Layer:**
-- Purpose: Static item databases
-- Location: `app/assets/data/`
-- Contains: `all_items.json`, `dlc_items.json`, etc.
+- Contains: `save-parser.ts`
 - Depends on: None
-- Used by: Stores (imported at runtime)
+- Used by: Stores
 
 ## Data Flow
 
-### Primary Request Path - Save File Upload
+### Primary Request Path (Checklist)
 
-1. **User Action** - User uploads .sl2 file on index page
-2. **Store Handler** - `useSaveStore.handleFileUpload(file)` reads file as ArrayBuffer (`app/stores/useSaveStore.ts:67`)
-3. **Parser Instantiation** - `new SaveParser(buffer)` validates BND4 header (`app/utils/save-parser.ts:26`)
-4. **Character Extraction** - `parser.getCharacterNames()` extracts 10 character slots at hardcoded offsets
-5. **Inventory Parsing** - `parser.getInventoryIds(index)` finds item ID patterns in binary data
-6. **State Update** - Store updates `foundItemIds` with parsed hex IDs
-7. **Computed Views** - `ownedItems`, `missingItems`, `stats` computed props derive completion data
+1. **Upload** — User drops `.sl2` file on `index.vue` (line 89)
+2. **Parse** — `useSaveStore.handleFileUpload()` creates `SaveParser` (`app/stores/useSaveStore.ts:73`)
+3. **Extract** — `SaveParser.getCharacterNames()` extracts character slots (`app/utils/save-parser.ts:32`)
+4. **Select** — `useSaveStore.selectCharacter()` extracts inventory IDs via pattern matching (`app/utils/save-parser.ts:81`)
+5. **Cross-ref** — `ownedItems`/`missingItems` computed properties compare IDs against JSON database
+6. **Display** — `WikiReliquarySlot` renders owned/missing items from computed store values
 
-### Wiki Item Lookup Flow
+### Secondary Flow (Wiki Detail)
 
-1. **User Action** - User clicks item in inventory list
-2. **Page Navigation** - Navigate to `wiki/[category]/[id]`
-3. **Composable Fetch** - `useWikiItem(category, id)` calls `useEldenRingApi().fetchEntity()`
-4. **API Response** - External Fan API returns item data with image, description, stats
-5. **Cache Store** - `useWikiStore` caches fetched items to avoid re-fetching
+1. **Navigate** — User clicks item card, routes to `wiki/[category]/[id].vue` (line 10)
+2. **Fetch** — `useWikiItem()` calls `useEldenRingApi.fetchEntity()` (`app/composables/useWikiItem.ts:6`)
+3. **Cache** — Response cached in Pinia store to avoid redundant API calls
+4. **Render** — Wiki page displays item details, image, metadata
 
 **State Management:**
-- Pinia stores (`useSaveStore`, `useWikiStore`) hold reactive state
-- Components use `useSaveStore()` to access state via composables
-- Nuxt auto-imports eliminate manual store imports
+- Pinia stores manage all shared state
+- JSON item database merged at runtime from `all_items.json`, `altered_armor.json`, `unobtainable.json`, `dlc_items.json`
+- LocalStorage persistence via `@pinia-plugin-persistedstate` (detected in plugins)
 
 ## Key Abstractions
 
-**SaveParser Class:**
-- Purpose: Binary parsing of Elden Ring .sl2 save files
-- Examples: `app/utils/save-parser.ts`
-- Pattern: Pure class with instance methods, no Vue reactivity
-
-**WikiEntity Interface:**
-- Purpose: Type definitions for wiki API responses
+**WikiEntity:**
+- Purpose: Interface for wiki/API data
 - Examples: `app/shared/types/EldenRingApi.ts`
-- Pattern: TypeScript interfaces exported from shared types
+- Pattern: Plain TypeScript interface
 
-**Pinia Setup Stores:**
-- Purpose: Reactive state management with Composition API
-- Examples: `app/stores/useSaveStore.ts`, `app/stores/useWikiStore.ts`
-- Pattern: `defineStore('name', () => { ... })` returning refs and functions
+**SaveParser:**
+- Purpose: Binary .sl2 file parser
+- Examples: `app/utils/save-parser.ts`
+- Pattern: Class with private methods, public API
+
+**CharacterSlot:**
+- Purpose: Character slot representation
+- Examples: `app/utils/save-parser.ts:6`
+- Pattern: Exported TypeScript interface
 
 ## Entry Points
 
 **App Entry:**
 - Location: `app/app.vue`
-- Triggers: Application bootstrap
-- Responsibilities: Renders NuxtLayout + NuxtPage
+- Triggers: Nuxt app mount
+- Responsibilities: Renders `NuxtLayout` > `NuxtPage`
 
 **Default Layout:**
 - Location: `app/layouts/default.vue`
-- Triggers: All page routes
-- Responsibilities: Wraps all pages with AppHeader, AppSidebar, main slot
+- Triggers: Any page
+- Responsibilities: Renders header, sidebar, page slot
 
-**Home Page:**
-- Location: `app/pages/index.vue`
-- Triggers: `/` route
-- Responsibilities: Save file upload UI
-
-**Inventory Pages:**
-- Location: `app/pages/inventory/[category].vue`
-- Triggers: `/inventory/:category` route
-- Responsibilities: Display owned/missing items by category
-
-**Wiki Detail Pages:**
-- Location: `app/pages/wiki/[category]/[id].vue`
-- Triggers: `/wiki/:category/:id` route
-- Responsibilities: Display item details from API
+**Client Plugin:**
+- Location: `app/plugins/save-store-persist.client.ts`
+- Triggers: Client-side hydration
+- Responsibilities: Pinia persistence for save store
 
 ## Architectural Constraints
 
-- **Client-Side Only:** No server-side rendering for save parsing (binary requires browser)
-- **Hardcoded Offsets:** Save parser uses fixed memory offsets (from original script.js) - fragile to game updates
-- **External API Dependency:** Wiki data depends on fanapis.com - no local fallback if API unavailable
-- **Single Page State:** Save data not persisted - cleared on refresh
+- **Browser-only:** File API (`FileReader`) and `localStorage` - wrapped in `<ClientOnly>` components
+- **Server-side guards:** `import.meta.server` checks in `useSaveStore.loadDatabase()` prevent server execution
+- **No API proxy:** Direct calls to external `eldenring.fanapis.com` from client (no server API routes)
+- **Static JSON DB:** Item database loaded from multiple JSON files merged at runtime
 
 ## Anti-Patterns
 
-### Hardcoded Magic Numbers in Save Parser
+### Hardcoded API URL
 
-**What happens:** Binary offsets and patterns defined as raw numbers in code
-**Why it's wrong:** No clarity on what these values represent; risk of silent breakage if game updates
-**Do this instead:** Use named constants or dedicated configuration object (`app/utils/save-parser.ts:37-40`)
+**What happens:** `BASE_URL` defined in both `useWikiStore` and `useEldenRingApi` composables
+**Why it's wrong:** Duplication, no single source of truth for API configuration
+**Do this instead:** Define in `nuxt.config.ts` runtime config, reference via `useRuntimeConfig()`
 
-### Category Mapping Duplication
+### Inline Category Mapping
 
-**What happens:** Same API category mapping exists in both `useWikiStore` and `useEldenRingApi`
-**Why it's wrong:** DRY violation; changes must be made in two places
-**Do this instead:** Extract mapping to shared utility or constant file
-
-### No Error Boundaries
-
-**What happens:** API failures silently logged to console; no user-facing error states
-**Why it's wrong:** Users see no feedback when wiki data fails to load
-**Do this instead:** Add error state in store and display in components
+**What happens:** Category mapping objects defined inline in multiple files (`useWikiStore.ts:23`, `useEldenRingApi.ts:28`)
+**Why it's wrong:** Changes to category mappings require edits in multiple places
+**Do this instead:** Extract to shared constants in `app/shared/types/EldenRingApi.ts`
 
 ## Error Handling
 
-**Strategy:** Try-catch with console.error logging
+**Strategy:** Graceful degradation with error states
 
 **Patterns:**
-- API calls wrapped in try-catch, errors logged but not surfaced to UI (`app/stores/useWikiStore.ts:45-47`)
-- Save parser validation throws early with alert (`app/stores/useSaveStore.ts:74-76`)
-- No global error boundary or error page
+- Store exposes `*Error` ref (e.g., `dbLoadError`, `uploadError`)
+- Page components display error messages via `v-if="error"`
+- API errors logged in dev mode only (`import.meta.dev`)
 
 ## Cross-Cutting Concerns
 
-**Logging:** `console.error()` for failures; no structured logging framework
-**Validation:** Save file BND4 header check; no form validation
-**Authentication:** None required - public wiki API, local save file only
+**Styling:** Scoped SCSS with global abstracts (variables, mixins injected via Vite config)
+**i18n:** `@nuxtjs/i18n` with locale files in `locales/`
+**Images:** `@nuxt/image` with external provider for wiki images
+**Icons:** `@nuxt/icon` using Material Symbols
 
 ---
 
-*Architecture analysis: 2026-05-05*
+*Architecture analysis: 2026-05-06*

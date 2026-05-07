@@ -1,78 +1,67 @@
 # External Integrations
 
-**Analysis Date:** 2026-05-05
+**Analysis Date:** 2026-05-06
 
 ## APIs & External Services
 
-**Game Data API:**
-- **Elden Ring Fan API** (`eldenring.fanapis.com`) - External API for game item data
-  - SDK/Client: Native `$fetch` (Nuxt built-in) or `ofetch`
+**Wiki Data API:**
+- Elden Ring Fan API - External wiki data source
   - Base URL: `https://eldenring.fanapis.com/api`
-  - Endpoints: `/weapons`, `/armors`, `/talismans`, `/sorceries`, `/ashes`, `/spirits`
-  - Purpose: Provides wiki-style item details (images, descriptions, stats)
-  - Used in: `app/composables/useEldenRingApi.ts`, `app/stores/useWikiStore.ts`
-
-**Google Fonts:**
-- Font Provider: Google Fonts (via @nuxt/fonts)
-  - Cinzel (weights: 400, 700, 900)
-  - Noto Serif (weights: 400, 700, styles: normal/italic)
-  - Lora (weights: 400, 500, styles: normal/italic)
-  - Manrope (weights: 300, 400, 600)
-  - Space Grotesk (weights: 300, 400, 700)
-  - Configuration: `nuxt.config.ts` lines 18-29
+  - SDK/Client: Native `$fetch` (Nuxt/ofetch)
+  - Categories: weapons, armors, talismans, sorceries, ashes, spirits
+  - No authentication required
 
 ## Data Storage
 
-**Databases:**
-- None - No database integration
+**Client-Side Persistence:**
+- LocalStorage via Pinia persistence plugin (save data)
+- No server-side database
 
 **File Storage:**
-- Local filesystem only - No cloud storage
+- Static JSON assets in `app/assets/data/`
+- Local build assets, no external CDN
 
 **Caching:**
-- In-memory cache via Pinia store (`useWikiStore`) - Items cached in `cache` ref
-- No persistent cache (browser storage not used)
+- Nuxt `useAsyncData` with built-in cache
 
 ## Authentication & Identity
 
-**Auth Provider:**
-- None - Application does not require authentication
-- All functionality operates anonymously
+**Not Applicable:**
+- No authentication system
+- No user accounts or login
 
 ## Monitoring & Observability
 
 **Error Tracking:**
-- None - No error tracking service configured
+- None integrated
 
 **Logs:**
-- Console logging via `console.error` - Used in API error handlers in `app/stores/useWikiStore.ts` and `app/composables/useEldenRingApi.ts`
+- Console.log in development mode only (`import.meta.dev`)
 
 ## CI/CD & Deployment
 
 **Hosting:**
-- Not specified - Project can be deployed to any Node.js-compatible hosting
-- Vercel, Netlify, Cloudflare Pages, or any Node.js server
+- Not detected (no deployment config)
 
 **CI Pipeline:**
-- None detected - No GitHub Actions, GitLab CI, or other CI configuration found
+- Not detected
 
 ## Environment Configuration
 
 **Required env vars:**
-- None - Application works without environment variables
-- All configuration is hardcoded in source files
+- None (public API only)
 
 **Secrets location:**
-- N/A - No secrets used
+- None required
 
 ## Webhooks & Callbacks
 
 **Incoming:**
-- None - No webhook endpoints
+- None
 
 **Outgoing:**
-- None - No outgoing webhooks
+- Fan API calls only
 
 ---
 
-*Integration audit: 2026-05-05*
+*Integration audit: 2026-05-06*

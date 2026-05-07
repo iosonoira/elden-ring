@@ -1,108 +1,114 @@
 # Testing Patterns
 
-**Analysis Date:** 2026-05-05
+**Analysis Date:** 2026-05-06
 
 ## Test Framework
 
-**Status:** Not detected
+**Status:** No testing framework currently configured
 
-No testing framework is currently configured or used in this codebase.
+**Observations:**
+- No test files (`.test.ts`, `.spec.ts`, `.test.vue`, `.spec.vue`) found in codebase
+- No test configuration files (e.g., `vitest.config.ts`, `jest.config.js`)
+- No testing dependencies in `package.json`
+- No test scripts in `package.json`
 
-- No test runner installed (no vitest, jest, or other test frameworks in package.json)
-- No test files found in the project
-- No test configuration files (no jest.config.*, vitest.config.*, etc.)
+**Recommendation:** Consider adding Vitest for Vue/Nuxt testing
 
 ## Test File Organization
 
-**Location:** Not applicable
+**Location:** Not applicable (no tests exist)
 
-No tests exist in the current codebase.
-
-**Expected Location (if tests were to be added):**
-- Unit tests could be placed alongside source files or in `__tests__` directories
-- Integration tests could use Nuxt's built-in test utilities
-- E2E tests could use Playwright or Cypress
+**Expected patterns for Nuxt 4 project:**
+- Unit tests: `**/*.test.ts` or `**/*.spec.ts` in same directory as source
+- Component tests: `**/*.test.ts` or `**/*.spec.ts` co-located with `.vue` files
+- Integration tests: `tests/integration/` directory
 
 ## Test Structure
 
-**Not applicable** - no tests exist in codebase.
+**Not applicable** - no tests currently exist in codebase
 
 ## Mocking
 
-**Not applicable** - no tests exist in codebase.
+**Not applicable** - no tests currently exist in codebase
 
-**Note:** If testing were to be added, consider:
-- Mocking `$fetch` or `$AsyncData` for API composables
-- Mocking file reader for `SaveParser` class
-- Using Pinia testing utilities for store testing
+**Expected patterns for this codebase:**
+
+1. **API mocking:**
+   - Use `nocked` or MSW for HTTP mocking
+   - Mock external API: `https://eldenring.fanapis.com/api`
+
+2. **Pinia store mocking:**
+   - Create test utils to mock stores
+   - Use `pinia-plugin-test-utils` if available
+
+3. **File upload mocking:**
+   - Mock `File` objects for `save-parser.ts` tests
 
 ## Fixtures and Factories
 
-**Not applicable** - no tests exist in codebase.
+**Not applicable** - no tests currently exist in codebase
 
-**Potential test data locations (if tests were to be added):**
-- JSON data files in `app/assets/data/` could serve as fixtures
-- Type definitions in `app/shared/types/` could inform test data structures
+**Potential test data locations:**
+- JSON data files in `app/assets/data/` can serve as fixtures
+- Character save files would need binary test fixtures
+- Item database JSON can be used for expected item lists
 
 ## Coverage
 
-**Requirements:** None enforced
+**Requirements:** None (no tests enforced)
 
-No coverage tooling is configured.
+**Recommendation:** Target 70%+ coverage for:
+- Store logic (`useSaveStore.ts`, `useWikiStore.ts`)
+- Utility functions (`save-parser.ts`)
+- Composables (`useCategoryPage.ts`, `useEldenRingApi.ts`)
 
 ## Test Types
 
 **Unit Tests:**
-- Not present
-- Could test `SaveParser` class logic (hex conversion, pattern matching)
-- Could test store computed properties (`missingItems`, `ownedItems`, `stats`)
+
+Priority areas for unit tests:
+- `app/utils/save-parser.ts` - Binary parsing logic
+- `app/stores/useSaveStore.ts` - Computed properties for owned/missing items
+- `app/stores/useWikiStore.ts` - Cache and fetch logic
 
 **Integration Tests:**
-- Not present
-- Could test Pinia stores with database loading
-- Could test composable behavior with mocked API
+
+Priority areas:
+- Store persistence plugin (`save-store-persist.client.ts`)
+- Wiki API integration with caching
 
 **E2E Tests:**
-- Not present
-- Could use Playwright to test file upload flow
-- Could test page navigation and routing
+
+Not currently implemented. Consider Playwright for:
+- Character selection flow
+- Inventory loading from save file
+- Category filtering and pagination
 
 ## Common Patterns
 
-**None established** - no testing patterns in use.
+**Not applicable** - no tests currently exist in codebase
 
-**Recommendations for future testing:**
-- Use `@pinia/testing` for store unit tests
-- Use Nuxt `useTestUtils` for component testing
-- Mock external API calls to `eldenring.fanapis.com`
-- Test `SaveParser` with pre-configured ArrayBuffer fixtures
+## Testing Recommendations
 
-## Test Framework Recommendations
+1. **Add Vitest:**
+   ```bash
+   pnpm add -D vitest @vue/test-utils jsdom
+   ```
 
-If testing were to be added, the recommended stack would be:
+2. **Create test utilities:**
+   - Mock for `SaveParser` class
+   - Mock for external API responses
+   - Pinia store testing helpers
 
-**Framework:**
-- Vitest - aligns with Nuxt/Vue ecosystem
-- Alternative: Jest with ts-jest
+3. **Priority test targets:**
+   - `save-parser.ts` - Critical binary parsing logic
+   - Store computed properties - Business logic for item categorization
+   - Cache invalidation in `useWikiStore.ts`
 
-**Component Testing:**
-- Vue Test Utils (built into Vue ecosystem)
-- Alternatively: Testing Library for Vue
-
-**E2E Testing:**
-- Playwright - recommended for Nuxt projects
-
-**Installation would add packages like:**
-```json
-{
-  "devDependencies": {
-    "vitest": "^2.0.0",
-    "@vue/test-utils": "^2.4.0",
-    "@pinia/testing": "^2.0.0"
-  }
-}
-```
+4. **CI integration:**
+   - Add `pnpm test` to build pipeline
+   - Enforce coverage thresholds
 
 ---
 
-*Testing analysis: 2026-05-05*
+*Testing analysis: 2026-05-06*
