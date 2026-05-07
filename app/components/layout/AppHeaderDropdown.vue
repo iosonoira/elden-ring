@@ -9,6 +9,17 @@ const wikiCategories = [
   { label: 'Magic', href: '/wiki/magic' },
   { label: 'Ashes of War', href: '/wiki/ashesOfWar' },
   { label: 'Spirit Ashes', href: '/wiki/spiritAshes' },
+  { label: 'Ammo', href: '/wiki/ammunition' },
+  { label: 'Bosses', href: '/wiki/bosses' },
+  { label: 'Classes', href: '/wiki/classes' },
+  { label: 'Creatures', href: '/wiki/creatures' },
+  { label: 'Incantations', href: '/wiki/incantations' },
+  { label: 'Items', href: '/wiki/items' },
+  { label: 'Locations', href: '/wiki/locations' },
+  { label: 'NPCs', href: '/wiki/npcs' },
+  { label: 'Shields', href: '/wiki/shields' },
+  { label: 'Sorceries', href: '/wiki/sorceries' },
+  { label: 'Spirits', href: '/wiki/spirits' },
 ]
 
 const isOpen = ref(false)

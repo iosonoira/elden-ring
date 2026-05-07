@@ -9,7 +9,18 @@ const CATEGORY_MAP: Record<string, string> = {
   talisman: 'talismans',
   magic: 'sorceries',
   ashesOfWar: 'ashes',
-  spiritAshes: 'spirits'
+  spiritAshes: 'spirits',
+  ammunition: 'ammunition',
+  bosses: 'bosses',
+  classes: 'classes',
+  creatures: 'creatures',
+  incantations: 'incantations',
+  items: 'items',
+  locations: 'locations',
+  npcs: 'npcs',
+  shields: 'shields',
+  sorceries: 'sorceries',
+  spirits: 'spirits'
 }
 
 export function useWikiCategory(category: string | Ref<string>) {

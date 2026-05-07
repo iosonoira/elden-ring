@@ -27,6 +27,17 @@ export type WikiCategory =
   | 'magic' 
   | 'ashesOfWar' 
   | 'spiritAshes'
+  | 'ammunition'
+  | 'bosses'
+  | 'classes'
+  | 'creatures'
+  | 'incantations'
+  | 'items'
+  | 'locations'
+  | 'npcs'
+  | 'shields'
+  | 'sorceries'
+  | 'spirits'
 
 // Tipo separato per i path dell'API esterna (usato solo nel composable)
 export type ApiCategory =
@@ -37,15 +48,34 @@ export type ApiCategory =
   | 'ashes'
   | 'spirits'
   | 'shields'
+  | 'ammunition'
+  | 'bosses'
+  | 'classes'
+  | 'creatures'
+  | 'incantations'
+  | 'items'
+  | 'locations'
+  | 'npcs'
 
 // Tipo per le chiavi delle categorie interne (usato in store e composables)
 export type CategoryKey =
   | 'armament'
   | 'armor'
-  | 'ashesOfWar'
-  | 'magic'
-  | 'spiritAshes'
   | 'talisman'
+  | 'magic'
+  | 'ashesOfWar'
+  | 'spiritAshes'
+  | 'ammunition'
+  | 'bosses'
+  | 'classes'
+  | 'creatures'
+  | 'incantations'
+  | 'items'
+  | 'locations'
+  | 'npcs'
+  | 'shields'
+  | 'sorceries'
+  | 'spirits'
 
 // Tipo per un item del database con il suo ID aggiunto
 export interface ItemData {

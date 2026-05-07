@@ -16,6 +16,17 @@ const categories = [
   { key: 'magic', label: 'wiki.category.magic', icon: 'auto_awesome' },
   { key: 'ashesOfWar', label: 'wiki.category.ashesOfWar', icon: 'settings' },
   { key: 'spiritAshes', label: 'wiki.category.spiritAshes', icon: 'person_outline' },
+  { key: 'ammunition', label: 'wiki.category.ammo', icon: 'ammo' },
+  { key: 'bosses', label: 'wiki.category.bosses', icon: 'boss' },
+  { key: 'classes', label: 'wiki.category.classes', icon: 'person' },
+  { key: 'creatures', label: 'wiki.category.creatures', icon: 'animal' },
+  { key: 'incantations', label: 'wiki.category.incantations', icon: 'spell' },
+  { key: 'items', label: 'wiki.category.items', icon: 'inventory_2' },
+  { key: 'locations', label: 'wiki.category.locations', icon: 'map' },
+  { key: 'npcs', label: 'wiki.category.npcs', icon: 'people' },
+  { key: 'shields', label: 'wiki.category.shields', icon: 'shield' },
+  { key: 'sorceries', label: 'wiki.category.sorceries', icon: 'magic' },
+  { key: 'spirits', label: 'wiki.category.spirits', icon: 'spirituality' },
 ]
 
 const searchQuery = ref('')
