@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
+const route = useRoute()
 
 const wikiCategories = [
   { label: 'Weapons', href: '/wiki/armament' },
@@ -37,10 +38,10 @@ const handleClickOutside = (event: MouseEvent) => {
 </script>
 
 <template>
-  <div class="wiki-dropdown" ref="dropdownRef">
+  <div class="app-header__nav-item" ref="dropdownRef">
     <button 
-      class="wiki-dropdown__trigger" 
-      :class="{ 'wiki-dropdown__trigger--active': isOpen }"
+      class="app-header__nav-link"
+      :class="{ 'app-header__nav-link--active': isOpen || route.path.startsWith('/wiki') }"
       @click="toggleDropdown"
       aria-haspopup="true"
       :aria-expanded="isOpen"
@@ -48,18 +49,18 @@ const handleClickOutside = (event: MouseEvent) => {
       <span>Wiki</span>
       <Icon 
         name="material-symbols:keyboard-arrow-down-rounded" 
-        size="20" 
+        size="16" 
         :class="{ 'wiki-dropdown__arrow--open': isOpen }"
       />
     </button>
 
     <Transition name="dropdown-fade">
-      <div v-if="isOpen" class="wiki-dropdown__menu">
+      <div v-if="isOpen" class="app-header__nav-item__menu">
         <NuxtLink 
           v-for="item in wikiCategories" 
           :key="item.href"
           :to="localePath(item.href)"
-          class="wiki-dropdown__item"
+          class="app-header__nav-item__item"
           @click="closeDropdown"
         >
           {{ item.label }}
@@ -73,28 +74,13 @@ const handleClickOutside = (event: MouseEvent) => {
 @use '~/assets/scss/abstracts/variables' as *;
 @use '~/assets/scss/abstracts/mixins' as *;
 
-.wiki-dropdown {
+.app-header__nav-item {
   position: relative;
 
-  &__trigger {
+  .app-header__nav-link {
     display: inline-flex;
     align-items: center;
     gap: $space-1;
-    padding: $space-2 $space-4;
-    background: transparent;
-    border: 1px solid transparent;
-    color: $color-on-surface;
-    font-family: $font-body;
-    font-size: $text-body;
-    cursor: pointer;
-    transition: color $transition-base, border-color $transition-base;
-    border-radius: $radius-sm;
-
-    &:hover,
-    &--active {
-      color: $color-primary;
-      border-color: rgba($color-primary, 0.3);
-    }
 
     .wiki-dropdown__arrow--open {
       transform: rotate(180deg);
@@ -122,7 +108,6 @@ const handleClickOutside = (event: MouseEvent) => {
     text-decoration: none;
     border-radius: $radius-sm;
     transition: color $transition-fast, background $transition-fast;
-    @include gold-glow-text;
 
     &:hover {
       color: $color-primary;
