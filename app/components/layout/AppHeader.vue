@@ -6,6 +6,7 @@ const route = useRoute();
 const navItems = computed(() => [
   { label: 'Checklist', href: localePath('/'), active: route.path === '/' },
   { label: 'Archives', href: localePath('/archives/armament'), active: route.path.startsWith('/archives') },
+  { label: 'Wiki', href: localePath('/wiki'), active: route.path.startsWith('/wiki') },
   { label: 'Inventory', href: localePath('/inventory/armament'), active: route.path.startsWith('/inventory') },
 ])
 
