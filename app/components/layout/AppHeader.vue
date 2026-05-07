@@ -1,12 +1,11 @@
 <script setup lang="ts">
-const localePath = useLocalePath();
-const route = useRoute();
+const localePath = useLocalePath()
+const route = useRoute()
 
 // Navigation items
 const navItems = computed(() => [
   { label: 'Checklist', href: localePath('/'), active: route.path === '/' },
   { label: 'Archives', href: localePath('/archives/armament'), active: route.path.startsWith('/archives') },
-  { label: 'Wiki', href: localePath('/wiki'), active: route.path.startsWith('/wiki') },
   { label: 'Inventory', href: localePath('/inventory/armament'), active: route.path.startsWith('/inventory') },
 ])
 
@@ -38,6 +37,7 @@ const isMobileMenuOpen = ref(false)
         :class="{ 'app-header__nav-link--active': item.active }">
         {{ item.label }}
       </NuxtLink>
+      <LayoutAppHeaderDropdown />
     </nav>
 
     <div class="app-header__actions">
