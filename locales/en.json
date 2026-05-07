@@ -35,9 +35,28 @@
       "titleFallback": "Wiki | Gilded Reliquary",
       "descFallback": "Discover the secrets of the Lands Between."
     },
+    "category": {
+      "weapons": "Weapons",
+      "armor": "Armor",
+      "talismans": "Talismans",
+      "magic": "Magic",
+      "ashesOfWar": "Ashes of War",
+      "spiritAshes": "Spirit Ashes",
+      "armament": "Weapons",
+      "talisman": "Talismans"
+    },
     "error": {
       "title": "Fragment Not Found",
       "message": "The search in the sacred archive yielded no results."
+    },
+    "breadcrumb": {
+      "home": "Wiki"
+    },
+    "filters": {
+      "search": "Search items...",
+      "sortAZ": "Name A-Z",
+      "sortZA": "Name Z-A",
+      "noResults": "No items found matching your search."
     },
     "label": {
       "location": "Location",
