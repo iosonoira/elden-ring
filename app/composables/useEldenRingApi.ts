@@ -26,7 +26,7 @@ export function useEldenRingApi() {
   function getByName<T extends WikiEntity>(
     category: WikiCategory,
     name: string,
-    options?: { lazy?: boolean; immediate?: boolean }
+    options: Parameters<typeof useAsyncData>[2] = {}
   ) {
     // Map internal categories to Fan API categories
     const apiCategoryMap: Record<WikiCategory, ApiCategory> = {

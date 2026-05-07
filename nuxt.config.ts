@@ -7,7 +7,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' }
+    pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+      ]
+    }
   },
 
   modules: [

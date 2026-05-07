@@ -17,7 +17,7 @@
 
 // Ambient gold shadow for UI elements
 @mixin gold-glow-box($strength: 0.15) {
-  box-shadow: 0 0 20px rgba(241, 201, 125, $strength);
+  box-shadow: 0 0 20px rgba($color-primary, $strength);
 }
 
 // Rune gradient: gold metallic gradient for CTAs

@@ -16,7 +16,7 @@
 
 ### Plan list:
 
-- [ ] 01-01-PLAN.md — Analyze current sidebar and routing logic
+- [x] 01-01-PLAN.md — Analyze current sidebar and routing logic
 - [ ] 01-02-PLAN.md — Implement smart redirect in sidebar
 - [ ] 01-03-PLAN.md — Verify/fix state persistence
 
