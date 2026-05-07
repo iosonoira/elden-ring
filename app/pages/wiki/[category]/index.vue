@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useWikiStore } from '~/stores/useWikiStore'
+import type { WikiCategory } from '~/shared/types/EldenRingApi'
 
 definePageMeta({ layout: 'default' })
 
@@ -7,152 +7,136 @@ const route = useRoute()
 const localePath = useLocalePath()
 const { t } = useI18n()
 
-const category = computed(() => route.params.category as string)
+const category = computed(() => route.params.category as WikiCategory)
+
+const categories = [
+  { key: 'armament', label: 'wiki.category.weapons', icon: 'swords' },
+  { key: 'armor', label: 'wiki.category.armor', icon: 'shield_person' },
+  { key: 'talisman', label: 'wiki.category.talismans', icon: 'brightness_7' },
+  { key: 'magic', label: 'wiki.category.magic', icon: 'auto_awesome' },
+  { key: 'ashesOfWar', label: 'wiki.category.ashesOfWar', icon: 'settings' },
+  { key: 'spiritAshes', label: 'wiki.category.spiritAshes', icon: 'person_outline' },
+]
+
 const searchQuery = ref('')
-const sortOrder = ref<'asc' | 'desc'>('asc')
+const sortOption = ref<'az' | 'za'>('az')
 
-const wikiStore = useWikiStore()
+const { items, loading, error, fetch } = useWikiCategory(category)
 
-const categoryLabel = computed(() => {
-  const labels: Record<string, string> = {
-    armament: 'wiki.category.weapons',
-    armor: 'wiki.category.armor',
-    talisman: 'wiki.category.talismans',
-    magic: 'wiki.category.magic',
-    ashesOfWar: 'wiki.category.ashesOfWar',
-    spiritAshes: 'wiki.category.spiritAshes'
-  }
-  return labels[category.value] || category.value
+onMounted(() => {
+  fetch()
 })
 
-const items = computed(() => {
-  const categoryItems = wikiStore.cache
-  const filtered = Object.entries(categoryItems)
-    .filter(([key]) => key.startsWith(category.value))
-    .map(([, item]) => item)
-    .filter((item): item is NonNullable<typeof item> => item !== null && item !== undefined)
+watch(category, () => {
+  searchQuery.value = ''
+})
+
+const filteredItems = computed(() => {
+  let result = [...items.value]
   
   if (searchQuery.value) {
-    return filtered.filter(item => 
-      item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    const query = searchQuery.value.toLowerCase()
+    result = result.filter(item => 
+      item.name.toLowerCase().includes(query)
     )
   }
   
-  return sortOrder.value === 'asc' 
-    ? filtered.sort((a, b) => a.name.localeCompare(b.name))
-    : filtered.sort((a, b) => b.name.localeCompare(a.name))
+  if (sortOption.value === 'az') {
+    result.sort((a, b) => a.name.localeCompare(b.name))
+  } else {
+    result.sort((a, b) => b.name.localeCompare(a.name))
+  }
+  
+  return result
+})
+
+const categoryLabel = computed(() => {
+  return `wiki.category.${category.value}`
+})
+
+useSeoMeta({
+  title: computed(() => `${t(categoryLabel.value)} | Gilded Reliquary`),
+  description: computed(() => t('wiki.category.desc', { category: t(categoryLabel.value) }))
 })
 </script>
 
 <template>
-  <div class="wiki-category">
-    <header class="wiki-category__header">
-      <NuxtLink :to="localePath('/wiki')" class="wiki-category__back">
-        <Icon name="material-symbols:arrow-back" size="20" />
-        {{ $t('wiki.breadcrumb.back') }}
-      </NuxtLink>
-      <h1>{{ $t(categoryLabel) }}</h1>
+  <div class="wiki-category-page">
+    <header class="wiki-category-page__header">
+      <nav class="wiki-category-page__breadcrumb">
+        <NuxtLink :to="localePath('/wiki')">{{ $t('wiki.index.title') }}</NuxtLink>
+        <Icon name="material-symbols:chevron-right" size="16" class="separator" />
+        <span>{{ $t(categoryLabel) }}</span>
+      </nav>
+      
+      <div class="wiki-category-page__title-group">
+        <span class="wiki-category-page__subtitle">{{ $t('wiki.category.subtitle') }}</span>
+        <h1 class="wiki-category-page__title">
+          <Icon :name="`material-symbols:${categories.find(c => c.key === category)?.icon || 'inventory-2'}`" size="28" />
+          {{ $t(categoryLabel) }}
+        </h1>
+      </div>
     </header>
 
-    <div class="wiki-category__filters">
-      <input 
-        v-model="searchQuery"
-        type="text"
-        :placeholder="$t('wiki.filters.search')"
-        class="wiki-category__search"
-      />
-      <select v-model="sortOrder" class="wiki-category__sort">
-        <option value="asc">{{ $t('wiki.filters.sortAZ') }}</option>
-        <option value="desc">{{ $t('wiki.filters.sortZA') }}</option>
-      </select>
-    </div>
-
-    <div class="wiki-category__grid">
-      <div
-        v-for="item in items"
-        :key="item.name"
-        class="wiki-category__item glass-panel"
-      >
-        <NuxtImg v-if="item.image" :src="item.image" :alt="item.name" class="wiki-category__item-img" />
-        <div class="wiki-category__item-info">
-          <h3>{{ item.name }}</h3>
-          <p v-if="item.location" class="wiki-category__item-location">{{ item.location }}</p>
+    <div class="wiki-category-page__layout">
+      <aside class="wiki-category-page__sidebar">
+        <div class="sticky-top">
+          <nav class="wiki-category-page__nav">
+            <NuxtLink
+              v-for="cat in categories"
+              :key="cat.key"
+              class="wiki-category-page__nav-item"
+              :class="{ 'wiki-category-page__nav-item--active': category === cat.key }"
+              :to="localePath(`/wiki/${cat.key}`)"
+            >
+              <Icon :name="`material-symbols:${cat.icon}`" size="20" />
+              <span>{{ $t(cat.label) }}</span>
+            </NuxtLink>
+          </nav>
         </div>
-      </div>
-    </div>
+      </aside>
 
-    <p v-if="items.length === 0" class="wiki-category__empty">
-      {{ $t('wiki.category.empty') }}
-    </p>
+      <main class="wiki-category-page__content">
+        <div class="wiki-category-page__controls">
+          <div class="wiki-category-page__search">
+            <Icon name="material-symbols:search" size="20" class="wiki-category-page__search-icon" />
+            <input
+              v-model="searchQuery"
+              type="text"
+              :placeholder="$t('wiki.searchPlaceholder')"
+              class="wiki-category-page__search-input"
+            />
+          </div>
+          <select v-model="sortOption" class="wiki-category-page__sort">
+            <option value="az">{{ $t('wiki.sortAz') }}</option>
+            <option value="za">{{ $t('wiki.sortZa') }}</option>
+          </select>
+        </div>
+
+        <div v-if="loading" class="wiki-category-page__loading">
+          <div class="wiki-category-page__spinner" />
+          <span>{{ $t('wiki.loading') }}</span>
+        </div>
+
+        <div v-else-if="error" class="wiki-category-page__error">
+          <Icon name="material-symbols:error-outline" size="24" />
+          <span>{{ error }}</span>
+        </div>
+
+        <div v-else-if="filteredItems.length === 0" class="wiki-category-page__empty">
+          <Icon name="material-symbols:inventory-2-outline" size="48" />
+          <p>{{ $t('wiki.noItems') }}</p>
+        </div>
+
+        <div v-else class="wiki-category-page__grid">
+          <WikiItemCard
+            v-for="item in filteredItems"
+            :key="item.id"
+            :item="item"
+            :category="category"
+          />
+        </div>
+      </main>
+    </div>
   </div>
 </template>
-
-<style scoped>
-.wiki-category {
-  padding: 2rem;
-}
-.wiki-category__header {
-  margin-bottom: 1.5rem;
-}
-.wiki-category__back {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  margin-bottom: 0.5rem;
-}
-.wiki-category__filters {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.wiki-category__search {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg-surface);
-  color: var(--text);
-}
-.wiki-category__sort {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg-surface);
-  color: var(--text);
-}
-.wiki-category__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-}
-.wiki-category__item {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  transition: transform 0.2s;
-}
-.wiki-category__item:hover {
-  transform: translateY(-2px);
-}
-.wiki-category__item-img {
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
-}
-.wiki-category__item-info h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1rem;
-}
-.wiki-category__item-location {
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  margin: 0;
-}
-.wiki-category__empty {
-  text-align: center;
-  color: var(--text-muted);
-  padding: 3rem;
-}
-</style>
