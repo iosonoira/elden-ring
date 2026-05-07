@@ -1,3 +1,4 @@
+import type { Ref } from 'vue'
 import type { WikiEntity, ApiResponse } from '~/shared/types/EldenRingApi'
 
 const API_BASE = 'https://eldenring.fanapis.com/api'
@@ -11,12 +12,14 @@ const CATEGORY_MAP: Record<string, string> = {
   spiritAshes: 'spirits'
 }
 
-export function useWikiCategory(category: string) {
+export function useWikiCategory(category: string | Ref<string>) {
+  const categoryRef = toRef(category)
+
   const items = ref<WikiEntity[]>([])
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  const apiCategory = computed(() => CATEGORY_MAP[category] || category)
+  const apiCategory = computed(() => CATEGORY_MAP[categoryRef.value] || categoryRef.value)
 
   async function fetchAll() {
     loading.value = true
@@ -38,7 +41,7 @@ export function useWikiCategory(category: string) {
     }
   }
 
-  watch(apiCategory, () => {
+  watch(categoryRef, () => {
     fetchAll()
   })
 

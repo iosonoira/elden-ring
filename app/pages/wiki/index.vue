@@ -21,7 +21,7 @@ const activeCategory = ref('armament')
 const searchQuery = ref('')
 const sortOption = ref<'az' | 'za'>('az')
 
-const { items, loading, error, fetch: fetchCategory } = useWikiCategory(activeCategory.value)
+const { items, loading, error, fetch: fetchCategory } = useWikiCategory(activeCategory)
 
 onMounted(() => {
   fetchCategory()
