@@ -19,6 +19,7 @@ const route = useRoute()
 const getInventoryTarget = (category: string) => {
   const inArchives = route.path.startsWith('/archives')
   if (inArchives) return localePath(`/archives/${category}`)
+  if (category === 'wiki') return localePath('/wiki')
   return isLoaded.value
     ? localePath(`/inventory/${category}`)
     : localePath(`/archives/${category}`)
@@ -85,6 +86,13 @@ const items = computed<SidebarItem[]>(() => {
       icon: 'person_outline', 
       owned: s?.spiritAshes?.owned || 0, 
       total: s?.spiritAshes?.total || 0 
+    },
+    { 
+      key: 'wiki', 
+      label: 'Wiki', 
+      icon: 'menu_book', 
+      owned: 0, 
+      total: 0 
     },
   ]
 });

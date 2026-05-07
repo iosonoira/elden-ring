@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useWikiStore } from '~/stores/useWikiStore'
+import WikiItemModal from './WikiItemModal.vue'
 
 interface Item {
   id: string
@@ -14,6 +15,7 @@ const props = defineProps<{
 const wikiStore = useWikiStore();
 const cardRef = ref<HTMLElement | null>(null);
 const isVisible = ref(false);
+const isModalOpen = ref(false);
 
 // Use global cache instead of local fetch (defensive check)
 const apiInfo = computed(() => {
@@ -57,13 +59,11 @@ onUnmounted(() => {
   }
 });
 
-function getWikiUrl(name: string) {
-  const cleanName = name.replace(/ \+\d+$/, '').replaceAll(' ', '+');
-  return `https://eldenring.wiki.fextralife.com/${cleanName}`
-}
-
-function openWiki() {
-  window.open(getWikiUrl(props.item.name), '_blank')
+function openWikiModal() {
+  if (props.category && props.item?.name) {
+    wikiStore.fetchItemDetails(props.category, props.item.name)
+    isModalOpen.value = true
+  }
 }
 </script>
 
@@ -74,8 +74,8 @@ function openWiki() {
     :class="{ 'item-card--loading': isPending }"
     tabindex="0"
     role="button"
-    @keydown.enter="openWiki"
-    @keydown.space.prevent="openWiki"
+    @keydown.enter="openWikiModal"
+    @keydown.space.prevent="openWikiModal"
   >
     <div class="item-card__image-container">
       <NuxtImg 
@@ -95,11 +95,18 @@ function openWiki() {
       </div>
 
       <div class="item-card__actions">
-        <a :href="getWikiUrl(item.name)" target="_blank" class="item-card__link label-mono">
+        <button class="item-card__link label-mono" @click="openWikiModal">
           Wiki <Icon name="material-symbols:open-in-new" size="10" />
-        </a>
+        </button>
       </div>
     </div>
+
+    <WikiItemModal
+      v-if="isModalOpen"
+      :category="category"
+      :item-name="item.name"
+      @close="isModalOpen = false"
+    />
   </div>
 </template>
 

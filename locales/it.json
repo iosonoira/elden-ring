@@ -31,6 +31,9 @@
     }
   },
   "wiki": {
+    "index": {
+      "title": "Wiki"
+    },
     "page": {
       "titleFallback": "Wiki | Gilded Reliquary",
       "descFallback": "Scopri i segreti delle Terre di Mezzo."
@@ -43,17 +46,23 @@
       "ashesOfWar": "Ceneri di Guerra",
       "spiritAshes": "Ceneri Spirituali",
       "armament": "Armi",
-      "talisman": "Talismani"
+      "talisman": "Talismani",
+      "empty": "Nessun oggetto trovato"
+    },
+    "modal": {
+      "viewFull": "Visualizza Pagina Intera",
+      "close": "Chiudi"
     },
     "error": {
       "title": "Frammento non trovato",
       "message": "La ricerca nell'archivio sacro non ha prodotto risultati."
     },
     "breadcrumb": {
-      "home": "Wiki"
+      "home": "Wiki",
+      "back": "Torna alla Wiki"
     },
     "filters": {
-      "search": "Cerca oggetti...",
+      "search": "Cerca",
       "sortAZ": "Nome A-Z",
       "sortZA": "Nome Z-A",
       "noResults": "Nessun oggetto trovato."

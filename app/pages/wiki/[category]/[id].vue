@@ -4,12 +4,15 @@ import type { WikiCategory } from '~/shared/types/EldenRingApi'
 definePageMeta({ layout: 'default' })
 
 const route = useRoute()
+const localePath = useLocalePath()
 const { t } = useI18n()
 
 const category = computed(() => route.params.category as WikiCategory)
 const id = computed(() => route.params.id as string)
 
-const { item, pending, error } = useWikiItem(category.value, id.value)
+const categoryLabel = computed(() => `wiki.category.${category.value}`)
+
+const { item, pending, error } = useWikiItem(category, id)
 
 useSeoMeta({
   title: computed(() => item.value?.name ? `${item.value.name} | Gilded Reliquary` : t('wiki.page.titleFallback')),
@@ -19,6 +22,15 @@ useSeoMeta({
 
 <template>
   <div class="wiki-page">
+    <!-- Breadcrumb -->
+    <nav class="wiki-page__breadcrumb">
+      <NuxtLink :to="localePath('/wiki')">{{ $t('wiki.index.title') }}</NuxtLink>
+      <Icon name="material-symbols:chevron-right" size="16" />
+      <NuxtLink :to="localePath(`/wiki/${category}`)">{{ $t(categoryLabel) }}</NuxtLink>
+      <Icon name="material-symbols:chevron-right" size="16" />
+      <span>{{ item?.name }}</span>
+    </nav>
+
     <!-- Pending State -->
     <div v-if="pending" class="wiki-page__skeleton">
       <div class="wiki-page__skeleton-img"></div>
