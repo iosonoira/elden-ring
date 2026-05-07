@@ -49,6 +49,12 @@
       "talisman": "Talismans",
       "empty": "No items found"
     },
+    "intro": "Explore the complete archives of Elden Ring. Browse weapons, armor, talismans, magic, ashes of war, and spirit ashes.",
+    "searchPlaceholder": "Search items...",
+    "sortAz": "A-Z",
+    "sortZa": "Z-A",
+    "loading": "Loading archives...",
+    "noItems": "No items found",
     "modal": {
       "viewFull": "View Full Page",
       "close": "Close"

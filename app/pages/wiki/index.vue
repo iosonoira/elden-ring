@@ -16,6 +16,39 @@ const categories = [
   { key: 'ashesOfWar', label: 'wiki.category.ashesOfWar', icon: 'settings' },
   { key: 'spiritAshes', label: 'wiki.category.spiritAshes', icon: 'person_outline' },
 ]
+
+const activeCategory = ref('armament')
+const searchQuery = ref('')
+const sortOption = ref<'az' | 'za'>('az')
+
+const { items, loading, error, fetch: fetchCategory } = useWikiCategory(activeCategory.value)
+
+onMounted(() => {
+  fetchCategory()
+})
+
+watch(activeCategory, () => {
+  searchQuery.value = ''
+})
+
+const filteredItems = computed(() => {
+  let result = [...items.value]
+  
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase()
+    result = result.filter(item => 
+      item.name.toLowerCase().includes(query)
+    )
+  }
+  
+  if (sortOption.value === 'az') {
+    result.sort((a, b) => a.name.localeCompare(b.name))
+  } else {
+    result.sort((a, b) => b.name.localeCompare(a.name))
+  }
+  
+  return result
+})
 </script>
 
 <template>
@@ -30,27 +63,75 @@ const categories = [
       </div>
     </header>
 
-    <section class="wiki-index-page__grid">
-      <NuxtLink
-        v-for="cat in categories"
-        :key="cat.key"
-        :to="localePath(`/wiki/${cat.key}`)"
-        class="wiki-category-card"
-      >
-        <div class="wiki-category-card__icon-wrap">
-          <Icon :name="`material-symbols:${cat.icon}`" size="48" />
+    <div class="wiki-index-page__layout">
+      <aside class="wiki-index-page__sidebar">
+        <nav class="wiki-index-page__nav">
+          <button
+            v-for="cat in categories"
+            :key="cat.key"
+            class="wiki-index-page__nav-item"
+            :class="{ 'wiki-index-page__nav-item--active': activeCategory === cat.key }"
+            @click="activeCategory = cat.key"
+          >
+            <Icon :name="`material-symbols:${cat.icon}`" size="20" />
+            <span>{{ $t(cat.label) }}</span>
+          </button>
+        </nav>
+      </aside>
+
+      <main class="wiki-index-page__content">
+        <p class="wiki-index-page__intro">
+          {{ $t('wiki.intro') }}
+        </p>
+
+        <div class="wiki-index-page__controls">
+          <div class="wiki-index-page__search">
+            <Icon name="material-symbols:search" size="20" class="wiki-index-page__search-icon" />
+            <input
+              v-model="searchQuery"
+              type="text"
+              :placeholder="$t('wiki.searchPlaceholder')"
+              class="wiki-index-page__search-input"
+            />
+          </div>
+          <select v-model="sortOption" class="wiki-index-page__sort">
+            <option value="az">{{ $t('wiki.sortAz') }}</option>
+            <option value="za">{{ $t('wiki.sortZa') }}</option>
+          </select>
         </div>
-        <h2 class="wiki-category-card__title">{{ $t(cat.label) }}</h2>
-        <Icon name="material-symbols:arrow-forward" class="wiki-category-card__arrow" size="20" />
-      </NuxtLink>
-    </section>
+
+        <div v-if="loading" class="wiki-index-page__loading">
+          <div class="wiki-index-page__spinner" />
+          <span>{{ $t('wiki.loading') }}</span>
+        </div>
+
+        <div v-else-if="error" class="wiki-index-page__error">
+          <Icon name="material-symbols:error-outline" size="24" />
+          <span>{{ error }}</span>
+        </div>
+
+        <div v-else-if="filteredItems.length === 0" class="wiki-index-page__empty">
+          <Icon name="material-symbols:inventory-2-outline" size="48" />
+          <span>{{ $t('wiki.noItems') }}</span>
+        </div>
+
+        <div v-else class="wiki-index-page__grid">
+          <WikiItemCard
+            v-for="item in filteredItems"
+            :key="item.id"
+            :item="item"
+            :category="activeCategory"
+          />
+        </div>
+      </main>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .wiki-index-page {
   padding: var(--spacing-xl) var(--spacing-md);
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -76,55 +157,167 @@ const categories = [
   font-weight: 600;
 }
 
-.wiki-index-page__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--spacing-lg);
+.wiki-index-page__layout {
+  display: flex;
+  gap: var(--spacing-xl);
 }
 
-.wiki-category-card {
+.wiki-index-page__sidebar {
+  flex-shrink: 0;
+  width: 240px;
+}
+
+.wiki-index-page__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  position: sticky;
+  top: var(--spacing-xl);
+}
+
+.wiki-index-page__nav-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
-  padding: var(--spacing-lg);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  text-decoration: none;
-  color: inherit;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
   transition: all var(--transition-fast);
 }
 
-.wiki-category-card:hover {
+.wiki-index-page__nav-item:hover {
   border-color: var(--color-accent);
   background: var(--color-surface-hover);
-  transform: translateY(-2px);
 }
 
-.wiki-category-card__icon-wrap {
+.wiki-index-page__nav-item--active {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.wiki-index-page__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.wiki-index-page__intro {
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-lg);
+}
+
+.wiki-index-page__controls {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.wiki-index-page__search {
+  flex: 1;
+  position: relative;
+}
+
+.wiki-index-page__search-icon {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+}
+
+.wiki-index-page__search-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 36px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.wiki-index-page__search-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.wiki-index-page__sort {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.wiki-index-page__loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
-  background: var(--color-surface-elevated);
-  border-radius: var(--radius-md);
-  color: var(--color-accent);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl);
+  color: var(--color-text-muted);
 }
 
-.wiki-category-card__title {
-  flex: 1;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-lg);
-  font-weight: 500;
+.wiki-index-page__spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-.wiki-category-card__arrow {
-  opacity: 0;
-  transition: opacity var(--transition-fast);
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.wiki-category-card:hover .wiki-category-card__arrow {
-  opacity: 1;
+.wiki-index-page__error {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  color: var(--color-error);
+}
+
+.wiki-index-page__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl);
+  color: var(--color-text-muted);
+}
+
+.wiki-index-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .wiki-index-page__layout {
+    flex-direction: column;
+  }
+
+  .wiki-index-page__sidebar {
+    width: 100%;
+  }
+
+  .wiki-index-page__nav {
+    flex-direction: row;
+    position: static;
+    overflow-x: auto;
+    padding-bottom: var(--spacing-sm);
+  }
+
+  .wiki-index-page__nav-item {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
 }
 </style>

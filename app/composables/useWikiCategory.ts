@@ -16,13 +16,14 @@ export function useWikiCategory(category: string) {
   const loading = ref(false)
   const error = ref<string | null>(null)
 
+  const apiCategory = computed(() => CATEGORY_MAP[category] || category)
+
   async function fetchAll() {
-    const apiCategory = CATEGORY_MAP[category] || category
     loading.value = true
     error.value = null
     
     try {
-      const response = await $fetch<ApiResponse<WikiEntity[]>>(`${API_BASE}/${apiCategory}`, {
+      const response = await $fetch<ApiResponse<WikiEntity[]>>(`${API_BASE}/${apiCategory.value}`, {
         query: { limit: 200 }
       })
       
@@ -37,11 +38,14 @@ export function useWikiCategory(category: string) {
     }
   }
 
-  onMounted(fetchAll)
+  watch(apiCategory, () => {
+    fetchAll()
+  })
 
   return {
     items,
     loading,
-    error
+    error,
+    fetch: fetchAll
   }
 }

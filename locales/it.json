@@ -49,6 +49,12 @@
       "talisman": "Talismani",
       "empty": "Nessun oggetto trovato"
     },
+    "intro": "Esplora gli archivi completi di Elden Ring. Sfoglia armi, armature, talismani, magia, ceneri di guerra e ceneri spirituali.",
+    "searchPlaceholder": "Cerca oggetti...",
+    "sortAz": "A-Z",
+    "sortZa": "Z-A",
+    "loading": "Caricamento archivi...",
+    "noItems": "Nessun oggetto trovato",
     "modal": {
       "viewFull": "Visualizza Pagina Intera",
       "close": "Chiudi"
