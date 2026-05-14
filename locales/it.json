@@ -87,7 +87,26 @@
     "label": {
       "location": "Luogo Certo",
       "quote": "Citazione Antica",
-      "weight": "Peso"
+      "weight": "Peso",
+      "info": "Info",
+      "stats": "Attacco",
+      "defence": "Difesa",
+      "dmgNegation": "Riduzione Danno",
+      "resistance": "Resistenza",
+      "scaling": "Scalatura Attributi",
+      "requirements": "Requisiti",
+      "drops": "Bottino",
+      "effect": "Effetto",
+      "affinity": "Affinità",
+      "skill": "Abilità",
+      "fpCost": "Costo FP",
+      "hpCost": "Costo HP",
+      "healthPoints": "Punti Vita",
+      "region": "Regione",
+      "role": "Ruolo",
+      "slots": "Slot Memoria",
+      "spellType": "Tipo",
+      "itemType": "Categoria"
     }
   }
 }

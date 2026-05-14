@@ -87,7 +87,26 @@
     "label": {
       "location": "Location",
       "quote": "Ancient Quote",
-      "weight": "Weight"
+      "weight": "Weight",
+      "info": "Info",
+      "stats": "Attack",
+      "defence": "Defence",
+      "dmgNegation": "Damage Negation",
+      "resistance": "Resistance",
+      "scaling": "Attribute Scaling",
+      "requirements": "Requirements",
+      "drops": "Drops",
+      "effect": "Effect",
+      "affinity": "Affinity",
+      "skill": "Skill",
+      "fpCost": "FP Cost",
+      "hpCost": "HP Cost",
+      "healthPoints": "Health Points",
+      "region": "Region",
+      "role": "Role",
+      "slots": "Memory Slots",
+      "spellType": "Type",
+      "itemType": "Category"
     }
   }
 }
