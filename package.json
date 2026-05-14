@@ -2,6 +2,7 @@
   "name": "elden-ring",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@9.0.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -26,12 +27,11 @@
     "sass": "^1.99.0"
   },
   "pnpm": {
-  "onlyBuiltDependencies": [
-    "@parcel/watcher",
-    "esbuild",
-    "sharp",
-    "unrs-resolver"
-  ]
-},
-"ignoredBuiltDependencies": []
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
+  }
 }

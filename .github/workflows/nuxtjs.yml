@@ -25,23 +25,18 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9
-          # Rimuoviamo il run_install da qui per avere più controllo sullo step successivo
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: "pnpm"  # ← cache automatica, richiede pnpm installato prima
 
       - name: Install dependencies
-        # Forziamo la directory corrente e disabilitiamo il controllo rigoroso dei pacchetti
-        run: pnpm install --no-frozen-lockfile --ignore-scripts=false
-        working-directory: . 
-        env:
-          PNPM_CONFIG_ONLY_BUILT_DEPENDENCIES_SOFT_FAIL: "true"
+        run: pnpm install --no-frozen-lockfile
 
       - name: Generate static site
         run: pnpm run generate
-        working-directory: .
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
