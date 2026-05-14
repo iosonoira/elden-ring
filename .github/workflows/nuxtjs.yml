@@ -24,12 +24,12 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: latest
+          version: 9
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: "22"
           cache: "pnpm"
 
       - name: Setup Pages
@@ -48,9 +48,10 @@ jobs:
             ${{ runner.os }}-nuxt-build-
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
-        env:
-          PNPM_CONFIG_ONLY_BUILT_DEPENDENCIES_SOFT_FAIL: "true"
+        # Configuriamo pnpm per non bloccarsi se gli script di build non sono esplicitamente autorizzati
+        run: |
+          pnpm config set only-built-dependencies-soft-fail true
+          pnpm install --no-frozen-lockfile
 
       - name: Generate static site
         run: pnpm run generate
