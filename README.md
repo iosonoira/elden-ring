@@ -1,75 +1,81 @@
-# Nuxt Minimal Starter
+# Gilded Reliquary — Elden Ring Save Analyser
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+> *May Grace Guide Thee.*
 
-## Setup
+A web application that reads your Elden Ring `.sl2` save file locally and shows you exactly what you own — and what you're still missing — across weapons, armour, talismans, magic, ashes of war and spirit ashes.
 
-Make sure to install dependencies:
+Built as a personal testbed for **Nuxt** and **AI-assisted development workflows** in 2026.
+
+---
+
+## Features
+
+- **Save file upload** — drag-and-drop or file picker; the `.sl2` is parsed entirely in the browser, no data ever leaves your machine.
+- **Multi-character support** — select any character slot from your save file.
+- **Inventory cross-reference** — instantly see owned vs. missing items across six categories: Weapons, Armour, Talismans, Magic, Ashes of War, Spirit Ashes.
+- **Global completion stats** — overall progress percentage and per-category counters at a glance.
+- **DLC coverage** — Shadow of the Erdtree items are fully included in the database.
+- **Integrated wiki** — browse 17 in-game categories (bosses, NPCs, locations, creatures, sorceries, incantations and more) powered by the Elden Ring Fan API.
+- **Multilingual UI** — English and Italian, switchable at runtime.
+
+---
+
+## Tech Stack
+
+| Layer | Choice |
+|---|---|
+| Framework | [Nuxt 4](https://nuxt.com) + Vue 3.5 |
+| State | Pinia 3 |
+| Styling | SCSS (scoped, BEM) |
+| Internationalisation | @nuxtjs/i18n |
+| Icons | @nuxt/icon (Iconify) |
+| Images | @nuxt/image (WebP) |
+| Package manager | pnpm |
+
+---
+
+## Getting Started
 
 ```bash
-# npm
-npm install
-
-# pnpm
+# Install dependencies
 pnpm install
 
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
+# Start the dev server
 pnpm dev
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
+# Build for production
 pnpm build
 
-# yarn
-yarn build
-
-# bun
-bun run build
+# Static site generation
+pnpm generate
 ```
 
-Locally preview production build:
+Open [http://localhost:3000](http://localhost:3000), upload your `.sl2` file and select a character.
 
-```bash
-# npm
-npm run preview
+---
 
-# pnpm
-pnpm preview
+## AI-First Development
 
-# yarn
-yarn preview
+This project was developed with an **AI-first workflow** as an explicit goal — using [Google Antigravity](https://antigravity.dev), [Opencode](https://opencode.ai) and [Claude](https://claude.ai) as primary development partners for code generation, review and architecture decisions.  
+It serves as a practical benchmark for what modern AI-assisted frontend development looks like in 2026.
 
-# bun
-bun run preview
-```
+---
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Credits & Acknowledgements
+
+| Who | What |
+|---|---|
+| [**CyberGiant7 (Leonardo Dessì)**](https://github.com/CyberGiant7) | Original save-file parsing logic and item database. The core engine powering inventory detection is his work, released under the MIT License (© 2022 Leonardo Dessì). |
+| [**Elden Ring Fan APIs**](https://docs.eldenring.fanapis.com/docs) | The wiki section is entirely built on this community-maintained public API. Thank you to all contributors who keep it running. |
+
+---
+
+## License
+
+The save-parser core and item database are derived from CyberGiant7's project, which is licensed under the **MIT License**. See [`Elden-Ring-Automatic-Checklist/LICENSE`](./Elden-Ring-Automatic-Checklist/LICENSE) for the full text.
+
+The Gilded Reliquary application layer is also released under the **MIT License**.
+
+---
+
+*Elden Ring is a trademark of Bandai Namco Entertainment and FromSoftware. This project is an unofficial fan tool, not affiliated with or endorsed by either company.*
