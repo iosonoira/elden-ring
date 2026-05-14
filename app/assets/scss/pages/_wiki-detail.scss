@@ -4,14 +4,11 @@
 .wiki-page {
   padding: $space-4 $space-6;
   min-height: 100vh;
-  
-  // Scansione hierarchy heading e typography come da DESIGN.md
+
   &__header {
-    margin-bottom: $space-8;
     background-color: $color-surface-low;
     padding: $space-4 $space-6;
-    margin: (-$space-4) (-$space-6) $space-8 (-$space-6); // Estende background per tutto il parent
-    // Nessun border ammesso per la separazione (The No-Line Rule)
+    margin: (-$space-4) (-$space-6) $space-8 (-$space-6);
   }
 
   &__title {
@@ -24,107 +21,141 @@
   }
 
   &__type {
-    font-family: $font-label;
-    font-size: $text-label;
-    letter-spacing: 0.5em;
+    @include label-style;
     color: $color-on-surface-variant;
-    text-transform: uppercase;
     margin-top: $space-2;
   }
 
-  &__details {
+  // Hero image block — centered, large
+  &__hero {
+    display: flex;
+    justify-content: center;
+    padding: $space-12 $space-6;
+    margin: 0 (-$space-6);
+    background: radial-gradient(ellipse at center, rgba($color-surface-container-high, 0.5) 0%, transparent 70%);
+  }
+
+  &__hero-image {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba($color-primary, 0.3));
+  }
+
+  // Lore description below image
+  &__lore {
+    @include lore-text;
+    color: $color-on-surface;
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto $space-10;
+  }
+
+  // Generic data section
+  &__section {
+    margin-bottom: $space-10;
+  }
+
+  &__section-title {
+    @include label-style;
+    color: $color-primary;
+    margin-bottom: $space-4;
+    display: block;
+  }
+
+  // Flex-wrap grid for WikiChip items
+  &__chips-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
+  }
+
+  // List of WikiStatBar items
+  &__stat-list {
     display: flex;
     flex-direction: column;
-    gap: $space-8;
+    gap: $space-3;
     background-color: $color-surface-lowest;
-    padding: $space-6;
+    padding: $space-5 $space-6;
     border-radius: $radius-md;
-    
-    @media (min-width: 768px) {
-      flex-direction: row;
+  }
+
+  // Row of WikiScalingBadge items
+  &__badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
+  }
+
+  // Quote blockquote
+  &__quote-block {
+    @include lore-text;
+    color: $color-on-surface-variant;
+    padding-left: $space-6;
+    margin: 0;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: $color-primary;
+      opacity: 0.35;
+      border-radius: $radius-sm;
     }
   }
 
-  &__image-container {
-    flex: 0 0 320px;
-    background: rgba($color-surface-container-high, 0.4);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba($color-primary, 0.1);
-    border-radius: $radius-default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: $space-4;
-    // Ambient shadows per DESIGN.md
-    box-shadow: 0 0 20px rgba(241, 201, 125, 0.05);
-  }
-
-  &__image {
-    max-width: 100%;
-    height: auto;
-    filter: drop-shadow(0 0 15px rgba($color-primary, 0.2));
-  }
-
-  &__info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: $space-6;
-  }
-
-  &__lore {
-    font-family: $font-lora;
-    font-style: italic;
-    font-size: $text-lore;
+  // Effect / effects plain text
+  &__effect-text {
+    font-family: $font-body;
+    font-size: $text-body;
     line-height: 1.6;
     color: $color-on-surface;
     margin: 0;
   }
 
-  &__metadata {
+  // Breadcrumb
+  &__breadcrumb {
     display: flex;
-    flex-direction: column;
-    gap: $space-4;
-    margin-top: auto;
-    padding: $space-4;
-    background-color: $color-surface-container; // Separazione tramite background shift (No-Line Rule)
-    border-radius: $radius-sm;
-  }
-
-  &__meta-group {
-    display: flex;
-    flex-direction: column;
-    gap: $space-1;
-  }
-
-  &__meta-label {
+    align-items: center;
+    gap: $space-2;
+    margin-bottom: $space-6;
     font-family: $font-label;
     font-size: $text-label;
-    letter-spacing: 0.5em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: $color-primary;
-  }
+    color: $color-on-surface-variant;
 
-  &__meta-value {
-    font-family: $font-body;
-    font-size: $text-body;
-    color: $color-on-surface;
-    
-    &--quote {
-      font-style: italic;
+    a {
+      color: $color-on-surface-variant;
+      text-decoration: none;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    span {
+      color: $color-primary;
     }
   }
 
-  // Pending (Skeleton)
+  // Skeleton loading state
   &__skeleton {
     display: flex;
     flex-direction: column;
     gap: $space-8;
-    
+
     @media (min-width: 768px) {
       flex-direction: row;
     }
-    
+
     &-img {
       flex: 0 0 320px;
       height: 320px;
@@ -132,47 +163,47 @@
       animation: pulse 1.5s infinite ease-in-out;
       border-radius: $radius-default;
     }
-    
+
     &-info {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: $space-4;
     }
-    
+
     &-text {
       width: 100%;
       height: 24px;
       background: $color-surface-container-highest;
       animation: pulse 1.5s infinite ease-in-out;
       border-radius: $radius-sm;
-      
+
       &--hero {
         height: 60px;
         width: 70%;
         margin-bottom: $space-6;
       }
-      
+
       &:last-child {
         width: 60%;
       }
     }
   }
 
+  // Error state
   &__error {
     padding: $space-6;
     background: rgba($color-error-container, 0.2);
-    // Nessun border ammesso (No-Line Rule)
     border-radius: $radius-md;
     text-align: center;
-    
+
     .error-title {
       font-family: $font-headline;
       font-size: $text-subheader;
       color: $color-error;
       margin-bottom: $space-2;
     }
-    
+
     .error-message {
       font-family: $font-body;
       font-size: $text-body;
