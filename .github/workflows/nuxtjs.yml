@@ -47,9 +47,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuxt-build-
 
-      - name: Configure pnpm
-        run: pnpm config set ignore-scripts-approval true
-
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
