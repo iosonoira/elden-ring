@@ -150,25 +150,25 @@
   &__skeleton {
     display: flex;
     flex-direction: column;
-    gap: $space-8;
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-    }
+    align-items: center;
+    gap: $space-6;
 
     &-img {
-      flex: 0 0 320px;
-      height: 320px;
+      width: 500px;
+      max-width: 100%;
+      aspect-ratio: 1;
       background: $color-surface-container-highest;
       animation: pulse 1.5s infinite ease-in-out;
       border-radius: $radius-default;
     }
 
     &-info {
-      flex: 1;
+      width: 100%;
+      max-width: 680px;
       display: flex;
       flex-direction: column;
       gap: $space-4;
+      align-items: center;
     }
 
     &-text {

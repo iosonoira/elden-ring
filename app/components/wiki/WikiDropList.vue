@@ -4,7 +4,7 @@ defineProps<{ drops: string[] }>()
 
 <template>
   <ul class="wiki-drop-list">
-    <li v-for="drop in drops" :key="drop" class="wiki-drop-list__item">
+    <li v-for="(drop, index) in drops" :key="`${index}-${drop}`" class="wiki-drop-list__item">
       <Icon name="material-symbols:diamond-outline" size="14" class="wiki-drop-list__icon" />
       <span>{{ drop }}</span>
     </li>
