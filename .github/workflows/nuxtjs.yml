@@ -25,25 +25,23 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9
-          # Facciamo gestire l'installazione direttamente all'action
-          # Questo evita conflitti di ambiente e problemi di "packages field missing"
-          run_install: |
-            - args: [--no-frozen-lockfile]
+          # Rimuoviamo il run_install da qui per avere più controllo sullo step successivo
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          # Non usiamo cache: pnpm qui, l'azione sopra è più efficiente
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: nuxt
+      - name: Install dependencies
+        # Forziamo la directory corrente e disabilitiamo il controllo rigoroso dei pacchetti
+        run: pnpm install --no-frozen-lockfile --ignore-scripts=false
+        working-directory: . 
+        env:
+          PNPM_CONFIG_ONLY_BUILT_DEPENDENCIES_SOFT_FAIL: "true"
 
       - name: Generate static site
-        # Se pnpm install è andato bene sopra, ora generiamo il sito
         run: pnpm run generate
+        working-directory: .
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
