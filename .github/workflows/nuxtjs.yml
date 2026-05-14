@@ -48,10 +48,8 @@ jobs:
             ${{ runner.os }}-nuxt-build-
 
       - name: Install dependencies
-        # Aggiungiamo la configurazione specifica per bypassare il controllo rigido sui build script
-        run: |
-          pnpm config set only-built-dependencies-soft-fail true
-          pnpm install --no-frozen-lockfile
+        # Passiamo la configurazione direttamente come flag del comando install
+        run: pnpm install --no-frozen-lockfile --only-built-dependencies-soft-fail
 
       - name: Generate static site
         run: pnpm run generate
