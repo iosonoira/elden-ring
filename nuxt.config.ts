@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   app: {
-    baseURL: '/elden-ring-automatic-checklist/',
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       link: [

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(superpowers:brainstorming)",
+      "Skill(superpowers:brainstorming:*)",
+      "WebFetch(domain:eldenring.fanapis.com)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
