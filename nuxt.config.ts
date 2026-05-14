@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   app: {
+    baseURL: '/elden-ring/',
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       link: [
