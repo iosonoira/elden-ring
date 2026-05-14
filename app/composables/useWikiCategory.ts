@@ -1,27 +1,7 @@
 import type { Ref } from 'vue'
-import type { WikiEntity, ApiResponse } from '~/shared/types/EldenRingApi'
+import type { WikiEntity, ApiResponse, WikiCategory } from '~/shared/types/EldenRingApi'
 
 const API_BASE = 'https://eldenring.fanapis.com/api'
-
-const CATEGORY_MAP: Record<string, string> = {
-  armament: 'weapons',
-  armor: 'armors',
-  talisman: 'talismans',
-  magic: 'sorceries',
-  ashesOfWar: 'ashes',
-  spiritAshes: 'spirits',
-  ammunition: 'ammunition',
-  bosses: 'bosses',
-  classes: 'classes',
-  creatures: 'creatures',
-  incantations: 'incantations',
-  items: 'items',
-  locations: 'locations',
-  npcs: 'npcs',
-  shields: 'shields',
-  sorceries: 'sorceries',
-  spirits: 'spirits'
-}
 
 export function useWikiCategory(category: string | Ref<string>) {
   const categoryRef = toRef(category)
@@ -30,7 +10,7 @@ export function useWikiCategory(category: string | Ref<string>) {
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  const apiCategory = computed(() => CATEGORY_MAP[categoryRef.value] || categoryRef.value)
+  const apiCategory = computed(() => wikiCategoryToApi(categoryRef.value as WikiCategory))
 
   async function fetchAll() {
     loading.value = true

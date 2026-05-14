@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { WikiEntity, ApiResponse } from '~/shared/types/EldenRingApi'
+import type { WikiEntity, ApiResponse, WikiCategory } from '~/shared/types/EldenRingApi'
 
 export const useWikiStore = defineStore('wiki', () => {
   // null = "cercato ma non trovato". Key assente = "non ancora cercato".
@@ -20,16 +20,7 @@ export const useWikiStore = defineStore('wiki', () => {
     loading.value[cacheKey] = true
     
     try {
-      const apiCategoryMap: Record<string, string> = {
-        'armament': 'weapons',
-        'armor': 'armors',
-        'talisman': 'talismans',
-        'magic': 'sorceries',
-        'ashesOfWar': 'ashes',
-        'spiritAshes': 'spirits'
-      }
-      
-      const finalCategory = apiCategoryMap[category] || category
+      const finalCategory = wikiCategoryToApi(category as WikiCategory)
 
       // Attempt 1: Default mapping
       let response = await $fetch<ApiResponse<WikiEntity[]>>(`https://eldenring.fanapis.com/api/${finalCategory}`, {

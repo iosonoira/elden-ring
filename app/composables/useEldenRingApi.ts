@@ -5,9 +5,10 @@ const BASE_URL = 'https://eldenring.fanapis.com/api'
 export function useEldenRingApi() {
 
   function fetchEntity<T extends WikiEntity>(category: WikiCategory, id: string) {
+    const finalCategory = wikiCategoryToApi(category)
     return useAsyncData<ApiResponse<T>>(
       `wiki-${category}-${id}`,
-      () => $fetch<ApiResponse<T>>(`${BASE_URL}/${category}/${id}`)
+      () => $fetch<ApiResponse<T>>(`${BASE_URL}/${finalCategory}/${id}`)
     )
   }
 
@@ -15,9 +16,10 @@ export function useEldenRingApi() {
     category: WikiCategory,
     params?: { limit?: number; page?: number }
   ) {
+    const finalCategory = wikiCategoryToApi(category)
     return useAsyncData<ApiResponse<T[]>>(
       `wiki-${category}-list-${params?.page ?? 0}`,
-      () => $fetch<ApiResponse<T[]>>(`${BASE_URL}/${category}`, {
+      () => $fetch<ApiResponse<T[]>>(`${BASE_URL}/${finalCategory}`, {
         query: { limit: params?.limit ?? 20, page: params?.page ?? 0 }
       })
     )
@@ -26,19 +28,9 @@ export function useEldenRingApi() {
   function getByName<T extends WikiEntity>(
     category: WikiCategory,
     name: string,
-    options: Parameters<typeof useAsyncData>[2] = {}
+    options: any = {}
   ) {
-    // Map internal categories to Fan API categories
-    const apiCategoryMap: Record<WikiCategory, ApiCategory> = {
-      'armament':   'weapons',
-      'armor':      'armors',
-      'talisman':   'talismans',
-      'magic':      'sorceries',
-      'ashesOfWar': 'ashes',
-      'spiritAshes':'spirits'
-    }
-    
-    const finalCategory = apiCategoryMap[category] || category
+    const finalCategory = wikiCategoryToApi(category)
 
     return useAsyncData<T | null>(
       `wiki-${category}-${name}`,

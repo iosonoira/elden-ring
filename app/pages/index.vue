@@ -34,7 +34,7 @@ const categories = computed(() => {
     },
     { 
       key: 'armor',
-      icon: 'shield_person', 
+      icon: 'shield-person', 
       title: 'Armor', 
       lore: 'Tarnished steel and royal silk', 
       owned: s?.armor?.owned || 0, 
@@ -42,7 +42,7 @@ const categories = computed(() => {
     },
     { 
       key: 'talisman',
-      icon: 'brightness_7', 
+      icon: 'brightness-7', 
       title: 'Talismans', 
       lore: 'Sacred trinkets blessed by the Erdtree', 
       owned: s?.talisman?.owned || 0, 
@@ -50,7 +50,7 @@ const categories = computed(() => {
     },
     { 
       key: 'magic',
-      icon: 'auto_awesome', 
+      icon: 'auto-awesome', 
       title: 'Magic', 
       lore: 'Spells and incantations of the primeval current', 
       owned: s?.magic?.owned || 0, 
@@ -66,7 +66,7 @@ const categories = computed(() => {
     },
     { 
       key: 'spiritAshes',
-      icon: 'person_outline', 
+      icon: 'person-outline', 
       title: 'Spirit Ashes', 
       lore: 'Spectral remains of fallen combatants', 
       owned: s?.spiritAshes?.owned || 0, 

@@ -40,11 +40,7 @@ const isMobileMenuOpen = ref(false)
       <LayoutAppHeaderDropdown />
     </nav>
 
-    <div class="app-header__actions">
-      <button class="app-header__icon-btn" aria-label="Settings">
-        <Icon name="material-symbols:settings-outline" size="24" />
-      </button>
-    </div>
+    <div class="app-header__actions" />
 
     <div class="app-header__glow-border" />
 

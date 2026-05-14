@@ -73,7 +73,7 @@ export type ApiCategory =
   | 'ashes'
   | 'spirits'
   | 'shields'
-  | 'ammunition'
+  | 'ammos'
   | 'bosses'
   | 'classes'
   | 'creatures'

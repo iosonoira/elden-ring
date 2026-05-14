@@ -58,7 +58,10 @@
       "shields": "Shields",
       "sorceries": "Sorceries",
       "spirits": "Spirit Ashes",
-      "empty": "No items found"
+      "ammo": "Ammunition",
+      "empty": "No items found",
+      "desc": "Browse our collection of {category} found throughout the Lands Between.",
+      "subtitle": "Sacred Archives"
     },
     "intro": "Explore the complete archives of Elden Ring. Browse weapons, armor, talismans, magic, ashes of war, and spirit ashes.",
     "searchPlaceholder": "Search items...",
