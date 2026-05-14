@@ -3,13 +3,38 @@ export interface WikiEntity {
   name: string
   image: string
   description: string
+  // Universal optional
   location?: string
   category?: string
   quote?: string
-  weight?: string
-  attack?: Array<{ name: string, amount: number }>
-  defence?: Array<{ name: string, amount: number }>
-  scalesWith?: Array<{ name: string, scaling: string }>
+  weight?: number | string
+  type?: string
+  // Bosses / Creatures
+  drops?: string[]
+  region?: string
+  healthPoints?: string
+  // Weapons / Shields
+  attack?: Array<{ name: string; amount: number }>
+  defence?: Array<{ name: string; amount: number }>
+  scalesWith?: Array<{ name: string; scaling: string }>
+  requiredAttributes?: Array<{ name: string; amount: number }>
+  // Armor
+  dmgNegation?: Array<{ name: string; amount: number }>
+  resistance?: Array<{ name: string; amount: number }>
+  // Sorceries / Incantations
+  cost?: number
+  slots?: number
+  effects?: string
+  requires?: Array<{ name: string; amount: number }>
+  // Spirit Ashes / Spirits
+  fpCost?: string
+  hpCost?: string
+  effect?: string
+  // Ashes of War
+  affinity?: string
+  skill?: string
+  // NPCs
+  role?: string
 }
 
 export interface ApiResponse<T> {
