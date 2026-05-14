@@ -99,6 +99,7 @@
       "effect": "Effect",
       "affinity": "Affinity",
       "skill": "Skill",
+      "cost": "FP Cost",
       "fpCost": "FP Cost",
       "hpCost": "HP Cost",
       "healthPoints": "Health Points",

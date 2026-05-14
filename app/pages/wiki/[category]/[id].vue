@@ -93,10 +93,10 @@ const hasInfoSection = computed(() =>
           <WikiChip v-if="item.role" :label="$t('wiki.label.role')" :value="item.role" />
           <WikiChip v-if="item.region" :label="$t('wiki.label.region')" :value="item.region" />
           <WikiChip v-if="item.healthPoints" :label="$t('wiki.label.healthPoints')" :value="item.healthPoints" />
-          <WikiChip v-if="item.cost" :label="$t('wiki.label.fpCost')" :value="item.cost" />
+          <WikiChip v-if="item.cost" :label="$t('wiki.label.cost')" :value="item.cost" />
           <WikiChip v-if="item.slots" :label="$t('wiki.label.slots')" :value="item.slots" />
           <WikiChip v-if="item.fpCost" :label="$t('wiki.label.fpCost')" :value="item.fpCost" />
-          <WikiChip v-if="hasHpCost" :label="$t('wiki.label.hpCost')" :value="item.hpCost!" />
+          <WikiChip v-if="hasHpCost" :label="$t('wiki.label.hpCost')" :value="item.hpCost ?? ''" />
           <WikiChip v-if="item.affinity" :label="$t('wiki.label.affinity')" :value="item.affinity" />
           <WikiChip v-if="item.skill" :label="$t('wiki.label.skill')" :value="item.skill" />
         </div>
