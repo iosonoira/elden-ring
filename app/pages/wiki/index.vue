@@ -94,8 +94,13 @@ useSeoMeta({
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: $space-6;
+    grid-template-columns: 1fr;
+    gap: $space-4;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: $space-6;
+    }
   }
 }
 

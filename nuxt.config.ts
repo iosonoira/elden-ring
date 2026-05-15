@@ -11,6 +11,9 @@ export default defineNuxtConfig({
     baseURL: '/elden-ring/',
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      ],
       link: [
         { rel: 'icon', type: 'image/png', href: '/elden-ring/favicon.png' }
       ]
