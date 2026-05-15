@@ -62,6 +62,10 @@ useSeoMeta({
   max-width: $content-max-w;
   margin: 0 auto;
 
+  @media (max-width: 768px) {
+    padding: $space-8 $space-4;
+  }
+
   &__header {
     text-align: center;
     margin-bottom: $space-12;
@@ -73,6 +77,10 @@ useSeoMeta({
     color: $color-primary;
     margin-bottom: $space-4;
     @include gold-glow-text;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
   }
 
   &__subtitle {
