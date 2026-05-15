@@ -31,6 +31,15 @@ const sidebarItems = computed(() => {
   ]
 })
 
+const wikiCategories = [
+  { label: 'Weapons', href: '/wiki/armament', icon: 'swords' },
+  { label: 'Armor', href: '/wiki/armor', icon: 'shield_person' },
+  { label: 'Talismans', href: '/wiki/talisman', icon: 'brightness_7' },
+  { label: 'Bosses', href: '/wiki/bosses', icon: 'skull' },
+  { label: 'NPCs', href: '/wiki/npcs', icon: 'groups' },
+  { label: 'Locations', href: '/wiki/locations', icon: 'map' },
+]
+
 const isMobileMenuOpen = ref(false)
 </script>
 
@@ -62,6 +71,7 @@ const isMobileMenuOpen = ref(false)
       :is-open="isMobileMenuOpen" 
       :nav-items="navItems" 
       :sidebar-items="sidebarItems"
+      :wiki-items="wikiCategories"
       @close="isMobileMenuOpen = false" 
     />
   </header>

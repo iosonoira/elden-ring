@@ -4,9 +4,12 @@ const props = defineProps<{
   isOpen: boolean
   navItems: Array<{ label: string, href: string, active?: boolean }>
   sidebarItems: Array<{ label: string, icon: string, href: string, active?: boolean }>
+  wikiItems: Array<{ label: string, icon: string, href: string, active?: boolean }>
 }>()
 
 defineEmits(['close'])
+
+const localePath = useLocalePath()
 
 const getIconName = (icon: string, active: boolean) => {
   const base = icon.replace(/_/g, '-')
@@ -77,6 +80,32 @@ const getIconName = (icon: string, active: boolean) => {
               >
                 <Icon :name="getIconName(item.icon, !!item.active)" size="24" />
                 <span>{{ item.label }}</span>
+              </NuxtLink>
+            </div>
+          </div>
+
+          <!-- Wiki Nav (from Header Dropdown) -->
+          <div class="mobile-menu__section">
+            <h4 class="mobile-menu__label">Wiki</h4>
+            <div class="mobile-menu__grid">
+              <NuxtLink
+                v-for="item in wikiItems"
+                :key="item.label"
+                :to="localePath(item.href)"
+                class="mobile-menu__icon-item"
+                :class="{ 'mobile-menu__icon-item--active': item.active }"
+                @click="$emit('close')"
+              >
+                <Icon :name="getIconName(item.icon, !!item.active)" size="24" />
+                <span>{{ item.label }}</span>
+              </NuxtLink>
+              <NuxtLink
+                :to="localePath('/wiki')"
+                class="mobile-menu__icon-item"
+                @click="$emit('close')"
+              >
+                <Icon name="material-symbols:more-horiz" size="24" />
+                <span>All Wiki</span>
               </NuxtLink>
             </div>
           </div>
