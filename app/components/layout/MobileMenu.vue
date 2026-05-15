@@ -50,16 +50,16 @@ const getIconName = (icon: string, active: boolean) => {
           <div class="mobile-menu__section">
             <h4 class="mobile-menu__label">Navigation</h4>
             <nav class="mobile-menu__nav">
-              <a 
+              <NuxtLink 
                 v-for="item in navItems" 
                 :key="item.label" 
-                :href="item.href"
+                :to="item.href"
                 class="mobile-menu__link"
                 :class="{ 'mobile-menu__link--active': item.active }"
                 @click="$emit('close')"
               >
                 {{ item.label }}
-              </a>
+              </NuxtLink>
             </nav>
           </div>
 
