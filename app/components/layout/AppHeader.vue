@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { useSaveStore } from '~/stores/useSaveStore'
+
 const localePath = useLocalePath()
 const route = useRoute()
+const saveStore = useSaveStore()
+const { isLoaded } = storeToRefs(saveStore)
 
 // Navigation items
 const navItems = computed(() => [
@@ -9,14 +13,23 @@ const navItems = computed(() => [
   { label: 'Inventory', href: localePath('/inventory/armament'), active: route.path.startsWith('/inventory') },
 ])
 
-// Sidebar items (copied here for mobile view consistency)
-const sidebarItems = [
-  { label: 'Equipment', icon: 'shield' },
-  { label: 'Magic', icon: 'magic_button' },
-  { label: 'Materials', icon: 'category' },
-  { label: 'Key Items', icon: 'vpn_key', active: true },
-  { label: 'Info', icon: 'info' },
-]
+// Sidebar items (dynamic links for mobile view)
+const sidebarItems = computed(() => {
+  const getTarget = (cat: string) => {
+    const inArchives = route.path.startsWith('/archives')
+    if (inArchives) return localePath(`/archives/${cat}`)
+    return isLoaded.value ? localePath(`/inventory/${cat}`) : localePath(`/archives/${cat}`)
+  }
+
+  return [
+    { label: 'Weapons', icon: 'swords', href: getTarget('armament'), active: route.path.includes('armament') },
+    { label: 'Armor', icon: 'shield_person', href: getTarget('armor'), active: route.path.includes('armor') },
+    { label: 'Talismans', icon: 'brightness_7', href: getTarget('talisman'), active: route.path.includes('talisman') },
+    { label: 'Magic', icon: 'auto_awesome', href: getTarget('magic'), active: route.path.includes('magic') },
+    { label: 'Ashes', icon: 'settings', href: getTarget('ashesOfWar'), active: route.path.includes('ashesOfWar') },
+    { label: 'Spirit', icon: 'person_outline', href: getTarget('spiritAshes'), active: route.path.includes('spiritAshes') },
+  ]
+})
 
 const isMobileMenuOpen = ref(false)
 </script>

@@ -3,7 +3,7 @@
 const props = defineProps<{
   isOpen: boolean
   navItems: Array<{ label: string, href: string, active?: boolean }>
-  sidebarItems: Array<{ label: string, icon: string, active?: boolean }>
+  sidebarItems: Array<{ label: string, icon: string, href: string, active?: boolean }>
 }>()
 
 defineEmits(['close'])
@@ -67,16 +67,17 @@ const getIconName = (icon: string, active: boolean) => {
           <div class="mobile-menu__section">
             <h4 class="mobile-menu__label">Categories</h4>
             <div class="mobile-menu__grid">
-              <div
+              <NuxtLink
                 v-for="item in sidebarItems"
                 :key="item.label"
+                :to="item.href"
                 class="mobile-menu__icon-item"
                 :class="{ 'mobile-menu__icon-item--active': item.active }"
                 @click="$emit('close')"
               >
                 <Icon :name="getIconName(item.icon, !!item.active)" size="24" />
                 <span>{{ item.label }}</span>
-              </div>
+              </NuxtLink>
             </div>
           </div>
         </div>
