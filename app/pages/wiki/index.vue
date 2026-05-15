@@ -130,10 +130,22 @@ useSeoMeta({
     }
   }
 
+  @media (max-width: 768px) {
+    padding: $space-4;
+  }
+
   &__icon-wrap {
     margin-bottom: $space-4;
     color: rgba($color-primary, 0.6);
     transition: transform $transition-base, color $transition-base;
+
+    @media (max-width: 768px) {
+      margin-bottom: $space-2;
+      :deep(svg) {
+        width: 32px;
+        height: 32px;
+      }
+    }
   }
 
   &__title {

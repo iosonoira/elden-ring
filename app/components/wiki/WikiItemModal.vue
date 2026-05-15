@@ -203,6 +203,11 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     gap: $space-6;
+
+    @media (max-width: 640px) {
+      padding: $space-4;
+      gap: $space-4;
+    }
   }
 
   &__image-wrap {
@@ -215,6 +220,11 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+
+    @media (max-width: 640px) {
+      width: 100%;
+      height: 200px;
+    }
   }
 
   &__image {
@@ -251,6 +261,10 @@ onUnmounted(() => {
     color: $color-primary;
     margin: 0;
     line-height: 1.2;
+
+    @media (max-width: 640px) {
+      font-size: 1.5rem;
+    }
   }
 
   &__divider {
