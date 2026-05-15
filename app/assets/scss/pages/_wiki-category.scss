@@ -6,6 +6,10 @@
   max-width: 1600px;
   margin: 0 auto;
 
+  @media (max-width: 1023px) {
+    padding: $space-6 $space-4;
+  }
+
   &__header {
     margin-bottom: $space-8;
   }
@@ -69,12 +73,26 @@
       position: sticky;
       top: calc($header-height + $space-6);
     }
+
+    @media (max-width: 1023px) {
+      order: -1;
+
+      .sticky-top {
+        position: static;
+      }
+    }
   }
 
   &__nav {
     display: flex;
     flex-direction: column;
     gap: $space-2;
+
+    @media (max-width: 1023px) {
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: $space-2;
+    }
   }
 
   &__nav-item {
@@ -100,6 +118,11 @@
       background: rgba($color-primary, 0.15);
       border-color: $color-primary;
       color: $color-primary;
+    }
+
+    @media (max-width: 1023px) {
+      flex-shrink: 0;
+      white-space: nowrap;
     }
   }
 
@@ -222,32 +245,3 @@
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 1023px) {
-  .wiki-category-page {
-    padding: $space-6 $space-4;
-
-    &__layout {
-      grid-template-columns: 1fr;
-    }
-
-    &__sidebar {
-      order: -1;
-
-      .sticky-top {
-        position: static;
-      }
-    }
-
-    &__nav {
-      flex-direction: row;
-      overflow-x: auto;
-      padding-bottom: $space-2;
-      gap: $space-2;
-    }
-
-    &__nav-item {
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-  }
-}
