@@ -60,7 +60,9 @@ useSeoMeta({
 .wiki-index-page {
   padding: $space-12 $space-6;
   max-width: $content-max-w;
+  width: 100%;
   margin: 0 auto;
+  overflow-x: hidden;
 
   @media (max-width: 768px) {
     padding: $space-8 $space-4;
@@ -93,14 +95,12 @@ useSeoMeta({
   }
 
   &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: $space-4;
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: $space-6;
-    }
+    @include responsive-grid(
+      $min-item-size: 280px,
+      $gap-mobile: $space-3,
+      $gap-desktop: $space-6,
+      $breakpoint: 768px
+    );
   }
 }
 

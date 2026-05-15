@@ -7,17 +7,16 @@
   top: $header-height;
   width: $sidebar-width;
   height: calc(100vh - #{$header-height});
-  display: none;
+  display: none !important;
   flex-direction: column;
   padding: $space-6 0;
   overflow-y: auto;
   background: $color-surface-lowest;
   z-index: $z-sidebar;
-  // No-Line Rule: section boundary via background shift, no border
   border-right: 1px solid rgba($color-surface-container-highest, 0.3);
 
   @media (min-width: 1024px) {
-    display: flex;
+    display: flex !important;
   }
 
   &__profile {

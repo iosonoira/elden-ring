@@ -7,9 +7,14 @@
   &__main {
     padding-top: $header-height;
     padding-bottom: $space-24;
+    margin-left: 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
 
     @media (min-width: 1024px) {
       margin-left: $sidebar-width;
+      width: calc(100% - #{$sidebar-width});
     }
   }
 }

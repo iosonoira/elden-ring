@@ -3,9 +3,12 @@
 @use "../abstracts/animations" as *;
 
 .item-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1.5rem;
+  @include responsive-grid(
+    $min-item-size: 140px,
+    $gap-mobile: $space-3,
+    $gap-desktop: $space-6,
+    $breakpoint: 480px
+  );
   padding: 1.5rem 0;
 }
 

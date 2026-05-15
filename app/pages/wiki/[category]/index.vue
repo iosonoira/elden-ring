@@ -107,7 +107,7 @@ useSeoMeta({
         </div>
       </aside>
 
-      <main class="wiki-category-page__content">
+      <div class="wiki-category-page__content">
         <div class="wiki-category-page__controls">
           <div class="wiki-category-page__search">
             <Icon name="material-symbols:search" size="20" class="wiki-category-page__search-icon" />
@@ -147,7 +147,7 @@ useSeoMeta({
             :category="category"
           />
         </div>
-      </main>
+      </div>
     </div>
   </div>
 </template>

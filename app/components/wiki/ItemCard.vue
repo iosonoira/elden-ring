@@ -5,6 +5,8 @@ import WikiItemModal from './WikiItemModal.vue'
 interface Item {
   id: string
   name: string
+  image?: string
+  description?: string
 }
 
 const props = defineProps<{
@@ -19,6 +21,8 @@ const isModalOpen = ref(false)
 
 const apiInfo = computed(() => {
   if (!props.category || !props.item?.name) return null
+  // Use prop data immediately if available (from useWikiCategory bulk fetch)
+  if (props.item.image) return props.item
   return wikiStore.getCachedItem(props.category, props.item.name)
 })
 
@@ -168,6 +172,10 @@ function openWikiModal() {
     display: flex;
     flex-direction: column;
     gap: $space-2;
+
+    @media (max-width: 480px) {
+      padding: $space-2;
+    }
   }
 
   &__name {
@@ -177,6 +185,12 @@ function openWikiModal() {
     color: $color-on-surface;
     transition: color $transition-base;
     margin: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
 
   &__desc {

@@ -128,3 +128,24 @@
     border-color: $color-outline;
   }
 }
+
+// Responsive auto-fill grid
+// $min-item-size : larghezza minima di ogni cella sul breakpoint desktop
+// $gap-mobile    : gap usato su mobile (colonne fisse 2x1fr)
+// $gap-desktop   : gap usato da $breakpoint in su
+// $breakpoint    : larghezza minima da cui attivare auto-fill
+@mixin responsive-grid(
+  $min-item-size: 140px,
+  $gap-mobile: $space-3,
+  $gap-desktop: $space-6,
+  $breakpoint: 480px
+) {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $gap-mobile;
+
+  @media (min-width: $breakpoint) {
+    grid-template-columns: repeat(auto-fill, minmax($min-item-size, 1fr));
+    gap: $gap-desktop;
+  }
+}

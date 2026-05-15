@@ -11,12 +11,20 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   background-color: $color-surface-lowest;
   overflow-x: hidden;
   min-height: 100vh;
+  width: 100vw;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 a {

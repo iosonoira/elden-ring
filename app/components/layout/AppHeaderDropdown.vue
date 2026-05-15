@@ -82,9 +82,6 @@ const handleClickOutside = (event: MouseEvent) => {
 </template>
 
 <style lang="scss">
-@use '~/assets/scss/abstracts/variables' as *;
-@use '~/assets/scss/abstracts/mixins' as *;
-
 .app-header__nav-item {
   position: relative;
 
